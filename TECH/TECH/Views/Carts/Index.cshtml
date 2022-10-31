@@ -1,0 +1,258 @@
+﻿@using TECH.Areas.Admin.Models
+@model List<CartsModelView>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (Model != null && Model.Count > 0)
+{
+    <section class="ftco-section ftco-cart">
+        <div data-v-2e4f4844="" class="container">
+            <div data-v-2e4f4844="" class="row">
+                <h2 data-v-2e4f4844="" class="mb-3">Giỏ hàng</h2>
+                <div data-v-2e4f4844="" class="col-md-12">
+                    <div data-v-2e4f4844="" class="cart-list my-cart">
+                        <div data-v-2e4f4844="" class="table-responsive">
+                            <table data-v-2e4f4844="" class="table table-striped">
+                                <thead data-v-2e4f4844="">
+                                    <tr data-v-2e4f4844="">
+                                        <th data-v-2e4f4844="">Hình ảnh</th>
+                                        <th data-v-2e4f4844="">Tên sản phẩm</th>
+                                        <th data-v-2e4f4844="">Giá tiền</th>
+                                        <th data-v-2e4f4844="">Số lượng</th>
+                                        <th data-v-2e4f4844="">Tổng</th>
+                                        <th data-v-2e4f4844=""></th>
+                                    </tr>
+                                </thead>
+                                <tbody data-v-2e4f4844="">
+                                    @foreach (var item in Model)
+                                    {
+                                        decimal totalPrice = item.price.Value;
+                                        string classQuantiy = item.product_id.Value.ToString();
+
+                                        <tr data-v-2e4f4844="">
+                                            <td data-v-2e4f4844="" class="image-prod">
+                                                <div data-v-2e4f4844="" class="img"><img data-v-2e4f4844="" src="/product-image/@item.productModelView.avatar" class="img-product"></div>
+                                            </td>
+                                            <td data-v-2e4f4844="" class="product-name text-left">
+                                                <h3 data-v-2e4f4844="">@item.productModelView.name</h3>
+                                            </td>
+                                            <td data-v-2e4f4844="" class="price">@Convert.ToInt32(item.productModelView.price).ToString("#,###")<i data-v-2e4f4844=""> đ</i></td>
+                                            <td data-v-2e4f4844="">
+                                                <div data-v-2e4f4844="" class="input-group input-quantity">
+                                                    <div data-v-2e4f4844="" class="left-quantity"></div>
+                                                    <div data-v-2e4f4844="" class="input-group-prepend"><button data-v-2e4f4844="" type="button" class="btn btn-primary minus" onclick="minusQuantity(@classQuantiy,@item.id)">-</button></div>
+                                                    <input data-v-2e4f4844="" type="number" id="quantity" min="1" oninput="this.value = !!this.value && Math.abs(this.value) >= 1 ? Math.abs(this.value) : 1" value="@item.quantity"  aria-label="Recipient's username" aria-describedby="basic-addon2" class="form-control @classQuantiy">
+                                                    <div data-v-2e4f4844="" class="input-group-append"><button data-v-2e4f4844="" type="button" class="btn btn-primary plus" onclick="addQuantity(@classQuantiy,@item.id)">+</button></div>
+                                                    <div data-v-2e4f4844="" class="right-quantity"></div>
+                                                </div>
+                                            </td>
+                                            <td data-v-2e4f4844=""><span class="@classQuantiy">@item.price.Value.ToString("#,###")</span><i data-v-2e4f4844=""> đ</i></td>
+                                            <td data-v-2e4f4844=""><button data-v-2e4f4844="" class="btn btn-danger text-white" onclick="deleteCart(@item.id)"><i data-v-2e4f4844="" class="ion-ios-trash text-white"></i></button></td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <a data-v-2e4f4844="" href="thanh-toan" class="btn btn-primary py-3 px-4 float-right mr-3 btn-checkout" style="">
+                        Thanh toán
+                    </a> <a data-v-2e4f4844="" href="san-pham" class="btn btn-secondary py-3 px-4 float-right mr-3 btn-buy">Tiếp tục mua hàng</a>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+else
+{
+    <section class="ftco-section ftco-cart">
+   <div data-v-2e4f4844="" class="container">
+      <div data-v-2e4f4844="" class="row">
+         <h2 data-v-2e4f4844="" class="mb-3">Giỏ hàng (0)</h2>
+         <div data-v-2e4f4844="" class="col-md-12">
+            <div data-v-2e4f4844="" class="cart-list my-cart">
+               <div data-v-2e4f4844="" class="table-responsive">
+                  <table data-v-2e4f4844="" class="table table-striped">
+                     <thead data-v-2e4f4844="">
+                        <tr data-v-2e4f4844="">
+                           <th data-v-2e4f4844="">Hình ảnh</th>
+                           <th data-v-2e4f4844="">Tên sản phẩm</th>
+                           <th data-v-2e4f4844="">Giá tiền</th>
+                           <th data-v-2e4f4844="">Số lượng</th>
+                           <th data-v-2e4f4844="">Tổng</th>
+                           <th data-v-2e4f4844=""></th>
+                        </tr>
+                     </thead>
+                     <tbody data-v-2e4f4844=""></tbody>
+                  </table>
+               </div>
+            </div>
+            <a data-v-2e4f4844="" href="thanh-toan" class="btn btn-primary py-3 px-4 float-right mr-3 btn-checkout" style="display: none;">
+            Thanh toán
+            </a> <a data-v-2e4f4844="" href="/san-pham" class="btn btn-secondary py-3 px-4 float-right mr-3 btn-buy">Tiếp tục mua hàng</a>
+         </div>
+      </div>
+   </div>
+</section>
+}
+
+<div  id="CartsModal" tabindex="-1" role="dialog" aria-labelledby="categoryModalTitle" class="modal fade" aria-modal="true">
+   <div  role="document" class="modal-dialog">
+      <form id="form-submit" action="#">
+         <div  class="modal-content">
+            <div  class="modal-header bg-primary">
+               <h5  id="titleModal" class="modal-title white ">Xóa sản phẩm khỏi giỏ hàng thành công</h5>
+               <button  type="button" data-dismiss="modal" aria-label="Close" class="close"><span  aria-hidden="true">×</span></button>
+            </div>
+            <div  class="modal-body">
+            </div>
+            <div  class="modal-footer">
+                @*<a href="/dang-nhap" class="btn btn-primary me-1 mb-1 btn-submit-format">OK</a>*@
+                <a href="/home" class="btn btn-primary me-1 mb-1 btn-submit-format">OK</a>
+                </div>
+         </div>
+      </form>
+   </div>
+</div>
+
+@section Scripts{
+        <script type="text/javascript">
+    //$(document).ready(function () {
+    //    $(".plus").click(function () {
+    //        var value = parseInt($("#quantity").val());
+    //        if (value < 9999) {
+    //            $("#quantity").val(value + 1);
+    //        }
+
+    //    })
+    //    $(".minus").click(function () {
+    //        var value = parseInt($("#quantity").val());
+    //        if (value > 1) {
+    //            $("#quantity").val(value - 1);
+    //        }
+
+    //    })
+    //    $(".btn-add-cart").click(function () {
+
+    //        $.ajax({
+    //            url: '/Carts/Add',
+    //            type: 'POST',
+    //            dataType: 'json',
+    //            data: {
+    //                product_id: $(".product-id").val(),
+    //                quantity: $("#quantity").val(),
+    //                price:$(".product-price").val()
+    //            },
+    //            beforeSend: function () {
+    //               // Loading('show');
+    //            },
+    //            complete: function () {
+    //               // Loading('hiden');
+    //            },
+    //            success: function (response) {
+    //                if (response.success) {
+    //                    $("#CartsModal").modal("show");
+    //                }
+    //                else{
+    //                     $("#categoryModal").modal("show");
+    //                }
+    //            }
+    //        })
+
+    //    })
+
+    //})
+    function addQuantity(className,id){
+        var value = parseInt($("."+className).val());
+        if (value < 9999) {
+            $("."+className).val(value + 1);
+        }
+        $.ajax({
+            url: '/Carts/Update',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                product_id: parseInt(className),
+                quantity: $("."+className).val(),
+                id:id
+            },
+            beforeSend: function () {
+                // Loading('show');
+            },
+            complete: function () {
+                // Loading('hiden');
+            },
+            success: function (response) {
+                if (response.success && response.Data) {
+                    $("." + className).text(response.Data.pricestr);
+                }
+                //else{
+                //    $("#categoryModal").modal("show");
+                //}
+            }
+        })
+
+    }
+
+     function minusQuantity(className,id){
+        var value = parseInt($("."+className).val());
+        if (value < 9999 && value >=2) {
+            $("."+className).val(value - 1);
+        }
+        $.ajax({
+            url: '/Carts/Update',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                product_id: parseInt(className),
+                quantity: $("."+className).val(),
+                id:id
+            },
+            beforeSend: function () {
+                // Loading('show');
+            },
+            complete: function () {
+                // Loading('hiden');
+            },
+            success: function (response) {
+                if (response.success && response.Data) {
+                    $("." + className).text(response.Data.pricestr);
+                }
+                //if (response.success) {
+                //    $("#CartsModal").modal("show");
+                //}
+                //else{
+                //        $("#categoryModal").modal("show");
+                //}
+            }
+        })
+
+    }
+    function deleteCart(id){
+        $.ajax({
+            url: '/Carts/Deleted',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                id: id
+            },
+            beforeSend: function () {
+                // Loading('show');
+            },
+            complete: function () {
+                // Loading('hiden');
+            },
+            success: function (response) {
+                if (response.success) {
+                    $("#CartsModal").modal("show");
+                }                
+            }
+        })
+
+    }
+    
+
+
+</script>
+}

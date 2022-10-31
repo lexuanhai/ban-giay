@@ -1,0 +1,300 @@
+﻿@using TECH.Areas.Admin.Models
+@model ProductModelView
+@{
+    ViewData["Title"] = "ProductCategory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .price-color[data-v-f7970b56] {
+        color: red !important;
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    .custom-description img {
+        width: 100%;
+    }
+
+    .box-specifications table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 14px;
+    }
+
+        .box-specifications table tr:nth-child(odd) {
+            background-color: #f3f4f7;
+        }
+
+        .box-specifications table td {
+            border: 1px solid #dee2e6;
+            padding: 6px 10px;
+        }
+
+            .box-specifications table td:first-child {
+                width: 140px;
+            }
+</style>
+<input type="hidden" class="product-id" value="@Model.id" />
+<div data-v-f7970b56="">
+    <section data-v-f7970b56="" class="ftco-section">
+        <div data-v-f7970b56="" class="container">
+            <div data-v-f7970b56="" class="row">
+                <div data-v-f7970b56="" class="col-lg-6 mb-5" style="text-align:center">
+                    <a data-v-f7970b56="" href="#" class="image-popup" style="height: 40vh;">
+                        <img data-v-f7970b56="" src="/product-image/@Model.avatar" alt="Colorlib Template" class="img-fluid" style="height: 450px;">
+                    </a>
+                </div>
+                <div data-v-f7970b56="" class="col-lg-6 product-details pl-md-5">
+                    <h3 data-v-f7970b56="">@Model.name</h3>
+                    <div data-v-f7970b56="" class="row">
+                        <div data-v-f7970b56="" class="col-md-4" style="color: rgb(0, 0, 0);">
+                            Danh mục: <span data-v-f7970b56="" style="color: green;"> @Model.categorystr</span>
+                        </div>
+                        <div data-v-f7970b56="" class="col-md-4" style="color: rgb(0, 0, 0);">
+                            Tình trạng:
+                            @if (Model.quantity > 0)
+                            {
+                                <span data-v-f7970b56="" style="color: green;"> Còn hàng</span>
+                            }
+                            else
+                            {
+                                <span data-v-f7970b56="" style="color: red; display: none;"> Hết hàng</span>
+                            }
+
+
+                        </div>
+                        <div data-v-f7970b56="" class="col-md-4" style="color: rgb(0, 0, 0);">
+                            <!----> <span data-v-f7970b56="" style="color: green;">@(Model.differentiate.HasValue ? Model.differentiate.Value == 0 ? "Hàng mới" : "Hàng cũ" : "")</span>
+                        </div>
+                    </div>
+                    @{
+                        string priceStr = "";
+                        if (Model.price.HasValue && Model.price.Value > 0)
+                        {
+                            priceStr = Model.price.Value.ToString("#,###");
+                        }
+
+                    }
+                    <input type="hidden" value="@Model.price" class="product-price" />
+
+                    <p data-v-f7970b56="" class="price"><span data-v-f7970b56="" class="price-color">@priceStr<i data-v-f7970b56="">đ</i></span></p>
+                    @if (!string.IsNullOrEmpty(Model.color))
+                    {
+                        var color = "";
+                        var lstColor = new List<string>();
+                        @if (Model.color.Contains(","))
+                        {
+                            var _colorSplit = Model.color.Split(',');
+                            foreach (var item in _colorSplit)
+                            {
+                                lstColor.Add(item);
+                            }
+                        }
+                        else
+                        {
+                            lstColor.Add(Model.color);
+                        }
+                        <div>
+                            <lable style="float: left; margin-right: 10px;">Màu:</lable>
+                            <div>
+                                <select id="selectColor" style="height: 31px; padding-left: 10px; min-width: 100px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px;">
+                                    @foreach (var item in lstColor)
+                                    {
+                                        <option value="@item">@item</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    }
+
+                    @*  <p data-v-f7970b56="">@Model.short_desc</p>*@
+                    <div data-v-f7970b56="" class="row mt-4">
+                        <div data-v-f7970b56="" class="w-100"></div>
+                        <div data-v-f7970b56="" class="input-group col-md-6 d-flex mb-3">
+                            <span data-v-f7970b56="" class="input-group-btn mr-2">
+                                <button data-v-f7970b56="" type="button" data-type="minus" data-field="" class="quantity-left-minus minus btn">
+                                    <i data-v-f7970b56="" class="ion-ios-remove"></i>
+                                </button>
+                            </span>
+                            <input data-v-f7970b56="" type="number" min="1" value="1" id="quantity" class="form-control input-number" oninput="this.value = !!this.value && Math.abs(this.value) >= 1 ? Math.abs(this.value) : 1" style="min-width: 100px; padding: 0px 10px; flex: unset;">
+                            <span data-v-f7970b56="" class="input-group-btn ml-2">
+                                <button data-v-f7970b56="" type="button" data-type="plus" class="quantity-right-plus btn plus">
+                                    <i data-v-f7970b56="" class="ion-ios-add"></i>
+                                </button>
+                            </span>
+                        </div>
+                        @* <div data-v-f7970b56="" class="w-100"></div>
+                        <div data-v-f7970b56="" class="col-md-12">
+                        <button data-v-f7970b56="" class="btn mr-2 select-color active" style="display: none;">
+                        null
+                        </button>
+                        </div>*@
+                        @if (Model.quantity > 0)
+                        {
+                            <div data-v-f7970b56="" class="col-md-12">
+                                <p data-v-f7970b56="" style="color: rgb(0, 0, 0);">Còn @Model.quantity sản phẩm</p>
+                            </div>
+                        }
+
+                    </div>
+                    @if (!string.IsNullOrEmpty(Model.endow))
+                    {
+                        <div data-v-f7970b56="" class="row mb-4">
+                            <div data-v-f7970b56="" class="col-md-12">
+                                <div data-v-f7970b56="" class="card">
+                                    <h5 data-v-f7970b56="" class="card-header endow">Ưu đãi</h5>
+                                    <div data-v-f7970b56="" class="card-body">
+                                        <p data-v-f7970b56="">@Model.endow</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <div data-v-f7970b56="" class="row">
+                        <div data-v-f7970b56="" class="col-md-12">
+                            <p data-v-f7970b56="">
+                                <a data-v-f7970b56="" href="javascript:void(0)" class="btn btn-black py-3 px-5 btn-block btn-add-cart">
+                                    Thêm vào giỏ <i data-v-f7970b56="" class="ion-ios-add ml-1"></i>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section data-v-f7970b56="" class="ftco-section ftco-degree-bg" style="padding-top:0px;padding-bottom: 0px;">
+        <div data-v-f7970b56="" class="container">
+            <div data-v-f7970b56="" class="row">
+                <div data-v-f7970b56="" class="col-lg-7 custom-description">
+                    <h2 data-v-f7970b56="" class="mb-3">Mô tả sản phẩm</h2>
+                    @Html.Raw(Model.description)
+                    @* <p data-v-f7970b56="">
+                    <p>With a 5K (5120 x 2880) screen resolution, this iMac provides one billion colors and 500 nits of brightness. The Retina 5K display also features the wider P3 color gamut, which provides a larger color space that shifts away from standard white LEDs to red-green phosphor LEDs that more equally represent red, green, and blue. And with more available colors, the images will appear more vivid and reveal greater detail, with more balance and precision. The display is further enhanced by True Tone technology for a more natural viewing experience</p>
+                    <p>The iMac’s processor has been upgraded and now houses an 10th Gen 3.8 GHz Intel Core i7 8-Core processor that can be overclocked up to 5.0 GHz, as well as 8GB of 2666 MHz DDR4 RAM in a 2 x 4GB configuration that can be upgraded to 128GB by using an 32GB module in each of the four SO-DIMM slots. Visuals are powered by a dedicated AMD Radeon Pro 5500 XT graphics card with 8GB of GDDR6 video memory, and for storage, there is a 512GB PCIe SSD.</p>
+                    <p><img alt="" src="../../../../public/images/product/desc/iMac_2020_new_1.jpg_1576962810.jpg" style="height:100%; width:100%"></p>
+                    </p>*@
+                </div>
+                <div data-v-f7970b56="" class="col-lg-5 sidebar">
+                    @if (!string.IsNullOrEmpty(Model.specifications))
+                    {
+                        <div data-v-f7970b56="" class="sidebar-box box-specifications" style="margin-bottom:0px">
+                            <h3 data-v-f7970b56="" class="heading" style="background-color: rgb(0, 0, 0); padding: 1vh; color: rgb(255, 255, 255);margin-bottom: 0px;padding: 10px 10px;">Thông số kỹ thuật</h3>
+                            @Html.Raw(Model.specifications)
+                        </div>
+                    }
+
+
+                    @await Component.InvokeAsync("ProductsLikeComponent", new{categoryId=Model.category_id})
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @await Component.InvokeAsync("RelatedProductsComponent",new {categoryId= Model.category_id,productId=Model.id})
+    @*<section data-v-f7970b56="" class="ftco-section bg-light">
+    <div data-v-f7970b56="" class="container">
+    <div data-v-f7970b56="" class="row justify-content-center mb-3 pb-3">
+    <div data-v-f7970b56="" class="col-md-12 heading-section text-center">
+    <h2 data-v-f7970b56="" class="mb-4">Sản phẩm liên quan</h2>
+    </div>
+    </div>
+    </div>
+    <div data-v-f7970b56="" class="container">
+    <div data-v-f7970b56="" class="cards"></div>
+    </div>
+    </section>*@
+</div>
+<div id="categoryModal" tabindex="-1" role="dialog" aria-labelledby="categoryModalTitle" class="modal fade" aria-modal="true">
+    <div role="document" class="modal-dialog">
+        <form id="form-submit" action="#">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h5 id="titleModal" class="modal-title white ">Vui lòng đăng nhập</h5>
+                    <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <a href="/dang-nhap" class="btn btn-primary me-1 mb-1 btn-submit-format">Đăng nhập</a>
+                    <a href="#" class="btn btn-primary me-1 mb-1 btn-submit-format" data-dismiss="modal">Hủy</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="CartsModal" tabindex="-1" role="dialog" aria-labelledby="categoryModalTitle" class="modal fade" aria-modal="true">
+    <div role="document" class="modal-dialog">
+        <form id="form-submit" action="#">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h5 id="titleModal" class="modal-title white ">Thêm vào giỏ hàng thành công</h5>
+                    <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    @*<a href="/dang-nhap" class="btn btn-primary me-1 mb-1 btn-submit-format">OK</a>*@
+                    <a href="#" class="btn btn-primary me-1 mb-1 btn-submit-format" data-dismiss="modal">OK</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".plus").click(function () {
+                var value = parseInt($("#quantity").val());
+                if (value < 9999 && value >= 1) {
+                    $("#quantity").val(value + 1);
+                }
+
+            })
+            $(".minus").click(function () {
+                var value = parseInt($("#quantity").val());
+                if (value > 1) {
+                    $("#quantity").val(value - 1);
+                }
+
+            })
+            $(".btn-add-cart").click(function () {
+                var price = parseInt($("#quantity").val()) * parseInt($(".product-price").val());
+                $.ajax({
+                    url: '/Carts/Add',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        product_id: $(".product-id").val(),
+                        quantity: $("#quantity").val(),
+                        price: price,
+                        color: $("#selectColor").val()
+                    },
+                    beforeSend: function () {
+                        // Loading('show');
+                    },
+                    complete: function () {
+                        // Loading('hiden');
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            $("#CartsModal").modal("show");
+                        }
+                        else {
+                            $("#categoryModal").modal("show");
+                        }
+                    }
+                })
+
+            })
+
+        })
+
+
+    </script>
+}

@@ -1,0 +1,44 @@
+﻿@using TECH.Areas.Admin.Models
+@using TECH.Utilities
+@model PagedResult<PostModelView>
+@{
+    Layout = null;
+}
+<style>
+    .box-detail-post img {
+        width: 100%;
+    }
+</style>
+@if (Model != null)
+{
+    @if (Model.Results != null && Model.Results.Count > 0)
+    {
+        @foreach (var item in Model.Results)
+        {
+            <div data-v-fabbb9d8="" class="col-md-12 d-flex">
+                <div data-v-fabbb9d8="" class="blog-entry align-self-stretch d-md-flex">
+                    <img data-v-fabbb9d8="" src="/product-post/@item.avatar" alt="" class="img-style block-20">
+                    <div data-v-fabbb9d8="" class="text d-block pl-md-4">
+                        <div data-v-fabbb9d8="" class="meta mb-3" style="margin-bottom: 5px !important">
+                            <div data-v-fabbb9d8=""><span data-v-fabbb9d8="">@item.created_at.Value.ToString("dd/MM/yyyy")</span></div>
+                            <div data-v-fabbb9d8=""><span data-v-fabbb9d8="">@item.author_name</span></div>
+                        </div>
+                        <h3 data-v-fabbb9d8="" class="heading">
+                            @item.title
+                        </h3>
+                        <p data-v-fabbb9d8="" class="short-content">@item.short_content</p>
+                        <p data-v-fabbb9d8=""><a data-v-fabbb9d8="" href="/chi-tiet-bai-viet/@item.id" class="btn btn-primary py-2 px-3 view-more">Xem thêm</a></p>
+                    </div>
+                </div>
+            </div>
+        }
+
+    }
+    else{
+        <p style="width: 100%; text-align: center; margin-top: 100px;">Không tìm thấy kết quả</p>
+    }
+}
+else
+{
+    <p style="width: 100%; text-align: center; margin-top: 100px;">Không tìm thấy kết quả</p>
+}

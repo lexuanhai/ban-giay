@@ -1,0 +1,60 @@
+﻿@using TECH.Areas.Admin.Models
+@using TECH.Utilities
+@model PagedResult<ProductModelView>
+@{
+    ViewData["Title"] = "ProductCategory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="ftco-section bg-light">
+    <div data-v-7b8a01fc="" class="container">
+
+
+        <div data-v-7b8a01fc="" class="row">
+            <div data-v-7b8a01fc="" class="col-md-8 col-lg-10 order-md-last">
+                @if (Model != null && Model.Results != null && Model.Results.Count() > 0)
+                {
+                    <div data-v-7b8a01fc="" class="cards">
+                        @foreach (var item in Model.Results)
+                        {
+                            string priceStr = "";
+                            @if (item.price> 0)
+                            {
+                                priceStr = item.price.Value.ToString("#,###");
+                            }
+
+                            <div class="card product">
+                                <a data-v-7b8a01fc="" href="/chi-tiet-san-pham/@item.id" class="img-prod">
+                                    <img data-v-7b8a01fc="" src="/product-image/@item.avatar" alt="Colorlib Template" class="img-fluid product-img"> <!---->
+                                    <div data-v-7b8a01fc="" class="overlay"></div>
+                                </a>
+                                <div data-v-7b8a01fc="" class="text py-3 px-3">
+                                    <h3 data-v-7b8a01fc=""><a data-v-7b8a01fc="" href="/chi-tiet-san-pham/@item.id" class="name-product">@item.name</a></h3>
+                                    <div data-v-7b8a01fc="" class="price"><span data-v-7b8a01fc="" class="mr-2 price-color">@priceStr<i data-v-7b8a01fc="">đ</i></span></div>
+                                    @*<div data-v-7b8a01fc="" class="rate">
+                            <span data-v-7b8a01fc="">
+                            5 <span data-v-7b8a01fc="" class="ion-ios-star"></span><span data-v-7b8a01fc="" class="sold">&nbsp;(2)</span>
+                            </span>
+                            </div>*@
+                                    <div data-v-7b8a01fc="" class="endow"><span data-v-7b8a01fc="" class="endow"></span></div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div data-v-7b8a01fc="" class="row mt-5">
+                        <div data-v-7b8a01fc="" class="col text-center">
+                          Không tìm thấy kết quả
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+
+            @await Component.InvokeAsync("ProductCountForCategoryIdComponent")
+
+        </div>
+    </div>
+</section>

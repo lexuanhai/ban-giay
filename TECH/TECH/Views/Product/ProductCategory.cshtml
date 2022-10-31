@@ -1,0 +1,101 @@
+﻿@using TECH.Areas.Admin.Models
+@model List<ProductModelView>
+@{
+    ViewData["Title"] = "ProductCategory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="ftco-section bg-light">
+    <div data-v-7b8a01fc="" class="container">
+        <div data-v-7b8a01fc="" class="row">
+            <div data-v-7b8a01fc="" class="col-md-8 col-lg-10 order-md-last">
+                <div data-v-7b8a01fc="" class="cards">
+                    @foreach (var item in Model)
+                    {
+                        string priceStr = "";
+                        @if (item.price > 0)
+                        {
+                            priceStr = item.price.Value.ToString("#,###");
+                        }
+                        <div class="card product">
+                            <a data-v-7b8a01fc="" href="/chi-tiet-san-pham/@item.id" class="img-prod">
+                                <img data-v-7b8a01fc="" src="/product-image/@item.avatar" alt="Colorlib Template" class="img-fluid product-img"> <!---->
+                                <div data-v-7b8a01fc="" class="overlay"></div>
+                            </a>
+                            <div data-v-7b8a01fc="" class="text py-3 px-3">
+                                <h3 data-v-7b8a01fc=""><a data-v-7b8a01fc="" href="/chi-tiet-san-pham/@item.id" class="name-product">@item.name</a></h3>
+                                <div data-v-7b8a01fc="" class="price"><span data-v-7b8a01fc="" class="mr-2 price-color">@priceStr<i data-v-7b8a01fc="">đ</i></span></div>
+                                @if (item.ProductViews != null)
+                                {
+                                    <div data-v-7b8a01fc="" class="rate">
+                                        <span data-v-7b8a01fc="">
+                                            @item.ProductViews.star  <span data-v-7b8a01fc="" class="ion-ios-star"></span><span data-v-7b8a01fc="" class="sold">&nbsp;(@item.ProductViews.review_count)</span>
+                                        </span>
+                                    </div>
+                                    <div data-v-7b8a01fc="" class="endow"><span data-v-7b8a01fc="" class="endow"></span></div>
+                                }
+                               
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div data-v-7b8a01fc="" class="row mt-5">
+                    <div data-v-7b8a01fc="" class="col text-center">
+                        <!---->
+                    </div>
+                </div>
+            </div>
+
+            @await Component.InvokeAsync("ProductCountForCategoryIdComponent")
+
+            @*  <div data-v-7b8a01fc="" class="col-md-4 col-lg-2 sidebar">
+            <div data-v-7b8a01fc="" class="sidebar-box-2">
+            <h2 data-v-7b8a01fc="" class="heading mb-4"><a data-v-7b8a01fc="" href="#">Danh mục</a></h2>
+            <ul data-v-7b8a01fc="" class="categories">
+            <li data-v-7b8a01fc="">
+            <a data-v-7b8a01fc="" href="airpod">
+            <h6 data-v-7b8a01fc="">
+            AirPod <span data-v-7b8a01fc="">(1)</span>
+            </h6>
+            </a>
+            </li>
+            <li data-v-7b8a01fc="">
+            <a data-v-7b8a01fc="" href="apple-watch">
+            <h6 data-v-7b8a01fc="">
+            Apple Watch <span data-v-7b8a01fc="">(1)</span>
+            </h6>
+            </a>
+            </li>
+            <li data-v-7b8a01fc="">
+            <a data-v-7b8a01fc="" href="imac">
+            <h6 data-v-7b8a01fc="">
+            Imac <span data-v-7b8a01fc="">(1)</span>
+            </h6>
+            </a>
+            </li>
+            <li data-v-7b8a01fc="">
+            <a data-v-7b8a01fc="" href="ipad">
+            <h6 data-v-7b8a01fc="">
+            Ipad <span data-v-7b8a01fc="">(1)</span>
+            </h6>
+            </a>
+            </li>
+            <li data-v-7b8a01fc="">
+            <a data-v-7b8a01fc="" href="iphone">
+            <h6 data-v-7b8a01fc="">
+            Iphone <span data-v-7b8a01fc="">(4)</span>
+            </h6>
+            </a>
+            </li>
+            <li data-v-7b8a01fc="">
+            <a data-v-7b8a01fc="" href="khac">
+            <h6 data-v-7b8a01fc="">
+            Khác <span data-v-7b8a01fc="">(3)</span>
+            </h6>
+            </a>
+            </li>
+            </ul>
+            </div>
+            </div>*@
+        </div>
+    </div>
+</section>

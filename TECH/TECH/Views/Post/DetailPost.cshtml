@@ -1,0 +1,128 @@
+﻿@using TECH.Areas.Admin.Models
+@using TECH.Utilities
+@model PostModelView
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .box-detail-post img{
+        width: 100%;
+    }
+</style>
+@if (Model != null)
+{
+    <section class="ftco-section ftco-degree-bg box-detail-post">
+   <div data-v-77c39cb3="" class="container">
+      <div data-v-77c39cb3="" class="row">
+         <div data-v-77c39cb3="" class="col-lg-8">
+            <h2 data-v-77c39cb3="" class="mb-3">@Model.title</h2>
+            @Html.Raw(Model.content)
+           @* <p data-v-77c39cb3="">
+            <p>Theo&nbsp;<em>PhoneArena,</em>&nbsp;iOS 16 đã bắt đầu được Apple thử nghiệm giới hạn trên một số thiết bị từ đầu tháng. Mốc này chậm hơn iOS 15 vốn được thử nghiệm từ giữa tháng 3/2021 và muộn hơn các phiên bản trước đó thường bắt đầu từ tháng một.</p>
+            <p>Apple nhiều khả năng sẽ giới thiệu iOS 16 và bản beta đầu tiên tại WWDC 2022 tháng 6 tới trước khi cho tải về bản chính thức vào tháng 9. Hãng dự kiến phải thay đổi một số thành phần trong giao diện, hệ thống biểu tượng của iOS 16 để phù hợp với dòng iPhone 14 sắp ra mắt. Loạt sản phẩm mới được cho là sẽ dùng màn hình với các điểm khuyết tròn và dạng viên thuốc cho camera selfie và hệ thống nhận diện khuôn mặt Face ID.</p>
+            <p>Trước đó, iPhone 13 có màn hình mới giảm diện tích vùng khuyết so với iPhone 12 nhưng hệ điều hành iOS 15 gần như không điều chỉnh về cách bố trí giao diện ở khu vực này. Các thay đổi lớn của phiên bản này tập trung nhiều vào cải thiện tính năng bảo vệ quyền riêng tư người dùng, mục thông báo...</p>
+            <p>Cuối tuần trước, bản cập nhật iOS 15.4.1 được phát hành để sửa lỗi hao pin của iOS 15.4. iOS 15 có nhiều thay đổi về giao diện nhưng cũng là phiên bản có khá nhiều lỗi như không thể mở khóa iPhone bằng Apple Watch, thông báo bộ nhớ bị đầy hay tự xóa ảnh đã lưu...</p>
+            </p>*@
+         </div>
+         <div data-v-77c39cb3="" class="col-lg-4 sidebar">
+
+              @await Component.InvokeAsync("ProductCountForCategoryIdPostComponent")
+              @await Component.InvokeAsync("RecentPostsComponent")
+
+           @* <div data-v-77c39cb3="" class="sidebar-box">
+               <h3 data-v-77c39cb3="" class="heading">Danh mục</h3>
+               <ul data-v-77c39cb3="" class="categories">
+                  <li data-v-77c39cb3="">
+                     <a data-v-77c39cb3="" href="../san-pham/airpod">
+                        <h6 data-v-77c39cb3="">
+                           AirPod <span data-v-77c39cb3="">(1)</span>
+                        </h6>
+                     </a>
+                  </li>
+                  <li data-v-77c39cb3="">
+                     <a data-v-77c39cb3="" href="../san-pham/apple-watch">
+                        <h6 data-v-77c39cb3="">
+                           Apple Watch <span data-v-77c39cb3="">(1)</span>
+                        </h6>
+                     </a>
+                  </li>
+                  <li data-v-77c39cb3="">
+                     <a data-v-77c39cb3="" href="../san-pham/imac">
+                        <h6 data-v-77c39cb3="">
+                           Imac <span data-v-77c39cb3="">(1)</span>
+                        </h6>
+                     </a>
+                  </li>
+                  <li data-v-77c39cb3="">
+                     <a data-v-77c39cb3="" href="../san-pham/ipad">
+                        <h6 data-v-77c39cb3="">
+                           Ipad <span data-v-77c39cb3="">(1)</span>
+                        </h6>
+                     </a>
+                  </li>
+                  <li data-v-77c39cb3="">
+                     <a data-v-77c39cb3="" href="../san-pham/iphone">
+                        <h6 data-v-77c39cb3="">
+                           Iphone <span data-v-77c39cb3="">(4)</span>
+                        </h6>
+                     </a>
+                  </li>
+                  <li data-v-77c39cb3="">
+                     <a data-v-77c39cb3="" href="../san-pham/khac">
+                        <h6 data-v-77c39cb3="">
+                           Khác <span data-v-77c39cb3="">(3)</span>
+                        </h6>
+                     </a>
+                  </li>
+               </ul>
+            </div>
+
+            <div data-v-77c39cb3="" class="sidebar-box">
+               <h3 data-v-77c39cb3="" class="heading">Bài viết gần đây</h3>
+               <div data-v-77c39cb3="" class="block-21 mb-4 d-flex">
+                  <a data-v-77c39cb3="" class="blog-img mr-4"><img data-v-77c39cb3="" src="../../../public/images/post/ios-16-tinh-nang-face-1.jpeg" alt="" class="img-style"></a> 
+                  <div data-v-77c39cb3="" class="text">
+                     <h3 data-v-77c39cb3="" class="heading-1"><a data-v-77c39cb3="" href="7-tinh-nang-cuc-hay-cua-ios-16-ma-apple-khong-he-nhac-den-tai-wwdc-2022">7 tính năng cực hay của iOS 16 mà Apple không hề nhắc đến tại WWDC 2022</a></h3>
+                     <div data-v-77c39cb3="" class="meta">
+                        <div data-v-77c39cb3=""><span data-v-77c39cb3="" class="icon-calendar"></span>11/06/2022</div>
+                        <div data-v-77c39cb3=""><span data-v-77c39cb3="" class="icon-person"></span> Quản trị viên</div>
+                     </div>
+                  </div>
+               </div>
+               <div data-v-77c39cb3="" class="block-21 mb-4 d-flex">
+                  <a data-v-77c39cb3="" class="blog-img mr-4"><img data-v-77c39cb3="" src="../../../public/images/post/2-1654545994-689-width740height416.jpg" alt="" class="img-style"></a> 
+                  <div data-v-77c39cb3="" class="text">
+                     <h3 data-v-77c39cb3="" class="heading-1"><a data-v-77c39cb3="" href="dem-qua-apple-da-chinh-thuc-tuyen-chien-voi-ca-mot-nganh-cong-nghiep">Đêm qua, Apple đã chính thức tuyên chiến với cả một ngành công nghiệp</a></h3>
+                     <div data-v-77c39cb3="" class="meta">
+                        <div data-v-77c39cb3=""><span data-v-77c39cb3="" class="icon-calendar"></span>09/06/2022</div>
+                        <div data-v-77c39cb3=""><span data-v-77c39cb3="" class="icon-person"></span> Quản trị viên</div>
+                     </div>
+                  </div>
+               </div>
+               <div data-v-77c39cb3="" class="block-21 mb-4 d-flex">
+                  <a data-v-77c39cb3="" class="blog-img mr-4"><img data-v-77c39cb3="" src="../../../public/images/post/Apple-WWDC22-iOS16-3up-hero-22-6339-2574-1654540923.jpg" alt="" class="img-style"></a> 
+                  <div data-v-77c39cb3="" class="text">
+                     <h3 data-v-77c39cb3="" class="heading-1"><a data-v-77c39cb3="" href="sung-so-truoc-buc-thu-chieu-mo-nhan-tai-cua-steve-jobs-khong-chuc-danh-khong-trien-vong-nhung-khien-doi-phuong-tiec-nuoi-ca-doi">Sững sờ trước bức thư chiêu mộ nhân tài của Steve Jobs Không chức danh không triển vọng nhưng khiến đối phương tiếc nuối cả đời</a></h3>
+                     <div data-v-77c39cb3="" class="meta">
+                        <div data-v-77c39cb3=""><span data-v-77c39cb3="" class="icon-calendar"></span>09/06/2022</div>
+                        <div data-v-77c39cb3=""><span data-v-77c39cb3="" class="icon-person"></span> Quản trị viên</div>
+                     </div>
+                  </div>
+               </div>
+               <div data-v-77c39cb3="" class="block-21 mb-4 d-flex">
+                  <a data-v-77c39cb3="" class="blog-img mr-4"><img data-v-77c39cb3="" src="../../../public/images/post/16.jpg" alt="" class="img-style"></a> 
+                  <div data-v-77c39cb3="" class="text">
+                     <h3 data-v-77c39cb3="" class="heading-1"><a data-v-77c39cb3="" href="ios-16-trinh-lang-iphone-nao-duoc-nang-cap">iOS 16 trình làng, iPhone nào được nâng cấp?</a></h3>
+                     <div data-v-77c39cb3="" class="meta">
+                        <div data-v-77c39cb3=""><span data-v-77c39cb3="" class="icon-calendar"></span>11/06/2022</div>
+                        <div data-v-77c39cb3=""><span data-v-77c39cb3="" class="icon-person"></span> Quản trị viên</div>
+                     </div>
+                  </div>
+               </div>
+            </div>*@
+         </div>
+      </div>
+   </div>
+</section>
+}

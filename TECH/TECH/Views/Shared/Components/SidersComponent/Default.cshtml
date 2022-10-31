@@ -1,0 +1,158 @@
+﻿@using TECH.Areas.Admin.Models;
+@model List<SidersModelView>
+@if (Model != null && Model.Count() > 0)
+{
+
+
+    <style>
+        .item-img {
+            height: 100%;
+            background-position: center !important;
+            background-size: cover !important;
+            background-repeat: no-repeat !important;
+            width: 100%;
+            height: 550px;
+            border-radius: 10px;
+        }
+        .home-slider-2 .owl-nav{
+                position: absolute;
+    top: 45%;
+    width: 100%;
+    padding: 0px 14px;
+        }
+        .home-slider-2 .owl-next{
+                float: right;
+    transform: rotate(180deg);
+    display:none
+        }
+       .home-slider-2 .owl-prev{
+            outline:none;
+        }
+        .home-slider-2 .owl-dots{
+                position: absolute;
+                width: 100%;
+                      bottom: 13px;
+        }
+      .home-slider-2  .owl-dots .owl-dot.active {
+    background: #05b2e9;
+    opacity:1;
+}
+       .home-slider-2 .owl-dots .owl-dot{
+            width: 15px;
+    height: 15px;
+    background: #05b2e9;
+    opacity:0.5;
+        }
+      .home-slider-2 .owl-dots .owl-dot:after {
+                width: 18px;
+    height: 18px;
+        }
+    
+
+        .slider-item {
+            display: flex;
+            align-items: center;
+            align-content: center;
+            justify-content: center;
+            height: 550px;
+        }
+
+            .slider-item .text {
+                display: inline-flex;
+                height: 350px;
+                justify-content: right;
+                align-items: center;
+                width: 50%;
+                padding-right: 87px;
+            }
+
+        .home-slider-2 {
+            margin-top: 10px;
+        }
+
+        .slider-item .subheading {
+            color: #000000;
+            font-weight: 300;
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            display: inline-block;
+            color: #fff;
+            position: relative;
+        }
+
+        .slider-item h1 {
+            font-size: 44px;
+            color: #000000;
+            line-height: 1.3;
+            font-weight: 300;
+        }
+
+        .slider-item h3.vr {
+            text-align: right;
+            text-orientation: sideways;
+            margin: 0rem;
+            position: absolute;
+            top: 60px;
+            left: -50px;
+            height: 100%;
+            text-transform: uppercase;
+            font-weight: 300;
+            letter-spacing: 3px;
+            font-size: 12px;
+            z-index: 1;
+            color: #000000;
+            transform: rotate(180deg);
+            writing-mode: vertical-lr;
+        }
+
+        .slider-item .horizontal {
+            position: relative;
+        }
+
+        .slider-item .subheading {
+            color: #000000;
+            position: relative;
+            font-weight: 300;
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            display: inline-block;
+            position: relative;
+        }
+
+            .slider-item .subheading:after {
+                position: absolute;
+                bottom: -15px;
+                left: -45px;
+                right: 0;
+                width: 100px;
+                height: 1px;
+                background: #1a1a1a;
+                content: '';
+            }
+
+    </style>
+    <section id="home-section">
+        <div class="container">
+            <div class="home-slider-2 owl-carousel">
+                @foreach (var item in Model)
+                {
+                      <div class="slider-item">
+                    <div class="item-img" style="background:url('/product-siders/@item.image')">
+                        </div>
+                    </div>
+                }
+              
+              @*  <div class="slider-item">
+                    <div class="item-img" style="background:url('/image-side/quang-cao1.png')">
+                    </div>
+                </div>*@
+            </div>
+        </div>
+    </section>
+
+}
+
+
+

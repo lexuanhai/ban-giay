@@ -1,0 +1,145 @@
+﻿@using TECH.Areas.Admin.Models
+@using TECH.Utilities
+@model PagedResult<PostModelView>
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .blog-entry .text .heading {
+    font-size: 20px;
+    margin-bottom: 16px;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    display: -webkit-box;
+    height: 60px;
+}
+.short-content{
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    display: -webkit-box;
+    height: 80px;
+}
+.btn-search-post{
+        height: 95%;
+        width: 46px;
+        margin-top: 2px;
+        margin-right: 2px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        right: 0;
+        cursor: pointer;
+        background: #fff;
+        /* border: 1px solid #ddd; */
+        border-left: unset;
+        position: absolute;
+}
+</style>
+<section class="ftco-section ftco-degree-bg">
+    <div data-v-638ed844="">
+        <div data-v-638ed844="">
+            <div data-v-fabbb9d8="" data-v-638ed844="" class="container">
+                <div data-v-fabbb9d8="" class="row">
+                    <div data-v-fabbb9d8="" class="col-lg-8">
+                        <div data-v-fabbb9d8="" class="row box-details">
+                            @if (Model.Results != null && Model.Results.Count > 0)
+                            {
+                                @foreach (var item in Model.Results)
+                                {
+                                    <div data-v-fabbb9d8="" class="col-md-12 d-flex">
+                                    <div data-v-fabbb9d8="" class="blog-entry align-self-stretch d-md-flex">
+                                        <img data-v-fabbb9d8="" src="/product-post/@item.avatar" alt="" class="img-style block-20">
+                                        <div data-v-fabbb9d8="" class="text d-block pl-md-4">
+                                            <div data-v-fabbb9d8="" class="meta mb-3" style="margin-bottom: 5px !important">
+                                                <div data-v-fabbb9d8=""><span data-v-fabbb9d8="">@item.created_at.Value.ToString("dd/MM/yyyy")</span></div>
+                                                <div data-v-fabbb9d8=""><span data-v-fabbb9d8="">@item.author_name</span></div>
+                                            </div>
+                                            <h3 data-v-fabbb9d8="" class="heading">
+                                                @item.title
+                                            </h3>
+                                            <p data-v-fabbb9d8="" class="short-content">@item.short_content</p>
+                                            <p data-v-fabbb9d8=""><a data-v-fabbb9d8="" href="/chi-tiet-bai-viet/@item.id" class="btn btn-primary py-2 px-3 view-more">Xem thêm</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                }
+                                
+                            }
+
+                           
+                        </div>
+                      
+                    </div>
+                    
+                    <div data-v-fabbb9d8="" class="col-lg-4 sidebar">
+                        <div data-v-fabbb9d8="" class="sidebar-box" style="margin-bottom:0px;padding-bottom:0px;">
+                           
+                                <div data-v-fabbb9d8="" class="form-group" style="position: relative;">
+                                    <span data-v-fabbb9d8="" class="icon ion-ios-search btn-search-post"></span> 
+                                    <input data-v-fabbb9d8="" type="text" placeholder="Nhập từ khoá để tìm kiếm" class="form-control text-search-post"></div>
+                           
+                        </div>
+                     @*  @await Component.InvokeAsync("ProductCountForCategoryIdPostComponent")*@
+                       @await Component.InvokeAsync("RecentPostsComponent")
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+                                        
+@section Scripts{
+        <script type="text/javascript">
+    $(document).ready(function () {
+         $(".btn-search-post").click(function(){
+                var textSearch = $(".text-search-post").val();
+                if(textSearch != ""){
+                    PostSearch(textSearch);
+                }
+                
+               // Search(textSearch);
+            })
+            $(".text-search-post").keypress(function (e) {
+              if (e.which == 13) {
+                    var textSearch = $(".text-search-post").val();
+                    if (textSearch != "") {
+                        PostSearch(textSearch);
+                    }
+                return false;    //<---- Add this line
+              }
+            });
+            
+
+
+    })
+     function PostSearch(textSearch) {
+            $.ajax({
+                url: '/Post/PostSearch',
+                type: 'GET',
+                dataType: "html",
+                data: {
+                    textSearch: textSearch
+                },
+                beforeSend: function () {
+                    // Loading('show');
+                },
+                complete: function () {
+                    // Loading('hiden');
+                },
+                success: function (response) {
+                    $(".box-details").html(response);
+                    //$("#ReviewModal").modal("show");
+
+                }
+            })
+
+        }
+
+
+</script>
+}

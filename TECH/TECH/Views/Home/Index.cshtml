@@ -1,0 +1,407 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*
+  <style>
+                        .item-img {
+                            height: 100%;
+                            background-position: center !important;
+                            background-size: cover !important;
+                            background-repeat: no-repeat !important;
+                            width: 100%;
+                             height: 550px;
+                                 border-radius: 10px;
+                        }
+                        .slider-item{
+                            display: flex;
+                align-items: center;
+                align-content: center;
+                justify-content: center;
+                height: 550px;
+                        }
+                       .slider-item .text{
+                               display: inline-flex;
+    height: 350px;
+    justify-content: right;
+    align-items: center;
+    width: 50%;
+    padding-right: 87px;
+                       }
+                        .home-slider-2{
+                            margin-top: 10px;
+                        }
+                         .slider-item .subheading {
+                color: #000000;
+                font-weight: 300;
+                font-size: 12px;
+                letter-spacing: 4px;
+                text-transform: uppercase;
+                display: inline-block;
+                color: #fff;
+                    position: relative;
+            }
+
+            .slider-item h1 {
+                font-size: 44px;
+                color: #000000;
+                line-height: 1.3;
+                font-weight: 300;
+            }
+            .slider-item h3.vr{
+                    text-align: right;
+                text-orientation: sideways;
+                margin: 0rem;
+                position: absolute;
+                top: 60px;
+                left: -50px;
+                height: 100%;
+                text-transform: uppercase;
+                font-weight: 300;
+                letter-spacing: 3px;
+                font-size: 12px;
+                z-index: 1;
+                color: #000000;
+                    transform: rotate(180deg);
+                        writing-mode: vertical-lr;
+            }
+            .slider-item .horizontal{
+                   position: relative;
+            }
+            .slider-item .subheading {
+                color: #000000;
+                position: relative;
+                font-weight: 300;
+                font-size: 12px;
+                letter-spacing: 4px;
+                text-transform: uppercase;
+                display: inline-block;
+                position: relative;
+            }
+           .slider-item .subheading:after {
+                position: absolute;
+                bottom: -15px;
+                left: -45px;
+                right: 0;
+                width: 100px;
+                height: 1px;
+                background: #1a1a1a;
+                content: '';
+            }
+
+        </style>
+        <section id="home-section">
+            <div class="container">
+            <div class="home-slider-2 owl-carousel">
+                <div class="slider-item">                  
+                    <div class="item-img" style="background:url('/image-side/quang-cao1.png')">
+                    </div>
+                </div>
+                 <div class="slider-item">                
+                    <div class="item-img" style="background:url('/image-side/quang-cao1.png')">
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>*@
+@await Component.InvokeAsync("SidersComponent")
+
+<section class="ftco-section ftco-no-pb ftco-no-pt bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 py-5 wrap-about pb-md-5 ">
+                <div class="heading-section-bold mb-4 mt-md-5">
+                    <div class="ml-md-0">
+                        <h2 class="mb-4" style="text-align: center;">TẬN TÂM TRONG TỪNG SẢN PHẨM</h2>
+                        <h3 class="mb-4" style="text-align: center;">CÁC DỊCH VỤ CHỈ CÓ BÊN HIẾU T<i class="icon icon-apple"></i>O !</h3>
+                    </div>
+                </div>
+                <div class="pb-md-5">
+                    <div class="cards-service ftco-services">
+                        <div class="text-center d-flex align-self-stretch card" style="border: 2px solid rgb(222, 226, 230); margin-left: 10px; margin-right: 10px; padding: 5px;">
+                            <div class="media block-6 services">
+                                <div class="icon d-flex justify-content-center align-items-center mb-4">
+                                    <div style="height: 80px; width: 80px; background-color: rgba(255, 76, 76, 0.1); margin-top: 20px; border-radius: 20px; display: flex; align-items: center;"><span class="icon icon-exchange" style="color: rgb(255, 76, 76); font-size: 50px;"></span></div>
+                                </div>
+                                <div class="media-body">
+                                    <h3 class="heading"><b>Thu Cũ Đổi Mới</b></h3>
+                                    <p>Dịch vụ thu cũ đổi mới hiện đang chỉ áp dụng đối với các sản phẩm đến từ Apple.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center d-flex align-self-stretch card" style="border: 2px solid rgb(222, 226, 230); margin-left: 10px; margin-right: 10px; padding: 5px;">
+                            <div class="media block-6 services">
+                                <div class="icon d-flex justify-content-center align-items-center mb-4">
+                                    <div style="height: 80px; width: 80px; background-color: rgba(0, 153, 229, 0.1); margin-top: 20px; border-radius: 20px; display: flex; align-items: center;"><span class="icon icon-mobile-phone" style="color: rgb(0, 153, 229); font-size: 50px;"></span></div>
+                                </div>
+                                <div class="media-body">
+                                    <h3 class="heading"><b>Thay Màn Hình</b></h3>
+                                    <p>Dịch vụ thay màn hình, ép kính cho tất cả các dòng điện thoại hiện nay.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center d-flex align-self-stretch card" style="border: 2px solid rgb(222, 226, 230); margin-left: 10px; margin-right: 10px; padding: 5px;">
+                            <div class="media block-6 services">
+                                <div class="icon d-flex justify-content-center align-items-center mb-4">
+                                    <div style="height: 80px; width: 80px; background-color: rgba(255, 221, 0, 0.1); margin-top: 20px; border-radius: 20px; display: flex; align-items: center;"><span class="icon icon-hdd-o" style="color: rgb(255, 221, 0); font-size: 50px;"></span></div>
+                                </div>
+                                <div class="media-body">
+                                    <h3 class="heading"><b>Phụ Kiện Theo Máy</b></h3>
+                                    <p>Chuyên bán các phụ kiện đi kèm theo máy hiện nay: Case airPod, ốp lưng,...</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center d-flex align-self-stretch card" style="border: 2px solid rgb(222, 226, 230); margin-left: 10px; margin-right: 10px; padding: 5px;">
+                            <div class="media block-6 services">
+                                <div class="icon d-flex justify-content-center align-items-center mb-4">
+                                    <div style="height: 80px; width: 80px; background-color: rgba(10, 191, 83, 0.1); margin-top: 20px; border-radius: 20px; display: flex; align-items: center;"><span class="icon icon-gear" style="color: rgb(10, 191, 83); font-size: 50px;"></span></div>
+                                </div>
+                                <div class="media-body">
+                                    <h3 class="heading"><b>Sửa chữa &amp; Bảo Hành</b></h3>
+                                    <p>Kiểm tra tình trạng điện thoại, sửa chữa, bảo hành khi mua các sản phẩm.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@await Component.InvokeAsync("ProductAllComponent", new {differentiate = 0})
+
+
+
+<div data-v-52f78a14="">
+    <section data-v-52f78a14="" class="ftco-section ftco-choose ftco-no-pb ftco-no-pt bg-light">
+        <div data-v-52f78a14="" class="container">
+            <div data-v-52f78a14="" class="row">
+                <div data-v-52f78a14="" class="col-md-8 d-flex align-items-stretch"><img data-v-52f78a14="" src="/web/275463435_284222247191559_6329327769420854926_n.jpg" class="img"></div>
+                <div data-v-52f78a14="" class="col-md-4 py-md-5">
+                    <div data-v-52f78a14="" class="text py-3 py-md-5" style="background-color: rgb(255, 255, 255); border-radius: 40px; padding: 3vw; opacity: 0.9;">
+                        <h2 data-v-52f78a14="" class="mb-4"><b data-v-52f78a14="">Apple iPhone 13</b></h2>
+                        <p data-v-52f78a14="">
+                            Thiết kế các nút bấm trên cả hai mẫu điện thoại không có nhiều khác biệt với nút gạt rung, tăng giảm âm lượng bên cạnh trái. Vị trí jack cắm tai nghe, loa ngoài cũng không có nhiều khác biệt.
+                        </p>
+                        <p data-v-52f78a14=""><a data-v-52f78a14="" href="/chi-tiet-san-pham/18" class="btn btn-white px-4 py-3" style="background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);">Mua ngay</a></p>
+                    </div>
+                </div>
+            </div>
+
+             <div data-v-52f78a14="" class="row">
+                <div data-v-52f78a14="" class="col-md-5 order-md-last d-flex align-items-stretch"><img data-v-52f78a14="" src="public/images/product/product_avatarcdc0d6e63aa8e41c89689f54970bb35f62a30616a5e06.png" alt="" class="img img-2"></div>
+                <div data-v-52f78a14="" class="col-md-7 py-3 py-md-5">
+                    <div data-v-52f78a14="" class="text text-2 py-md-5">
+                        <h2 data-v-52f78a14="" class="mb-4">Macbook M2 2022</h2>
+                        <p data-v-52f78a14="">
+                            Apple đã thúc đẩy phạm vi hiệu năng xử lý và độ mỏng nhẹ máy tính xách tay của mình vào năm 2020 bằng cách giới thiệu MacBook Air M1
+                        </p>
+                        <p data-v-52f78a14=""><a data-v-52f78a14="" href="/chi-tiet-san-pham/32" class="btn btn-white px-4 py-3" style="background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);">Mua ngay</a></p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+</div>
+@await Component.InvokeAsync("SellingProductsComponent")
+@await Component.InvokeAsync("AdvertisementComponent")
+@await Component.InvokeAsync("ReviewSidersComponent")
+@*
+<style>
+    .reivews .item .line{
+            position: relative;
+            border-left: 1px solid #e6e6e6;
+    }
+    .reivews .item .line:after{
+        position: absolute;
+    top: 50%;
+    left: -2px;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    content: '';
+    width: 3px;
+    height: 30px;
+    background: #ffa45c;
+    }
+    .reivews .item img{
+            border-radius: 100%;
+            height: 10vh;
+    }
+    .bi {
+    width: 1rem;
+    height: 1rem;
+}
+.star-color {
+    color: #fcc72a;
+    font-size: 21px;
+}
+.reivews .item{
+    width:300px;
+}
+.reivews .item .name{
+        font-weight: 400;
+    font-size: 18px;
+    margin-bottom: 0;
+    color: #000000;
+}
+.reivews .box-item{
+    display:inline-block;
+    width:100%;
+}
+</style>
+<section data-v-5178a8ea="" class="ftco-section testimony-section bg-light reivews">
+   <div data-v-5178a8ea="" class="container">
+      <div data-v-5178a8ea="" class="row justify-content-center pb-3">
+         <div data-v-5178a8ea="" class="col-md-7 heading-section">
+            <h2 data-v-5178a8ea="" class="mb-4">Khách hàng nói gì về chúng tôi</h2>
+         </div>
+         <div class="box-item home-slider-reviews owl-carousel">
+             <div class="item">
+                 <p class="mb-5 pl-4 line">Tuyệt vời trong tầm giá </p>
+                 <div class="row">
+                     <div data-v-5178a8ea="" data-v-e4caeaf8="" class="col-md-4">
+                        <img data-v-5178a8ea="" data-v-e4caeaf8="" src="public/images/user/user_avatar_05f971b5ec196b8c65b75d2ef82673316291ac2ba267a.png" alt="" class="avatar-img" />
+                    </div>
+                    <div class="col-md-8">
+                        <p data-v-5178a8ea="" data-v-e4caeaf8="" class="name">Trần Tiến Đạt</p>
+                        <div>
+                            <span>&nbsp;<i class="bi bi-star-fill star-color"></i></span>
+                            <span>&nbsp;<i class="bi bi-star-fill star-color"></i></span>
+                            <span>&nbsp;<i class="bi bi-star-fill star-color"></i></span>
+                            <span>&nbsp;<i class="bi bi-star-fill star-color"></i></span>
+                            <span>&nbsp;<i class="bi bi-star-fill star-color"></i></span>
+                            <div></div>
+                        </div>
+                    </div>
+
+                 </div>
+             </div>
+                <div class="item">
+                 <p class="mb-5 pl-4 line">Tuyệt vời trong tầm giá </p>
+                 <div class="row">
+                     <div data-v-5178a8ea="" data-v-e4caeaf8="" class="col-md-4">
+                        <img data-v-5178a8ea="" data-v-e4caeaf8="" src="public/images/user/user_avatar_05f971b5ec196b8c65b75d2ef82673316291ac2ba267a.png" alt="" class="avatar-img" />
+                    </div>
+                    <div class="col-md-8">
+                        <p data-v-5178a8ea="" data-v-e4caeaf8="" class="name">Trần Tiến Đạt</p>
+                        <div>
+                            <span>&nbsp;<i class="bi bi-star-fill star-color"></i></span>
+                            <span>&nbsp;<i class="bi bi-star-fill star-color"></i></span>
+                            <span>&nbsp;<i class="bi bi-star-fill star-color"></i></span>
+                            <span>&nbsp;<i class="bi bi-star-fill star-color"></i></span>
+                            <span>&nbsp;<i class="bi bi-star-fill star-color"></i></span>
+                            <div></div>
+                        </div>
+                    </div>
+
+                 </div>
+             </div>
+                <div class="item">
+                 <p class="mb-5 pl-4 line">Tuyệt vời trong tầm giá </p>
+                 <div class="row">
+                     <div data-v-5178a8ea="" data-v-e4caeaf8="" class="col-md-4">
+                        <img data-v-5178a8ea="" data-v-e4caeaf8="" src="public/images/user/user_avatar_05f971b5ec196b8c65b75d2ef82673316291ac2ba267a.png" alt="" class="avatar-img" />
+                    </div>
+                    <div class="col-md-8">
+                        <p data-v-5178a8ea="" data-v-e4caeaf8="" class="name">Trần Tiến Đạt</p>
+                        <div>
+                            <span>&nbsp;<i class="bi bi-star-fill star-color"></i></span>
+                            <span>&nbsp;<i class="bi bi-star-fill star-color"></i></span>
+                            <span>&nbsp;<i class="bi bi-star-fill star-color"></i></span>
+                            <span>&nbsp;<i class="bi bi-star-fill star-color"></i></span>
+                            <span>&nbsp;<i class="bi bi-star-fill star-color"></i></span>
+                            <div></div>
+                        </div>
+                    </div>
+
+                 </div>
+             </div>
+                <div class="item">
+                 <p class="mb-5 pl-4 line">Tuyệt vời trong tầm giá </p>
+                 <div class="row">
+                     <div data-v-5178a8ea="" data-v-e4caeaf8="" class="col-md-4">
+                        <img data-v-5178a8ea="" data-v-e4caeaf8="" src="public/images/user/user_avatar_05f971b5ec196b8c65b75d2ef82673316291ac2ba267a.png" alt="" class="avatar-img" />
+                    </div>
+                    <div class="col-md-8">
+                        <p data-v-5178a8ea="" data-v-e4caeaf8="" class="name">Trần Tiến Đạt</p>
+                        <div>
+                            <span>&nbsp;<i class="bi bi-star-fill star-color"></i></span>
+                            <span>&nbsp;<i class="bi bi-star-fill star-color"></i></span>
+                            <span>&nbsp;<i class="bi bi-star-fill star-color"></i></span>
+                            <span>&nbsp;<i class="bi bi-star-fill star-color"></i></span>
+                            <span>&nbsp;<i class="bi bi-star-fill star-color"></i></span>
+                            <div></div>
+                        </div>
+                    </div>
+
+                 </div>
+             </div>
+
+              <div class="item">
+                 <p class="mb-5 pl-4 line">Tuyệt vời trong tầm giá </p>
+                 <div class="row">
+                     <div data-v-5178a8ea="" data-v-e4caeaf8="" class="col-md-4">
+                        <img data-v-5178a8ea="" data-v-e4caeaf8="" src="public/images/user/user_avatar_05f971b5ec196b8c65b75d2ef82673316291ac2ba267a.png" alt="" class="avatar-img" />
+                    </div>
+                    <div class="col-md-8">
+                        <p data-v-5178a8ea="" data-v-e4caeaf8="" class="name">Trần Tiến Đạt</p>
+                        <div>
+                            <span>&nbsp;<i class="bi bi-star-fill star-color"></i></span>
+                            <span>&nbsp;<i class="bi bi-star-fill star-color"></i></span>
+                            <span>&nbsp;<i class="bi bi-star-fill star-color"></i></span>
+                            <span>&nbsp;<i class="bi bi-star-fill star-color"></i></span>
+                            <span>&nbsp;<i class="bi bi-star-fill star-color"></i></span>
+                            <div></div>
+                        </div>
+                    </div>
+
+                 </div>
+             </div>
+           
+             
+         </div>
+      </div>
+      
+   </div>
+</section>
+*@
+               
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $("#CartsModalIndex").modal("show");
+
+             $('.home-slider-reviews').owlCarousel({
+                loop: true,
+                autoplay: true,
+                margin: 0,
+                
+                 autoplayTimeout: 5000,
+                 autoplaySpeed: 4000,
+                nav: false,
+                items: 4,
+                navText: false,
+                dots: true,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: 1
+                    },
+                    1000: {
+                        items: 4
+                    }
+                }
+            });
+        })
+     
+     
+    </script>
+}
