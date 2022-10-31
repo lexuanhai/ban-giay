@@ -225,69 +225,39 @@
         $(".cs-close-addedit,.btn-cancel-addedit").click(function () {
             $("#CreateEdit").css("display", "none");
         })
+        //$(".filesImages").change(function () {
+        //    var files = $(this).prop('files')[0];
 
-        
+        //    var t = files.type.split('/').pop().toLowerCase();
 
-        $(".filesImages").change(function () {
-            var files = $(this).prop('files')[0];
+        //    if (t != "jpeg" && t != "jpg" && t != "png" && t != "bmp" && t != "gif") {
+        //        alert('Vui lòng chọn một tập tin hình ảnh hợp lệ!');
+        //        //$("#avatar").val("");
+        //        return false;
+        //    }
 
-            var t = files.type.split('/').pop().toLowerCase();
+        //    if (files.size > 2048000) {
+        //        alert('Kích thước tải lên tối đa chỉ 2Mb');
+        //        //$("#avatar").val("");
+        //        return false;
+        //    }
 
-            if (t != "jpeg" && t != "jpg" && t != "png" && t != "bmp" && t != "gif") {
-                alert('Vui lòng chọn một tập tin hình ảnh hợp lệ!');
-                //$("#avatar").val("");
-                return false;
-            }
-
-            if (files.size > 2048000) {
-                alert('Kích thước tải lên tối đa chỉ 2Mb');
-                //$("#avatar").val("");
-                return false;
-            }
-
-            var img = new Image();
-            img.src = URL.createObjectURL(files);
-            img.onload = function () {
-                CheckWidthHeight(this.width, this.height);
-            }
-            var CheckWidthHeight = function (w, h) {
-                if (w <= 300 && h <= 300) {
-                    alert("Ảnh tối thiểu 300 x 300 px");
-                }
-                else {
-                    $(".box-avatar").css({ 'background': 'url(' + img.src + ')', 'display': 'block' });                   
-                    self.ProductImages = files;
-                    //console.log(self.ProductImages);
-                }
-            }
-
-        })
-
-
-        //$('.filesImages').on('change', function () {
-        //    var fileUpload = $(this).get(0);
-        //    var files = fileUpload.files;
-        //    if (files != null && files.length > 0) {
-        //        var fileExtension = ['jpeg', 'jpg', 'png'];
-        //        var html = "";
-        //        for (var i = 0; i < files.length; i++) {
-        //            if ($.inArray(files[i].type.split('/')[1].toLowerCase(), fileExtension) == -1) {
-        //                alert("Only formats are allowed : " + fileExtension.join(', '));
-        //            }
-        //            else {
-        //                console.log(files[i]);
-        //                self.FileImages.push(files[i]);
-        //                var src = URL.createObjectURL(files[i]);
-        //                html += "<div class=\"box-item-image\"> <div class=\"image-upload item-image\" style=\"background-image:url(" + src + ")\"></div><a href=\"javascript:void(0)\" class=\"item-delete\" onclick=\"DeleteImage(0,this)\">Xóa</a></div>";
-        //            }
+        //    var img = new Image();
+        //    img.src = URL.createObjectURL(files);
+        //    img.onload = function () {
+        //        CheckWidthHeight(this.width, this.height);
+        //    }
+        //    var CheckWidthHeight = function (w, h) {
+        //        if (w <= 300 && h <= 300) {
+        //            alert("Ảnh tối thiểu 300 x 300 px");
         //        }
-        //        if (html != "") {
-        //            $(".image-default").hide();
-        //            $(".box-images").append(html);
+        //        else {
+        //            $(".box-avatar").css({ 'background': 'url(' + img.src + ')', 'display': 'block' });                   
+        //            self.ProductImages = files;
         //        }
         //    }
 
-        //});
+        //})
 
 
         //$("#birthday").datepicker({
@@ -377,15 +347,13 @@
                         alert("Only formats are allowed : " + fileExtension.join(', '));
                     }
                     else {
-                        //console.log(files[i]);
-                        //self.FileImages.push(files[i]);
                         var src = URL.createObjectURL(files[i]);
-                        html += "<div class=\"box-item-image\"> <div class=\"image-upload item-image\" style=\"background-image:url(" + src + ")\"></div></div>";
+                        html += "<div class=\"box-image\" style=\"background-image:url(" + src + ")\"></div>";
                     }
                 }
                 if (html != "") {
-                    $(".image-default").hide();
-                    $(".box-images").html(html);
+                    /*$(".image-default").hide();*/
+                    $(".product-images").html(html);
                 }
             }
 

@@ -24,13 +24,18 @@
     }
 
     .box-image {
-        height: 450px;
+        width: 150px;
+        height: 120px;
+        background: url('/image-default/default.png');
         background-position: center;
         background-repeat: unset;
         background-size: cover;
         border-radius: 4px;
         margin-top: 10px;
-        display: none;
+        cursor: pointer;
+        float: left;
+    margin-right: 10px;
+        /*display: none;*/
     }
 </style>
 
@@ -206,11 +211,10 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-12 mb-2">
-                                            <div class="form-group">
-                                                <label for="email-id-vertical">Hình ảnh <span class="required">(*)</span></label>
-                                                <input type="file" id="productavatar" name="productavatar" class="form-control" multiple style="display:none"> <!----> <!---->
-                                                <div class="box-image" for="productavatar">
-                                                </div>
+                                            <div class="form-group product-images">
+                                                <label style="display: block">Hình ảnh <span class="required">(*)</span></label>
+                                                <input type="file" id="productavatar" name="productavatar" class="form-control filesImages" multiple style="display:none"> <!----> <!---->
+                                                <label class="box-image" for="productavatar"></label>                                               
                                             </div>
                                         </div>
                                     </div>

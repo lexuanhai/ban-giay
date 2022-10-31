@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "dF+8AnU1RIt0l0MX5fwUbTFO3fA4BGGml591HCNiQkCrWh0vbV04mMAmQQPeEk1tzymjSlYkJhon4Ff8LCkbGA==",
+  "dgSpecHash": "Nl11cOsDi3GEWI79076cOlIzFyqlT8Oo+SfLaTZo8dd7APn0JMjiWSbq0hQ5lSSL09GWjaMmhHAXU3M22AG0HQ==",
   "success": true,
-  "projectFilePath": "E:\\Hoc-Tap\\Website\\Ban Giay\\TECH\\TECH\\TECH.csproj",
+  "projectFilePath": "E:\\Hoc-Tap\\ban giay\\TECH\\TECH\\TECH.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\emcua\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\emcua\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
