@@ -336,28 +336,28 @@
 
         })
 
-        $('.filesImages').on('change', function () {
-            var fileUpload = $(this).get(0);
-            var files = fileUpload.files;
-            if (files != null && files.length > 0) {
-                var fileExtension = ['jpeg', 'jpg', 'png'];
-                var html = "";
-                for (var i = 0; i < files.length; i++) {
-                    if ($.inArray(files[i].type.split('/')[1].toLowerCase(), fileExtension) == -1) {
-                        alert("Only formats are allowed : " + fileExtension.join(', '));
-                    }
-                    else {
-                        var src = URL.createObjectURL(files[i]);
-                        html += "<div class=\"box-image\" style=\"background-image:url(" + src + ")\"></div>";
-                    }
-                }
-                if (html != "") {
-                    /*$(".image-default").hide();*/
-                    $(".product-images").html(html);
-                }
-            }
+        //$('.filesImages').on('change', function () {
+        //    var fileUpload = $(this).get(0);
+        //    var files = fileUpload.files;
+        //    if (files != null && files.length > 0) {
+        //        var fileExtension = ['jpeg', 'jpg', 'png'];
+        //        var html = "";
+        //        for (var i = 0; i < files.length; i++) {
+        //            if ($.inArray(files[i].type.split('/')[1].toLowerCase(), fileExtension) == -1) {
+        //                alert("Only formats are allowed : " + fileExtension.join(', '));
+        //            }
+        //            else {
+        //                var src = URL.createObjectURL(files[i]);
+        //                html += "<div class=\"box-image\" style=\"background-image:url(" + src + ")\"></div>";
+        //            }
+        //        }
+        //        if (html != "") {
+        //            /*$(".image-default").hide();*/
+        //            $(".product-images").html(html);
+        //        }
+        //    }
 
-        });
+        //});
     }
 
     self.confirmUser = function (nameUser, id) {
@@ -825,13 +825,44 @@
                     else {
                         self.ProductImages = files[i];
                         var src = URL.createObjectURL(files[i]);
-                        console.log(self.ProductImages);
-                        $(".box-image").css({ "background-image":"url('" + src + "')","display":"block" });                        
+
+                        html = "<div class=\"box-image\" style=\"background-image:url(" + src + ")\"></div>";
+
+                        $(".product-images").append(html);                
                     }
                 }
             }
 
         });
+
+        $('.filesImages').on('change', function () {
+            var fileUpload = $(this).get(0);
+            var files = fileUpload.files;
+            if (files != null && files.length > 0) {
+                var fileExtension = ['jpeg', 'jpg', 'png'];
+                var html = "";
+                for (var i = 0; i < files.length; i++) {
+                    if ($.inArray(files[i].type.split('/')[1].toLowerCase(), fileExtension) == -1) {
+                        alert("Only formats are allowed : " + fileExtension.join(', '));
+                    }
+                    else {
+                        var src = URL.createObjectURL(files[i]);
+                        html += "<div class=\"box-image\" style=\"background-image:url(" + src + ")\"></div>";
+                    }
+                }
+                if (html != "") {
+                    /*$(".image-default").hide();*/
+                    $(".product-images").html(html);
+                }
+            }
+
+        });
+
+
+
+
+
+
         $(".btn-back").click(function () {
             window.location.reload();
         })
