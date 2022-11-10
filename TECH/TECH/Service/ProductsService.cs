@@ -16,7 +16,7 @@ namespace TECH.Service
     {
         PagedResult<ProductModelView> GetAllPaging(ProductViewModelSearch ProductModelViewSearch);
         ProductModelView GetByid(int id);
-        bool Add(ProductModelView view);
+        int Add(ProductModelView view);
         bool Update(ProductModelView view);
         bool Deleted(int id);
         void Save();
@@ -57,12 +57,13 @@ namespace TECH.Service
                     id = data.id,
                     name = data.name,
                     category_id = data.category_id,
-                    //avatar = data.avatar,
-                    //slug = data.slug,
-                    //color = data.color,
-                    //price = data.price,
-                    //quantity = data.quantity,
-                    short_desc = data.short_desc,
+                    trademark = !string.IsNullOrEmpty(data.trademark) ? data.trademark : "",
+                    price_sell = data.price_sell.Value,
+                    price_import = data.price_import.Value,
+                    price_reduced = data.price_reduced.Value,
+                    //price_sell_str = data.price_sell.HasValue && data.price_sell.Value > 0 ? data.price_sell.Value.ToString("#,###") : "",
+                    //price_import_str = data.price_import.HasValue && data.price_import.Value > 0 ? data.price_import.Value.ToString("#,###") : "",
+                    //price_reduced_str = data.price_reduced.HasValue && data.price_reduced.Value > 0 ? data.price_reduced.Value.ToString("#,###") : "",
                     status = data.status,
                     description = data.description
                 };
@@ -70,7 +71,7 @@ namespace TECH.Service
             }
             return null;
         }
-        public bool Add(ProductModelView view)
+        public int Add(ProductModelView view)
         {
             try
             {
@@ -83,22 +84,23 @@ namespace TECH.Service
                         category_id = view.category_id,
                         //slug = Regex.Replace(view.name.ToLower(), @"\s+", "-"),
                         //color = view.color,
-                        price = view.price,
-                        //quantity = view.quantity,
-                        short_desc = view.short_desc,
-                        status = 0,
+                        price_sell = view.price_sell,
+                        price_import = view.price_import,
+                        price_reduced = view.price_reduced,
+                        status = view.status,
+                        trademark = view.trademark,
                         description = view.description,
                     };
                     _productsRepository.Add(products);
-
-                    return true;                    
+                    Save();
+                    return products.id;                    
                 }
             }
             catch (Exception ex)
             {
-                return false;
+                return 0;
             }
-            return false;
+            return 0;
 
         }
         public int GetCount()
@@ -130,9 +132,7 @@ namespace TECH.Service
                     //dataServer.avatar = view.avatar;
                     //dataServer.slug = Regex.Replace(view.name.ToLower(), @"\s+", "-");
                     //dataServer.color = view.color;
-                    dataServer.price = view.price;
                     //dataServer.quantity = view.quantity;
-                    dataServer.short_desc = view.short_desc;
                     dataServer.description = view.description;
                     _productsRepository.Update(dataServer);                                        
                     return true;
@@ -196,9 +196,9 @@ namespace TECH.Service
                 //avatar = p.avatar,
                 //slug = p.slug,
                 //color = p.color,
-                price = p.price,
-                //quantity = p.quantity,
-                short_desc = p.short_desc,
+                //price = p.price,
+                ////quantity = p.quantity,
+                //short_desc = p.short_desc,
                 status = p.status,
                 description = p.description
             }).Take(4).ToList();
@@ -216,9 +216,9 @@ namespace TECH.Service
                 //avatar = p.avatar,
                 //slug = p.slug,
                 //color = p.color,
-                price = p.price,
-                //quantity = p.quantity,
-                short_desc = p.short_desc,
+                //price = p.price,
+                ////quantity = p.quantity,
+                //short_desc = p.short_desc,
                 status = p.status,
                 description = p.description,
             }).ToList();
@@ -248,13 +248,11 @@ namespace TECH.Service
                     id = p.id,
                     category_id = p.category_id,                    
                     name = p.name,
-                    //avatar = p.avatar,
-                    //slug = p.slug,
-                    //color = p.color,
-                    price = p.price,
-                    //quantity = p.quantity,
-                    short_desc = p.short_desc,
                     status = p.status,
+                    trademark = p.trademark,
+                    price_sell = p.price_sell,
+                    price_import = p.price_import,
+                    price_reduced = p.price_reduced,
                     description = p.description
                 }).ToList();             
               
@@ -285,9 +283,9 @@ namespace TECH.Service
                     //avatar = p.avatar,
                     //slug = p.slug,
                     //color = p.color,
-                    price = p.price,
-                    //quantity = p.quantity,
-                    short_desc = p.short_desc,
+                    //price = p.price,
+                    ////quantity = p.quantity,
+                    //short_desc = p.short_desc,
                     status = p.status,
                     description = p.description
                 }).ToList();

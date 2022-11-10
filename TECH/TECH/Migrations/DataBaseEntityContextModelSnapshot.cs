@@ -231,7 +231,7 @@ namespace TECH.Migrations
                     b.Property<string>("alt")
                         .HasColumnType("nvarchar(400)");
 
-                    b.Property<string>("image")
+                    b.Property<string>("name")
                         .HasColumnType("varchar(200)");
 
                     b.Property<int?>("status")
@@ -433,14 +433,8 @@ namespace TECH.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
-                    b.Property<string>("avatar")
-                        .HasColumnType("varchar(200)");
-
                     b.Property<int?>("category_id")
                         .HasColumnType("int");
-
-                    b.Property<string>("color")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("description")
                         .HasColumnType("nvarchar(max)");
@@ -448,20 +442,20 @@ namespace TECH.Migrations
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<decimal?>("price")
+                    b.Property<decimal?>("price_import")
                         .HasColumnType("decimal(18,0)");
 
-                    b.Property<int>("quantity")
-                        .HasColumnType("int");
+                    b.Property<decimal?>("price_reduced")
+                        .HasColumnType("decimal(18,0)");
 
-                    b.Property<string>("short_desc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("slug")
-                        .HasColumnType("varchar(200)");
+                    b.Property<decimal?>("price_sell")
+                        .HasColumnType("decimal(18,0)");
 
                     b.Property<int?>("status")
                         .HasColumnType("int");
+
+                    b.Property<string>("trademark")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
 

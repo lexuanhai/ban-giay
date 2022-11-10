@@ -76,7 +76,10 @@
                                                 <label id="phone_number-error" class="error productname-exist" for="productname" style="display: none;">Tên sản phẩm đã tồn tại</label>
                                             </div>
                                         </div>
-                                        <div class="col-4 mb-2">
+                                      
+                                    </div>
+                                    <div class="row">
+                                          <div class="col-4 mb-2">
                                             <div class="form-group">
                                                 <label for="first-name-vertical">Danh mục sản phẩm <span class="required">(*)</span></label>
                                                 <select name="productcategoryid" id="productcategoryid" class="form-select">
@@ -108,93 +111,75 @@
                                         </div>
                                         <div class="col-4 mb-2">
                                             <div class="form-group">
-                                                <label for="validationTooltipUsername">Phân loại màu <span class="required">(*)</span></label>
-                                                <select name="producttypecolor" id="producttypecolor" class="form-select">
-                                                    <option value="">Chọn loại màu</option>
-                                                    <option value="0">Có</option>
-                                                    <option value="1">Không</option>
+                                                <label for="first-name-vertical">Thương hiệu <span class="required">(*)</span></label>
+                                                <select name="productcategoryid" id="producttrademark" class="form-select">
+                                                    <option value="" selected="selected" disabled="disabled">Chọn thương hiệu</option>
+                                                    <option value="4">
+                                                        AirPod
+                                                    </option>
                                                 </select>
+                                                <!---->
+                                            </div>
+                                        </div>
+                                           <div class="col-4 mb-2">
+                                            <div class="form-group">
+                                                <label for="first-name-vertical">Trạng thái <span class="required">(*)</span></label>
+                                                <select name="productcategoryid" id="productstatus" class="form-select">
+                                                    <option value="" selected="selected" disabled="disabled">Chọn trạng thái</option>
+                                                    <option value="1">
+                                                       Sản phẩm mới
+                                                    </option>
+                                                    <option value="16">
+                                                        Khác
+                                                    </option>
+                                                </select>
+                                                <!---->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4 mb-2">
+                                            <div class="form-group">
+                                                <label for="validationTooltipUsername">Giá tiền nhập sản phẩm <span class="required">(*)</span></label>
+                                                <div class="" style="position: relative;">
+                                                    <input type="text" placeholder="1.000" aria-describedby="validationTooltipUsernamePrepend" name="productpriceimport" id="productpriceimport" class="form-control">
+                                                    <div class=""><span style="position: absolute; top: 0; right: 0;" id="validationTooltipUsernamePrepend" class="input-group-text">đ</span></div>
+                                                </div>
+                                                <!---->
                                             </div>
                                         </div>
                                         <div class="col-4 mb-2">
                                             <div class="form-group">
-                                                <label for="validationTooltipUsername">Phân loại sản phẩm <span class="required">(*)</span></label>
-                                                <select name="productnew" id="productnew" class="form-select">
-                                                    <option value="">Chọn loại sản phẩm</option>
-                                                    <option value="0">Sản phẩm mới</option>
-                                                    <option value="1">Sản phẩm cũ</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        @*<div class="row" style="display: none;">
-                                            <div class="col-6 mb-2">
-                                                <div class="form-group">
-                                                    <label for="validationTooltipUsername">Số lượng sản phẩm <span class="required">(*)</span></label>
-                                                    <div class="">
-                                                        <input type="number" placeholder="0" id="productquantity" name="productquantity" class="form-control">
-                                                    </div>
-                                                    <!---->
+                                                <label for="validationTooltipUsername">Giá tiền bán sản phẩm <span class="required">(*)</span></label>
+                                                <div class="" style="position: relative;">
+                                                    <input type="text" placeholder="1.000" aria-describedby="validationTooltipUsernamePrepend" name="productpricesell" id="productpricesell" class="form-control">
+                                                    <div class=""><span style="position: absolute; top: 0; right: 0;" id="validationTooltipUsernamePrepend" class="input-group-text">đ</span></div>
                                                 </div>
-                                            </div>
-                                            <div class="col-6 mb-2">
-                                                <div class="form-group">
-                                                    <label for="validationTooltipUsername">Giá tiền sản phẩm <span class="required">(*)</span></label>
-                                                    <div class="">
-                                                        <input type="text" id="productprice" placeholder="1.000" aria-describedby="validationTooltipUsernamePrepend" name="productprice" class="form-control">
-                                                        <div class="input-group-prepend"><span id="validationTooltipUsernamePrepend" class="input-group-text">đ</span></div>
-                                                    </div>
-                                                    <!---->
-                                                </div>
-                                            </div>
-                                        </div>*@
-                                        <div class="row">
-                                            <div class="col-4 mb-2">
-                                                <div class="form-group">
-                                                    <label for="validationTooltipUsername">Màu sản phẩm <span class="required">(*)</span></label>
-                                                    <div class=""><input type="text" placeholder="Nhập tên màu cho sản phẩm" name="productcolor" id="productcolor" class="form-control"></div>
-                                                    <!---->
-                                                </div>
-                                            </div>
-                                            <div class="col-4 mb-2">
-                                                <div class="form-group">
-                                                    <label for="validationTooltipUsername">Số lượng sản phẩm <span class="required">(*)</span></label>
-                                                    <div class=""><input type="text" placeholder="Nhập số lượng sản phẩm" name="productquantity" id="productquantity" class="form-control"></div>
-                                                    <!---->
-                                                </div>
-                                            </div>
-                                            <div class="col-4 mb-2">
-                                                <div class="form-group">
-                                                    <label for="validationTooltipUsername">Giá tiền sản phẩm <span class="required">(*)</span></label>
-                                                    <div class="" style="position: relative;">
-                                                        <input type="text" placeholder="1.000" aria-describedby="validationTooltipUsernamePrepend" name="productprice" id="productprice" class="form-control">
-                                                        <div class=""><span style="position: absolute; top: 0; right: 0;" id="validationTooltipUsernamePrepend" class="input-group-text">đ</span></div>
-                                                    </div>
-                                                    <!---->
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 mb-2">
-                                            <div class="form-group">
-                                                <label for="email-id-vertical">Hình ảnh <span class="required">(*)</span></label>
-                                                <input type="file" id="productavatar" name="productavatar" class="form-control"> <!----> <!---->
-                                                <div class="box-image">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 mb-2">
-                                            <div class="form-group">
-                                                <label for="first-name-vertical">Thông số kỹ thuật <span class="required">(*)</span></label>
-                                                <textarea id="productspecifications" name="productspecifications" placeholder="Thông số kỹ thuật" class="form-control"></textarea>
                                                 <!---->
                                             </div>
                                         </div>
-                                        <div class="col-12 mb-2">
+                                        <div class="col-4 mb-2">
                                             <div class="form-group">
-                                                <label for="first-name-vertical">Ưu đãi</label>
-                                                <textarea id="productendow" name="productendow" placeholder="Ưu đãi cho sản phẩm này" class="form-control"></textarea>
+                                                <label for="validationTooltipUsername">Giá tiền giảm sản phẩm</label>
+                                                <div class="" style="position: relative;">
+                                                    <input type="text" placeholder="1.000" aria-describedby="validationTooltipUsernamePrepend" name="productreduced" id="productreduced" class="form-control">
+                                                    <div class=""><span style="position: absolute; top: 0; right: 0;" id="validationTooltipUsernamePrepend" class="input-group-text">đ</span></div>
+                                                </div>
                                                 <!---->
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 mb-2">
+                                            <div class="form-group product-images">
+                                                <label style="display: block">Hình ảnh <span class="required">(*)</span></label>
+                                                <input type="file" id="productimages" name="productimages" class="form-control filesImages" multiple style="display:none"> <!----> <!---->
+                                                <label class="box-image" for="productimages"></label>   
+                                                <div class="productimages"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label for="contact-info-vertical">Mô tả ngắn <span class="required">(*)</span></label>
@@ -202,6 +187,8 @@
                                                 <!---->
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label for="contact-info-vertical">Mô tả <span class="required">(*)</span></label>
@@ -211,9 +198,9 @@
                                                 <!---->
                                             </div>
                                         </div>
-                                        <div class="col-6 d-flex"><button  type="button" class="btn btn-secondary me-1 mb-1 btn-back">Quay lại</button></div>
-                                        <div class="col-6 d-flex justify-content-end">
-                                            <button type="submit" class="btn btn-primary me-1 mb-1">Cập nhật</button></div>
+                                    </div>
+                                    <div class="row">
+                                         <div class="col-12 d-flex justify-content-end"><button type="submit" class="btn btn-primary me-1 mb-1">Tạo mới</button></div>
                                     </div>
                                 </div>
                             </form>

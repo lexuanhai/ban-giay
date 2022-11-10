@@ -1,7 +1,7 @@
 ﻿(function ($) {
     var self = this;
     self.Data = [];
-    self.ProductImages = {};
+    self.ProductImages = [];
     self.IsUpdate = false;    
     self.Product = {
         id: null,
@@ -43,10 +43,18 @@
                 var item = data[i];
                 html += "<tr>";
                 html += "<td>" + (++index) + "</td>";
-                html += "<td> <img src=/product-image/" + item.avatar + " class=\"item-image\" /></td>";
+                if (item.avatar != null) {
+                    html += "<td> <img src=/product-image/" + item.avatar + " class=\"item-image\" /></td>";
+                } else {
+                    html += "<td> <img src=/image-default/default.png class=\"item-image\" /></td>";
+                }
                 html += "<td>" + item.name + "</td>";
                 html += "<td>" + item.categorystr + "</td>";
-                html += "<td>" + item.price + "</td>";            
+                html += "<td>" + item.trademark + "</td>";
+                html += "<td>" + item.price_sell_str + "</td>";
+                html += "<td>" + item.price_import_str + "</td>";
+                html += "<td>" + item.price_reduced_str + "</td>";   
+                html += "<td>" + item.price_reduced_str + "</td>";   
                 html += "<td style=\"text-align: center;\">" +
 
                     (item.status == 0 ? "<button  class=\"btn btn-dark custom-button\" onClick=UpdateStatus(" + item.id + ",1)><i class=\"bi bi-eye\"></i></button>" : "<button  class=\"btn btn-secondary custom-button\" onClick=UpdateStatus(" + item.id + ",0)><i class=\"bi bi-eye-slash\"></i></button>")  +
@@ -484,7 +492,7 @@
     }
     // Get User
    
-    self.AddUser = function (userView) {
+    self.AddProduct = function (userView) {
         $.ajax({
             url: '/Admin/Product/Add',
             type: 'POST',
@@ -500,6 +508,10 @@
             },
             success: function (response) {
                 if (response.success) {
+                    if (self.ProductImages != null && self.ProductImages != "") {
+                        self.UploadFileImageProduct(response.id);
+                    }
+
                     tedu.notify('Thêm mới dữ liệu thành công', 'success');
                     self.GetDataPaging(true);
                     window.location.href = '/admin/quan-ly-san-pham';
@@ -599,35 +611,16 @@
                 productcategoryid: {
                     required: true,
                 },
-                producttypecolor: {
+                producttrademark: {
                     required: true
                 },
-                productnew: {
+                productstatus: {
                     required: true
                 },
-                productquantity: {
+                productpricesell: {
                     required: true
                 },
-                productprice: {
-                    required: true
-                },
-                productcolor: {
-                    required: true
-                },
-                productquantity: {
-                    required: true
-                },
-                //productavatar: {
-                //    required: true
-                //},
-                productspecifications: {
-                    /*required: true,*/
-                    ckrequired: true,
-                },
-                //productendow: {
-                //    required: true
-                //},
-                productshort_desc: {
+                productpriceimport: {
                     required: true
                 },
                 productdescription: {
@@ -640,64 +633,36 @@
                 productname: {
                     required: "Bạn chưa nhập tên sản phẩm",
                 },
+                productstatus: {
+                    required: "Bạn chưa chọn trạng thái sản phẩm",
+                },
+                producttrademark: {
+                    required: "Bạn chưa nhập thương hiệu sản phẩm",
+                },
                 productcategoryid: {
                     required: "Bạn chưa chọn danh mục sản phẩm",
                 },
-                producttypecolor: {
-                    required: "Chọn màu sản phẩm"
+                productpricesell: {
+                    required: "Bạn chưa nhập giá bán sản phẩm"
                 },
-                productnew: {
-                    required: "Bạn chưa chọn loại sản phẩm"
-                },
-                productquantity: {
-                    required: "Bạn chưa nhập số sản phẩm"
-                },
-                productprice: {
-                    required: "Bạn chưa nhập giá sản phẩm"
-                },
-                productcolor: {
-                    required: "Bạn chưa nhập màu sản phẩm"
-                },
-                //productavatar: {
-                //    required: "Bạn chưa chọn ảnh sản phẩm"
-                //},
-                productspecifications: {
-                   /* required: "Bạn chưa nhập thông số kỹ thuật",*/
-                    ckrequired: "Bạn chưa nhập thông số kỹ thuật",
-                },
-                //productendow: {
-                //    required: "Bạn chưa nhập ưu đãi"
-                //},
-                productshort_desc: {
-                    required: "Bạn chưa nhập mô tả ngắn"
+                productpriceimport: {
+                    required: "Bạn chưa nhập giá nhập sản phẩm"
                 },
                 productdescription: {
                     ckrequired: "Bạn chưa nhập mô tả sản phẩm"
                 }
             },
             submitHandler: function (form) {
-                //debugger
-                //var description = CKEDITOR.instances.productdescription.getData();
-                //if (description == null || description == "" || description == undefined) {
-                //    swal("", "Vui lòng nhập mô ta chi tiết", "warning");
-                //    return;
-                //}
-                //else if (description.length < 25) {
-                //    swal("", "Mô tả tối thiểu 25 kí tự", "warning");
-                //    return;
-                //}
 
                 self.GetValue();
                 if (self.IsUpdate) {
                     self.UpdateUser(self.Product);
                 }
                 else {                    
-                    self.AddUser(self.Product);
+                    self.AddProduct(self.Product);
                 }
 
-                if (self.ProductImages != null && self.ProductImages != "") {
-                    self.UploadFileImageProduct();
-                }
+                
             }
         });
     }
@@ -706,44 +671,56 @@
         self.Product.name = $("#productname").val();
         self.Product.category_id = $("#productcategoryid").val();
         
-        if (self.ProductImages != null && self.ProductImages.name != null && self.ProductImages.name != "") {
-            self.Product.avatar = self.ProductImages.name;
-        }
-        self.Product.price = $("#productprice").val();
-        self.Product.color = $("#productcolor").val();
-        self.Product.quantity = $("#productquantity").val();
-        self.Product.short_desc = $("#productshort_desc").val();
+        //if (self.ProductImages != null && self.ProductImages.name != null && self.ProductImages.name != "") {
+        //    self.Product.avatar = self.ProductImages.name;
+        //}
+        self.Product.price_sell = $("#productpricesell").val();
+        self.Product.price_reduced = $("#productreduced").val();
+        self.Product.price_import = $("#productpriceimport").val();
+        self.Product.trademark = $("#producttrademark").val();       
+        self.Product.status = $("#productstatus").val();       
         self.Product.description = CKEDITOR.instances.productdescription.getData();
-        self.Product.specifications = CKEDITOR.instances.productspecifications.getData();  //$("#productspecifications").val();
-        self.Product.endow = $("#productendow").val();
-        self.Product.differentiate = $("#productnew").val();
     }
 
     self.RenderHtmlByObject = function (view) {
         $("#productname").val(view.name);
         $("#productcategoryid").val(view.category_id);
-        $("#productprice").val(view.price);
-        $("#productcolor").val(view.color);
-        if (view.color != null && view.color != "") {
-            $("#producttypecolor").val(0);
-        }
-        else {
-            $("#producttypecolor").val(1);
-        }
+        //$("#productprice").val(view.price);
+        //$("#productcolor").val(view.color);
+        //if (view.color != null && view.color != "") {
+        //    $("#producttypecolor").val(0);
+        //}
+        //else {
+        //    $("#producttypecolor").val(1);
+        //}
         self.Product.avatar = view.avatar;
-        $("#productnew").val(view.differentiate);
         $("#productquantity").val(view.quantity);
         $("#productshort_desc").val(view.short_desc);
+
+        $("#productpricesell").val(view.price_sell);
+        $("#productreduced").val(view.price_reduced);
+        $("#productpriceimport").val(view.price_import);
+        $("#producttrademark").val(view.trademark);
+        $("#productstatus").val(view.status);       
+
+        if (view.ImageModelView != null && view.ImageModelView.length > 0) {
+
+        }
+
         CKEDITOR.instances.productdescription.setData(view.description);
-        CKEDITOR.instances.productspecifications.setData(view.specifications);
+       /* CKEDITOR.instances.productspecifications.setData(view.specifications);*/
         /*$("#productspecifications").val(view.specifications);*/
-        $("#productendow").val(view.endow);
-        $(".box-image").css({ "background-image": "url('/product-image/" + view.avatar + "')", "display": "block" });  
+        //$("#productendow").val(view.endow);
+        //$(".box-image").css({ "background-image": "url('/product-image/" + view.avatar + "')", "display": "block" });  
     }
 
-    self.UploadFileImageProduct = function () {
+    self.UploadFileImageProduct = function (productid) {
         var dataImage = new FormData();
-        dataImage.append(0, self.ProductImages);
+        if (self.ProductImages != null && self.ProductImages) {
+            for (var i = 0; i < self.ProductImages.length; i++) {
+                dataImage.append(productid, self.ProductImages[i]);
+            }
+        }
 
         $.ajax({
             url: '/Admin/Product/UploadImageProduct',
@@ -764,6 +741,15 @@
                 //}
             }
         })
+    }
+    self.removeImage = function (nameimage,tag) {
+        if (self.ProductImages != null && self.ProductImages.length > 0) {
+            var indeximage = self.ProductImages.findIndex(p => p.name == nameimage);
+            if (indeximage >=0) {
+                self.ProductImages.splice(indeximage, 1);
+                $(tag).parent().remove();
+            }
+        }
     }
 
 
@@ -812,51 +798,54 @@
         });
 
         
-        $('#productavatar').on('change', function () {
+        $('#productimages').on('change', function () {
             var fileUpload = $(this).get(0);
             var files = fileUpload.files;
             if (files != null && files.length > 0) {
                 var fileExtension = ['jpeg', 'jpg', 'png'];
-                var html = "";
+              
                 for (var i = 0; i < files.length; i++) {
+                    var html = "";
                     if ($.inArray(files[i].type.split('/')[1].toLowerCase(), fileExtension) == -1) {
                         alert("Only formats are allowed : " + fileExtension.join(', '));
                     }
                     else {
-                        self.ProductImages = files[i];
+                        files[i].name = files[i].name.replace(/ /g, "").toLowerCase();
+                        self.ProductImages.push(files[i]);
+                        console.log(self.ProductImages);
                         var src = URL.createObjectURL(files[i]);
 
-                        html = "<div class=\"box-image\" style=\"background-image:url(" + src + ")\"></div>";
+                        html = "<div class=\"box-image\" style=\"background-image:url(" + src + ")\"><span onclick=\"removeImage('" + files[i].name +"',this)\" class='remove-image'>X</span></div>";
 
-                        $(".product-images").append(html);                
+                        $(".productimages").append(html);                
                     }
                 }
             }
 
         });
 
-        $('.filesImages').on('change', function () {
-            var fileUpload = $(this).get(0);
-            var files = fileUpload.files;
-            if (files != null && files.length > 0) {
-                var fileExtension = ['jpeg', 'jpg', 'png'];
-                var html = "";
-                for (var i = 0; i < files.length; i++) {
-                    if ($.inArray(files[i].type.split('/')[1].toLowerCase(), fileExtension) == -1) {
-                        alert("Only formats are allowed : " + fileExtension.join(', '));
-                    }
-                    else {
-                        var src = URL.createObjectURL(files[i]);
-                        html += "<div class=\"box-image\" style=\"background-image:url(" + src + ")\"></div>";
-                    }
-                }
-                if (html != "") {
-                    /*$(".image-default").hide();*/
-                    $(".product-images").html(html);
-                }
-            }
+        //$('.filesImages').on('change', function () {
+        //    var fileUpload = $(this).get(0);
+        //    var files = fileUpload.files;
+        //    if (files != null && files.length > 0) {
+        //        var fileExtension = ['jpeg', 'jpg', 'png'];
+        //        var html = "";
+        //        for (var i = 0; i < files.length; i++) {
+        //            if ($.inArray(files[i].type.split('/')[1].toLowerCase(), fileExtension) == -1) {
+        //                alert("Only formats are allowed : " + fileExtension.join(', '));
+        //            }
+        //            else {
+        //                var src = URL.createObjectURL(files[i]);
+        //                html += "<div class=\"box-image\" style=\"background-image:url(" + src + ")\"></div>";
+        //            }
+        //        }
+        //        if (html != "") {
+        //            /*$(".image-default").hide();*/
+        //            $(".product-images").html(html);
+        //        }
+        //    }
 
-        });
+        //});
 
 
 

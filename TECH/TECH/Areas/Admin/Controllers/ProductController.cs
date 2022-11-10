@@ -10,15 +10,21 @@ namespace TECH.Areas.Admin.Controllers
     public class ProductController : BaseController
     {
         private readonly IProductsService _productsService;
+        private readonly IImagesService _imagesService;
+        private readonly IProductsImagesService _productsImagesService;
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _hostingEnvironment;
         private readonly ICategoryService _categoryService;
         public ProductController(IProductsService productsService,
             Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment,
+            IImagesService imagesService,
+            IProductsImagesService productsImagesService,
             ICategoryService categoryService)
         {
             _productsService = productsService;
             _hostingEnvironment = hostingEnvironment;
             _categoryService = categoryService;
+            _imagesService = imagesService;
+            _productsImagesService = productsImagesService;
         }
         public IActionResult Index()
         {
@@ -42,6 +48,17 @@ namespace TECH.Areas.Admin.Controllers
                
                 if (model != null && !string.IsNullOrEmpty(model.name))
                 {
+
+                    var productimages = _productsImagesService.GetImageProduct(model.id);
+                    if (productimages != null && productimages.Count > 0)
+                    {
+                        var lstImages = _imagesService.GetImageName(productimages);
+                        if (lstImages != null && lstImages.Count > 0)
+                        {
+                            model.ImageModelView = lstImages;
+                        }
+                    }
+
                     if (model.category_id.HasValue && model.category_id.Value > 0)
                     {
                         var category = _categoryService.GetByid(model.category_id.Value);
@@ -150,7 +167,7 @@ namespace TECH.Areas.Admin.Controllers
                     Directory.CreateDirectory(folder);
                 }
                 var _lstImageName = new List<string>();
-
+                var productId = Convert.ToInt32(files[0].Name);
                 foreach (var itemFile in files)
                 {
                     string fileNameFormat = Regex.Replace(itemFile.FileName.ToLower(), @"\s+", "");
@@ -165,16 +182,26 @@ namespace TECH.Areas.Admin.Controllers
                         }
                     }
                 }
+                if (_lstImageName != null && _lstImageName.Count > 0)
+                {
+                    var lstImagesIds = _imagesService.Add(_lstImageName);
+                    if (lstImagesIds != null && lstImagesIds.Count > 0)
+                    {
+                        var lstProductImages = lstImagesIds.Select(p => new ProductImageModelView()
+                        {
+                            product_id = productId,
+                            images_id = p
+                        }).ToList();
+                         _productsImagesService.Add(lstProductImages);
+                        _productsImagesService.Save();
+                    }
+                }
             }
             return Json(new
             {
                 success = true
             });
         }
-
-
-
-
 
         [HttpPost]
         public JsonResult Add(ProductModelView ProductModelView)
@@ -185,23 +212,73 @@ namespace TECH.Areas.Admin.Controllers
                 isNameExist = _productsService.IsProductNameExist(ProductModelView.name);                
             }
 
-
             if (!isNameExist)
             {
                 var result = _productsService.Add(ProductModelView);
-                _productsService.Save();
-                return Json(new
-                {
-                    success = result
-                });
+                if (result > 0 )
+                {                    
+                    return Json(new
+                    {
+                        success = result,
+                        id= result
+                    });
+                }                
             }
             return Json(new
             {
                 success = false,
                 isNameExist = isNameExist
             });
-
         }
+
+
+        [HttpPost]
+        public JsonResult ImagesAdd(List<string> images)
+        {            
+            if (images != null && images.Count > 0)
+            {
+                string folder = _hostingEnvironment.WebRootPath + $@"\product-image\";
+                if (!Directory.Exists(folder))
+                {
+                    Directory.CreateDirectory(folder);
+                }
+                var listImageExist = new List<string>();
+                foreach (var item in images)
+                {
+                    string fileNameFormat = Regex.Replace(item.ToLower(), @"\s+", "");
+                    string filePath = Path.Combine(folder, fileNameFormat);
+                    if (!System.IO.File.Exists(filePath))
+                    {
+                        listImageExist.Add(item);
+                    }
+                }
+                
+                if (listImageExist != null && listImageExist.Count > 0)
+                {
+                    images = images.Where(i => !listImageExist.Exists(e => e == i)).ToList();
+                }
+                if (images != null && images.Count > 0)
+                {
+                    var listIds = _imagesService.Add(images);
+                    _imagesService.Save();
+                    if (listIds != null && listIds.Count > 0)
+                    {
+                        return Json(new
+                        {
+                            success = true,
+                            ids = listIds
+                        });
+                    }
+                }
+               
+            }
+           
+            return Json(new
+            {
+                success = false,              
+            });
+        }
+
 
         [HttpGet]
         public JsonResult UpdateStatus(int id,int status)
@@ -298,6 +375,15 @@ namespace TECH.Areas.Admin.Controllers
                 if (item.category_id.HasValue && item.category_id.Value > 0)
                 {
                     var  category = _categoryService.GetByid(item.category_id.Value);
+                    var productimages = _productsImagesService.GetImageProduct(item.id);
+                    if (productimages != null && productimages.Count > 0)
+                    {
+                       var lstImages =  _imagesService.GetImageName(productimages);
+                        if (lstImages != null && lstImages.Count > 0)
+                        {
+                            item.avatar = lstImages[0].name;
+                        }
+                    }
                     if (category != null && !string.IsNullOrEmpty(category.name))
                     {
                         item.categorystr = category.name;
@@ -312,6 +398,11 @@ namespace TECH.Areas.Admin.Controllers
                 {
                     item.categorystr = "";
                 }
+                item.trademark = !string.IsNullOrEmpty(item.trademark) ? item.trademark : "";
+                item.price_sell_str = item.price_sell.HasValue && item.price_sell.Value > 0 ? item.price_sell.Value.ToString("#,###") : "";
+                item.price_import_str = item.price_import.HasValue && item.price_import.Value > 0 ? item.price_import.Value.ToString("#,###") : "";
+                item.price_reduced_str = item.price_reduced.HasValue && item.price_reduced.Value > 0 ? item.price_reduced.Value.ToString("#,###") : "";
+                item.total_product = 10;
 
             }
             return Json(new { data = data });

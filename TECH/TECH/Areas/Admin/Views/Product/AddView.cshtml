@@ -34,8 +34,18 @@
         margin-top: 10px;
         cursor: pointer;
         float: left;
-    margin-right: 10px;
+        margin-right: 10px;
         /*display: none;*/
+    }
+    .remove-image{
+        float: right;
+        height: 20px;
+        width: 20px;
+        background: #ddd;
+        border-radius: 50%;
+        text-align: center;
+        font-size: 14px;
+        margin: 5px 5px 0px 0px;
     }
 </style>
 
@@ -119,28 +129,10 @@
                                         <div class="col-4 mb-2">
                                             <div class="form-group">
                                                 <label for="first-name-vertical">Thương hiệu <span class="required">(*)</span></label>
-                                                <select name="productcategoryid" id="productcategoryid" class="form-select">
+                                                <select name="productcategoryid" id="producttrademark" class="form-select">
                                                     <option value="" selected="selected" disabled="disabled">Chọn thương hiệu</option>
                                                     <option value="4">
                                                         AirPod
-                                                    </option>
-                                                    <option value="3">
-                                                        Apple Watch
-                                                    </option>
-                                                    <option value="6">
-                                                        Imac
-                                                    </option>
-                                                    <option value="14">
-                                                        Ipad
-                                                    </option>
-                                                    <option value="10">
-                                                        Iphone
-                                                    </option>
-                                                    <option value="5">
-                                                        Khác
-                                                    </option>
-                                                    <option value="16">
-                                                        Khăn
                                                     </option>
                                                 </select>
                                                 <!---->
@@ -149,28 +141,13 @@
                                            <div class="col-4 mb-2">
                                             <div class="form-group">
                                                 <label for="first-name-vertical">Trạng thái <span class="required">(*)</span></label>
-                                                <select name="productcategoryid" id="productcategoryid" class="form-select">
+                                                <select name="productcategoryid" id="productstatus" class="form-select">
                                                     <option value="" selected="selected" disabled="disabled">Chọn trạng thái</option>
-                                                    <option value="4">
-                                                        AirPod
-                                                    </option>
-                                                    <option value="3">
-                                                        Apple Watch
-                                                    </option>
-                                                    <option value="6">
-                                                        Imac
-                                                    </option>
-                                                    <option value="14">
-                                                        Ipad
-                                                    </option>
-                                                    <option value="10">
-                                                        Iphone
-                                                    </option>
-                                                    <option value="5">
-                                                        Khác
+                                                    <option value="1">
+                                                       Sản phẩm mới
                                                     </option>
                                                     <option value="16">
-                                                        Khăn
+                                                        Khác
                                                     </option>
                                                 </select>
                                                 <!---->
@@ -182,7 +159,7 @@
                                             <div class="form-group">
                                                 <label for="validationTooltipUsername">Giá tiền nhập sản phẩm <span class="required">(*)</span></label>
                                                 <div class="" style="position: relative;">
-                                                    <input type="text" placeholder="1.000" aria-describedby="validationTooltipUsernamePrepend" name="productprice" id="productprice" class="form-control">
+                                                    <input type="text" placeholder="1.000" aria-describedby="validationTooltipUsernamePrepend" name="productpriceimport" id="productpriceimport" class="form-control">
                                                     <div class=""><span style="position: absolute; top: 0; right: 0;" id="validationTooltipUsernamePrepend" class="input-group-text">đ</span></div>
                                                 </div>
                                                 <!---->
@@ -192,7 +169,7 @@
                                             <div class="form-group">
                                                 <label for="validationTooltipUsername">Giá tiền bán sản phẩm <span class="required">(*)</span></label>
                                                 <div class="" style="position: relative;">
-                                                    <input type="text" placeholder="1.000" aria-describedby="validationTooltipUsernamePrepend" name="productprice" id="productprice" class="form-control">
+                                                    <input type="text" placeholder="1.000" aria-describedby="validationTooltipUsernamePrepend" name="productpricesell" id="productpricesell" class="form-control">
                                                     <div class=""><span style="position: absolute; top: 0; right: 0;" id="validationTooltipUsernamePrepend" class="input-group-text">đ</span></div>
                                                 </div>
                                                 <!---->
@@ -202,7 +179,7 @@
                                             <div class="form-group">
                                                 <label for="validationTooltipUsername">Giá tiền giảm sản phẩm</label>
                                                 <div class="" style="position: relative;">
-                                                    <input type="text" placeholder="1.000" aria-describedby="validationTooltipUsernamePrepend" name="productprice" id="productprice" class="form-control">
+                                                    <input type="text" placeholder="1.000" aria-describedby="validationTooltipUsernamePrepend" name="productreduced" id="productreduced" class="form-control">
                                                     <div class=""><span style="position: absolute; top: 0; right: 0;" id="validationTooltipUsernamePrepend" class="input-group-text">đ</span></div>
                                                 </div>
                                                 <!---->
@@ -213,8 +190,9 @@
                                         <div class="col-12 mb-2">
                                             <div class="form-group product-images">
                                                 <label style="display: block">Hình ảnh <span class="required">(*)</span></label>
-                                                <input type="file" id="productavatar" name="productavatar" class="form-control filesImages" multiple style="display:none"> <!----> <!---->
-                                                <label class="box-image" for="productavatar"></label>                                               
+                                                <input type="file" id="productimages" name="productimages" class="form-control filesImages" multiple style="display:none"> <!----> <!---->
+                                                <label class="box-image" for="productimages"></label>   
+                                                <div class="productimages"></div>
                                             </div>
                                         </div>
                                     </div>

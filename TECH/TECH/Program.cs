@@ -41,7 +41,11 @@ builder.Services.AddScoped<ICartsRepository, CartsRepository>();
 builder.Services.AddScoped<IOrderDetailsRepository, OrderDetailsRepository>();
 builder.Services.AddScoped<IAdvertisementRepository, AdvertisementRepository>();
 builder.Services.AddScoped<ISidersRepository, SidersRepository>();
+builder.Services.AddScoped<IImageRepository, ImageRepository>();
+builder.Services.AddScoped<IProductsImageRepository, ProductsImageRepository>();
 
+builder.Services.AddScoped<IProductsImagesService, ProductsImagesService>();
+builder.Services.AddScoped<IImagesService, ImagesService>();
 builder.Services.AddScoped<IAppUserService, AppUserService>();
 builder.Services.AddScoped<IContractsService, ContractsService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();

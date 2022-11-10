@@ -15,25 +15,20 @@ namespace TECH.Data.DatabaseEntity
         public int? category_id { get; set; }
         [ForeignKey("category_id")]
         public Category? Category { get; set; }
-        //[Column(TypeName = "varchar(200)")]
-        //public string? slug { get; set; }
-        //[Column(TypeName = "varchar(200)")]
-        //public string? avatar { get; set; }
         [Column(TypeName = "decimal(18,0)")]
-        public decimal? price { get; set; }
+        public decimal? price_sell { get; set; }
 
         [Column(TypeName = "decimal(18,0)")]
-        public decimal? reduced_price { get; set; }
-
-        //public string? color { get; set; }
-        //public int quantity { get; set; }
-
-        [Column(TypeName = "nvarchar(max)")]
-        public string? short_desc { get; set; }
+        public decimal? price_reduced { get; set; }
+        [Column(TypeName = "decimal(18,0)")]
+        public decimal? price_import { get; set; }
 
         [Column(TypeName = "nvarchar(max)")]
-        public string? description { get; set; }
+        public string? trademark { get; set; }        
+
+        [Column(TypeName = "nvarchar(max)")]
+        public string? description { get; set; }        
         
-        public int? status { get; set; }
+        public int? status { get; set; }     
     }
 }

@@ -38,6 +38,23 @@ namespace TECH.Areas.Admin.Models
 
         public int total_product { get; set; }
         public ProductViews ProductViews { get; set; }
+
+
+        public decimal? price_sell { get; set; }
+
+        public decimal? price_reduced { get; set; }
+        public decimal? price_import { get; set; }
+
+
+        public string? price_sell_str { get; set; }
+
+        public string? price_reduced_str { get; set; }
+        public string? price_import_str { get; set; }
+
+        public List<ImageModelView> ImageModelView { get; set; }
+        public string? trademark { get; set; }
+
+
     }
     public class ProductViews
     {

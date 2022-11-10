@@ -11,7 +11,7 @@ namespace TECH.Data.DatabaseEntity
     public class Images : DomainEntity<int>
     {
         [Column(TypeName = "varchar(200)")]
-        public string? image { get; set; }
+        public string? name { get; set; }
         [Column(TypeName = "nvarchar(400)")]
         public string? alt { get; set; }
         public int? status { get; set; }
