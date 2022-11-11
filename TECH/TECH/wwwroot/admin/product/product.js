@@ -704,7 +704,13 @@
         $("#productstatus").val(view.status);       
 
         if (view.ImageModelView != null && view.ImageModelView.length > 0) {
+            for (var i = 0; i < view.ImageModelView.length; i++) {
+                var item = view.ImageModelView[i];
+                var html = "";
+                html = "<div class=\"box-image\" style=\"background-image:url(/product-image/" + item.name + ")\"><span onclick=\"removeImage('" + item.name + "',this)\" class='remove-image'>X</span></div>";
 
+                $(".productimages").append(html);     
+            }
         }
 
         CKEDITOR.instances.productdescription.setData(view.description);

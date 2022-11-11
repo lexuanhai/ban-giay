@@ -3,9 +3,10 @@
     Layout = null;
 }
 <style>
-    .required{
+    .required {
         color: #f00;
     }
+
     input.error {
         border-color: #f00 !important;
     }
@@ -21,14 +22,30 @@
         font-weight: unset !important;
         background: unset;
     }
-    .box-image{
-        height: 450px;
+
+    .box-image {
+        width: 150px;
+        height: 120px;
+        background: url('/image-default/default.png');
         background-position: center;
         background-repeat: unset;
         background-size: cover;
         border-radius: 4px;
         margin-top: 10px;
-        display: none;
+        cursor: pointer;
+        float: left;
+        margin-right: 10px;
+        /*display: none;*/
+    }
+    .remove-image{
+        float: right;
+        height: 20px;
+        width: 20px;
+        background: #ddd;
+        border-radius: 50%;
+        text-align: center;
+        font-size: 14px;
+        margin: 5px 5px 0px 0px;
     }
 </style>
 
