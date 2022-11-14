@@ -84,19 +84,8 @@
                 var item = data[i];
                 html += "<tr>";
                 html += "<td>" + (++index) + "</td>";
-                if (item.avatar != null) {
-                    html += "<td> <img src=/product-image/" + item.avatar + " class=\"item-image\" /></td>";
-                } else {
-                    html += "<td> <img src=/image-default/default.png class=\"item-image\" /></td>";
-                }
-                html += "<td>" + item.name + "</td>";
-                html += "<td>" + item.categorystr + "</td>";
-                html += "<td>" + item.trademark + "</td>";
-                html += "<td>" + item.price_sell_str + "</td>";
-                html += "<td>" + item.price_import_str + "</td>";
-                html += "<td>" + item.price_reduced_str + "</td>";
-                html += "<td>" + item.price_reduced_str + "</td>";
-                html += "<td style=\"text-align: center;\">" +
+                html += "<td>" ++"</td>";
+                
 
                     (item.status == 0 ? "<button  class=\"btn btn-dark custom-button\" onClick=UpdateStatus(" + item.id + ",1)><i class=\"bi bi-eye custom-icon\"></i></button>" : "<button  class=\"btn btn-secondary custom-button\" onClick=UpdateStatus(" + item.id + ",0)><i class=\"bi bi-eye-slash custom-icon\"></i></button>") +
                     "<button  class=\"btn btn-primary custom-button\" onClick=\"UpdateView(" + item.id + ")\"><i  class=\"bi bi-pencil-square custom-icon\"></i></button>" +
