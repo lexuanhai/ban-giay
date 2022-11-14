@@ -17,6 +17,7 @@ namespace TECH.Service
         bool Update(ImageModelView view);
         List<ImageModelView> GetImageName(List<int> imgaeId);
         bool Deleted(int id);
+        void Remove(int id);
         void Save();
     }
 
@@ -113,6 +114,21 @@ namespace TECH.Service
 
             return false;
         }
-     
+        public void Remove(int id)
+        {
+            try
+            {
+                var dataServer = _imagesRepository.FindById(id);
+                if (dataServer != null)
+                {
+                    _imagesRepository.Remove(dataServer);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
     }
 }

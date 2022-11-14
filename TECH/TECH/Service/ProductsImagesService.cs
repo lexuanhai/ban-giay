@@ -17,6 +17,7 @@ namespace TECH.Service
         bool Update(List<ProductImageModelView> view);
         List<int> GetImageProduct(int productid);
         bool Deleted(int id);
+        void Remove(List<int> ids);
         void Save();
     }
 
@@ -117,6 +118,24 @@ namespace TECH.Service
 
             return false;
         }
-     
+        public void Remove(List<int> ids)
+        {
+            try
+            {
+                var dataServer = _productsImageRepository.FindAll(p=> ids.Contains(p.image_id.Value)).ToList();
+                if (dataServer != null && dataServer.Count > 0)
+                {
+                    foreach (var item in dataServer)
+                    {
+                        _productsImageRepository.Remove(item.id);
+                    }                   
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
     }
 }

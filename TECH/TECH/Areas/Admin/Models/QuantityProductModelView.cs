@@ -13,6 +13,7 @@ namespace TECH.Areas.Admin.Models
         public int? TotalImported { get; set; }
         public int? ProductId { get; set; }
         public int? AppSizeId { get; set; }
+        public int? ColorId { get; set; }
         public int? TotalSold { get; set; }
         public int? TotalStock { get; set; }
         public DateTime? DateImport { get; set; }

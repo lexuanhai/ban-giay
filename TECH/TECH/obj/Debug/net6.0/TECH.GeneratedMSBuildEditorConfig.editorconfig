@@ -103,6 +103,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUHJvZHVjdFxVcGRhdGVWaWV3LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/Hoc-Tap/ban giay/TECH/TECH/Areas/Admin/Views/Product/_Quantity.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUHJvZHVjdFxfUXVhbnRpdHkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/Hoc-Tap/ban giay/TECH/TECH/Areas/Admin/Views/Reviews/DetailView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUmV2aWV3c1xEZXRhaWxWaWV3LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

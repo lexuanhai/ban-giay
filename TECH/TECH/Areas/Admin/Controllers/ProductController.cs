@@ -204,6 +204,39 @@ namespace TECH.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        public IActionResult RemoveImage(List<ImageModelView> images)
+        {
+            var files = Request.Form.Files;
+            if (images != null && images.Count > 0)
+            {
+                var imageFolder = $@"\product-image\";
+                string folder = _hostingEnvironment.WebRootPath + imageFolder;
+                foreach (var item in images)
+                {
+                    string fileNameFormat = Regex.Replace(item.name.ToLower(), @"\s+", "");
+                    string filePath = Path.Combine(folder, fileNameFormat);
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        System.IO.File.Delete(filePath);                       
+                    }
+                    if (item.id > 0)
+                    {
+                        _imagesService.Remove(item.id);
+                       
+                    }                                                                                 
+                }
+                _productsImagesService.Remove(images.Select(p=>p.id).ToList());
+                _productsService.Save();
+            }
+            return Json(new
+            {
+                success = true
+            });
+        }
+
+
+
+        [HttpPost]
         public JsonResult Add(ProductModelView ProductModelView)
         {            
             bool isNameExist = false;

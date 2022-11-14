@@ -49,7 +49,7 @@
     }
 </style>
 
-<div class="page-heading product-add-update">
+<div class="page-heading product-view">
     <div class="page-title">
         <div class="row">
             <div class="col-12 col-md-6 order-md-1 order-last">
@@ -143,12 +143,10 @@
                                                 <label for="first-name-vertical">Trạng thái <span class="required">(*)</span></label>
                                                 <select name="productcategoryid" id="productstatus" class="form-select">
                                                     <option value="" selected="selected" disabled="disabled">Chọn trạng thái</option>
-                                                    <option value="1">
-                                                       Sản phẩm mới
-                                                    </option>
-                                                    <option value="16">
-                                                        Khác
-                                                    </option>
+                                                    <option value="1"> Sản phẩm mới</option>
+                                                    <option value="2"> Bán chạy</option>
+                                                    <option value="3"> Nổi bật</option>
+                                                    <option value="4">Khác</option>
                                                 </select>
                                                 <!---->
                                             </div>
@@ -196,7 +194,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    @*<div class="row">
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label for="contact-info-vertical">Mô tả ngắn <span class="required">(*)</span></label>
@@ -204,7 +202,7 @@
                                                 <!---->
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>*@
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-group">
@@ -217,7 +215,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                         <div class="col-12 d-flex justify-content-end"><button type="submit" class="btn btn-primary me-1 mb-1">Tạo mới</button></div>
+                                         <div class="col-12 d-flex justify-content-end"><button type="submit" class="btn btn-primary me-1 mb-1 btn-submit-format">Tạo mới</button></div>
                                     </div>
                                 </div>
                             </form>

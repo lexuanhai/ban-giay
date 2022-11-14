@@ -2,6 +2,8 @@
     var self = this;
     self.Data = [];
     self.ProductImages = [];
+    self.ProductServerImages = [];
+    self.ProductUpdateImage = [];
     self.IsUpdate = false;    
     self.Product = {
         id: null,
@@ -57,9 +59,11 @@
                 html += "<td>" + item.price_reduced_str + "</td>";   
                 html += "<td style=\"text-align: center;\">" +
 
-                    (item.status == 0 ? "<button  class=\"btn btn-dark custom-button\" onClick=UpdateStatus(" + item.id + ",1)><i class=\"bi bi-eye\"></i></button>" : "<button  class=\"btn btn-secondary custom-button\" onClick=UpdateStatus(" + item.id + ",0)><i class=\"bi bi-eye-slash\"></i></button>")  +
-                    "<button  class=\"btn btn-primary custom-button\" onClick=\"Update(" + item.id +")\"><i  class=\"bi bi-pencil-square\"></i></button>" +
-                    "<button  class=\"btn btn-danger custom-button\" onClick=\"Deleted(" + item.id +")\"><i  class=\"bi bi-trash\"></i></button>" +
+                    (item.status == 0 ? "<button  class=\"btn btn-dark custom-button\" onClick=UpdateStatus(" + item.id + ",1)><i class=\"bi bi-eye custom-icon\"></i></button>" : "<button  class=\"btn btn-secondary custom-button\" onClick=UpdateStatus(" + item.id + ",0)><i class=\"bi bi-eye-slash custom-icon\"></i></button>")  +
+                    "<button  class=\"btn btn-primary custom-button\" onClick=\"UpdateView(" + item.id + ")\"><i  class=\"bi bi-pencil-square custom-icon\"></i></button>" +
+                    "<button  class=\"btn btn-success custom-button\" onClick=\"Quantity(" + item.id + ")\"><i  class=\"bi bi-calculator custom-icon\"></i></button>" +
+                    "<button  class=\"btn btn-danger custom-button\" onClick=\"Deleted(" + item.id + ")\"><i  class=\"bi bi-trash custom-icon\"></i></button>" +
+                    
                     "</td>";
                 
                 html += "</tr>";
@@ -70,23 +74,68 @@
         }
         $("#tblData").html(html);
     };
-    self.Update = function (id) {
+
+    // Quantity start
+    self.ProductQuantityRenderTableHtml = function (data) {
+        var html = "";
+        if (data != "" && data.length > 0) {
+            var index = 0;
+            for (var i = 0; i < data.length; i++) {
+                var item = data[i];
+                html += "<tr>";
+                html += "<td>" + (++index) + "</td>";
+                if (item.avatar != null) {
+                    html += "<td> <img src=/product-image/" + item.avatar + " class=\"item-image\" /></td>";
+                } else {
+                    html += "<td> <img src=/image-default/default.png class=\"item-image\" /></td>";
+                }
+                html += "<td>" + item.name + "</td>";
+                html += "<td>" + item.categorystr + "</td>";
+                html += "<td>" + item.trademark + "</td>";
+                html += "<td>" + item.price_sell_str + "</td>";
+                html += "<td>" + item.price_import_str + "</td>";
+                html += "<td>" + item.price_reduced_str + "</td>";
+                html += "<td>" + item.price_reduced_str + "</td>";
+                html += "<td style=\"text-align: center;\">" +
+
+                    (item.status == 0 ? "<button  class=\"btn btn-dark custom-button\" onClick=UpdateStatus(" + item.id + ",1)><i class=\"bi bi-eye custom-icon\"></i></button>" : "<button  class=\"btn btn-secondary custom-button\" onClick=UpdateStatus(" + item.id + ",0)><i class=\"bi bi-eye-slash custom-icon\"></i></button>") +
+                    "<button  class=\"btn btn-primary custom-button\" onClick=\"UpdateView(" + item.id + ")\"><i  class=\"bi bi-pencil-square custom-icon\"></i></button>" +
+                    "<button  class=\"btn btn-success custom-button\" onClick=\"Quantity(" + item.id + ")\"><i  class=\"bi bi-calculator custom-icon\"></i></button>" +
+                    "<button  class=\"btn btn-danger custom-button\" onClick=\"Deleted(" + item.id + ")\"><i  class=\"bi bi-trash custom-icon\"></i></button>" +
+
+                    "</td>";
+
+                html += "</tr>";
+            }
+        }
+        else {
+            html += "<tr><td colspan=\"10\" style=\"text-align:center\">Không có dữ liệu</td></tr>";
+        }
+        $("#tblData").html(html);
+    };
+    // Quantity end
+
+
+
+
+    self.UpdateView = function (id) {
         if (id != null && id != "") {
-            $(".txtPassword").hide();
-            $("#titleModal").text("Cập nhật tài khoản");
-            $(".btn-submit-format").text("Cập nhật");
+            //$(".btn-submit-format").text("Cập nhật");
+            //$(".product-title").text("Cập nhật sản phẩm");
             $(".custom-format").attr("disabled", "disabled");
             self.GetById(id, self.RenderHtmlByObject);
             self.Product.id = id;
 
-            $(".product-add-update").show();
+            $(".product-update").show();
             $(".product-list").hide();
             self.IsUpdate = true;
         }
     }
+    self.Quantity = function (id) {
+        $('#quantityModal').modal('show');
+    }
 
     self.GetById = function (id, renderCallBack) {
-        //self.ProductData = {};
         if (id != null && id != "") {
             $.ajax({
                 url: '/Admin/Product/GetById',
@@ -96,14 +145,11 @@
                     id: id
                 },
                 beforeSend: function () {
-                    //Loading('show');
                 },
                 complete: function () {
-                    ////Loading('hiden');
                 },
                 success: function (response) {
                     if (response.Data != null) {
-                        //self.GetImageByProductId(id);
                         renderCallBack(response.Data);
                         self.Id = id;
                         
@@ -214,267 +260,7 @@
         })
 
     };
-
-
-    self.Init = function () {
-        //self.GetUser();
-        //self.GetAllRole();
-
-
-        $(".btn-add").click(function () {
-            //self.BindRoleHtml();
-            //;           
-            self.SetValueDefault();
-            self.Product.Id = 0;
-            $('#CreateOrUpdate').modal('show')
-        })
-
-        // hủy add và edit
-        $(".cs-close-addedit,.btn-cancel-addedit").click(function () {
-            $("#CreateEdit").css("display", "none");
-        })
-        //$(".filesImages").change(function () {
-        //    var files = $(this).prop('files')[0];
-
-        //    var t = files.type.split('/').pop().toLowerCase();
-
-        //    if (t != "jpeg" && t != "jpg" && t != "png" && t != "bmp" && t != "gif") {
-        //        alert('Vui lòng chọn một tập tin hình ảnh hợp lệ!');
-        //        //$("#avatar").val("");
-        //        return false;
-        //    }
-
-        //    if (files.size > 2048000) {
-        //        alert('Kích thước tải lên tối đa chỉ 2Mb');
-        //        //$("#avatar").val("");
-        //        return false;
-        //    }
-
-        //    var img = new Image();
-        //    img.src = URL.createObjectURL(files);
-        //    img.onload = function () {
-        //        CheckWidthHeight(this.width, this.height);
-        //    }
-        //    var CheckWidthHeight = function (w, h) {
-        //        if (w <= 300 && h <= 300) {
-        //            alert("Ảnh tối thiểu 300 x 300 px");
-        //        }
-        //        else {
-        //            $(".box-avatar").css({ 'background': 'url(' + img.src + ')', 'display': 'block' });                   
-        //            self.ProductImages = files;
-        //        }
-        //    }
-
-        //})
-
-
-        //$("#birthday").datepicker({
-        //    changeMonth: true,
-        //    changeYear: true,
-        //    dateFormat: 'dd/mm/yy',
-        //    formatSubmit: 'yyyy/mm/dd'
-        //});
-
-        $(".btn-submit-search").click(function () {
-            var id = $("#code_user_search").val();
-            var fullName = $('#fullname_user_search').val();
-            var userName = $('#name_user_search').val();
-            var email = $('#email_user_search').val();
-            var address = $('#address_user_search').val();
-            var phoneNumber = $('#phone_user_search').val();
-            var birthDay = $('#birthday_user_search').val();
-
-            self.ProductSearch = {
-                Id: id,
-                FullName: fullName,
-                UserName: userName,
-                Email: email,
-                Address: address,
-                Phone: phoneNumber,
-                Birthday: birthDay,
-            }
-            self.GetUser(self.ProductSearch);
-        })
-
-        $('body').on('click', '.btn-edit', function () {
-            $(".user .modal-title").text("Chỉnh sửa thông tin người dùng");
-            var id = $(this).attr('data-id');
-            if (id !== null && id !== undefined) {
-                self.GetUserById(id);
-                $('#create').modal('show');
-            }
-        })
-
-        $('.add-role').click(function () {
-            $('#AddRole').modal('show');
-        })
-
-        $('body').on('click', '.btn-delete', function () {
-            var id = $(this).attr('data-id');
-            var fullname = $(this).attr('data-fullname');
-            if (id !== null && id !== '') {
-                self.confirmUser(fullname, id);
-            }
-        })
-        $(".add-image").click(function () {
-            $("#file-input").click();
-        })
-
-        $('body').on('click', '.btn-role-user', function () {
-            var id = $(this).attr('data-id');
-            $("#user_id").val(id);
-            //self.GetAllRoles(id);           
-        })
-
-        $('body').on('click', '.btn-set-role', function () {
-            var userId = parseInt($("#user_id").val());
-            $.each($("#lst-role tr"), function (key, item) {
-                var check = $(item).find('.ckRole').prop('checked');
-                if (check == true) {
-                    var id = parseInt($(item).find('.ckRole').val());
-                    self.lstRole.push({
-                        UserId: userId,
-                        RoleId: id
-                    });
-                }
-            })
-            if (self.lstRole.length > 0) {
-                self.SaveRoleForUser(self.lstRole, userId);
-            }
-
-        })
-
-        //$('.filesImages').on('change', function () {
-        //    var fileUpload = $(this).get(0);
-        //    var files = fileUpload.files;
-        //    if (files != null && files.length > 0) {
-        //        var fileExtension = ['jpeg', 'jpg', 'png'];
-        //        var html = "";
-        //        for (var i = 0; i < files.length; i++) {
-        //            if ($.inArray(files[i].type.split('/')[1].toLowerCase(), fileExtension) == -1) {
-        //                alert("Only formats are allowed : " + fileExtension.join(', '));
-        //            }
-        //            else {
-        //                var src = URL.createObjectURL(files[i]);
-        //                html += "<div class=\"box-image\" style=\"background-image:url(" + src + ")\"></div>";
-        //            }
-        //        }
-        //        if (html != "") {
-        //            /*$(".image-default").hide();*/
-        //            $(".product-images").html(html);
-        //        }
-        //    }
-
-        //});
-    }
-
-    self.confirmUser = function (nameUser, id) {
-        bootbox.confirm({
-            message: '<div class="title-delete"><p>Bạn có chắc muốn xóa người dùng này?</p><p>' + nameUser + '</p></div>',
-            centerVertical: true,
-            buttons: {
-                confirm: {
-                    label: 'Đồng ý',
-                    className: 'btn-success pull-left'
-                },
-                cancel: {
-                    label: 'Hủy',
-                    className: 'btn-danger '
-                }
-            },
-            callback: function (result) {
-                if (result === true) {
-                    $.ajax({
-                        type: "POST",
-                        url: "/Admin/User/Delete",
-                        dataType: "json",
-                        data: {
-                            id: id
-                        },
-                        beforeSend: function () {
-                        },
-                        complete: function () {
-                        },
-                        success: function (res) {
-                            if (res.status) {
-                                self.GetUser();
-                                Notifly(res.message, "success");
-                            }
-                            else {
-                                $.notify(res.message, 'error');
-                            }
-                        },
-                        error: function () {
-                        }
-                    });
-                }
-            }
-        });
-    }
-
    
-
-    self.AddImageAvatar = function () {
-        var dataImage = new FormData();
-        dataImage.append("image1", self.ProductImages);
-        $.ajax({
-            url: '/Admin/Product/UploadImageAvatar',
-            type: 'POST',
-            contentType: false,
-            processData: false,
-            data: dataImage,
-            beforeSend: function () {
-                //Loading('show');
-            },
-            complete: function () {
-                //Loading('hiden');
-            },
-            success: function (response) {
-                //if (response.success) {
-                //    self.GetDataPaging(true);
-                //    $('#_addUpdate').modal('hide');
-                //}
-            }
-        })
-    }
-
-
-    //self.GetAllRoles = function (userId) {
-    //    $.ajax({
-    //        type: "GET",
-    //        url: "/Admin/Role/GetAllRole",
-    //        dataType: "json",
-    //        beforeSend: function () {
-    //        },
-    //        complete: function () {
-    //        },
-    //        success: function (response) {
-
-    //            if (response.Data !== null && response.Data.length > 0) {
-    //                var data = response.Data;
-    //                var html = "";
-    //                $.each(data, function (key, item) {
-    //                    html += '<tr data-id="' + item.Id + '">' +
-    //                        "<td>" + item.Name + "</td>" +
-    //                        "<td><label><input type='checkbox' value=" + item.Id + " class='ckRole'></label></td>" +
-    //                        "</tr> ";
-    //                })
-
-    //                $("#lst-role").html(html);
-
-    //                if (userId > 0) {
-    //                    self.GetRoleByUserId(userId);
-    //                }
-
-    //            }
-
-    //        },
-    //        error: function () {
-    //        }
-    //    });
-    //}
-
-  
 
    
     // Set value default
@@ -526,7 +312,7 @@
         })
     }
 
-    self.UpdateUser = function (userView) {
+    self.Update = function (userView) {
         $.ajax({
             url: '/Admin/Product/Update',
             type: 'POST',
@@ -544,7 +330,7 @@
                 if (response.success) {
                     tedu.notify('Cập nhật dữ liệu thành công', 'success');
                     self.GetDataPaging(true);
-                    window.location.href = '/admin/quan-ly-san-pham';
+                    /*window.location.href = '/admin/quan-ly-san-pham';*/
                 }
                
             }
@@ -656,16 +442,41 @@
 
                 self.GetValue();
                 if (self.IsUpdate) {
-                    self.UpdateUser(self.Product);
+                    self.Update(self.Product);
+                    if (self.ProductImages != null && self.ProductImages != "") {
+                        self.UploadFileImageProduct(self.Product.id);
+                    }
+                    if (self.ProductUpdateImage != null && self.ProductUpdateImage.length > 0) {
+                        self.RemoveImageServer(self.ProductUpdateImage);
+                    }
                 }
                 else {                    
                     self.AddProduct(self.Product);
                 }
-
-                
             }
         });
     }
+
+    self.RemoveImageServer = function (productUpdateImages) {
+        $.ajax({
+            url: '/Admin/Product/RemoveImage',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                images: productUpdateImages
+            },
+            beforeSend: function () {
+                Loading('show');
+            },
+            complete: function () {
+                Loading('hiden');
+            },
+            success: function (response) {
+               
+            }
+        })
+    }
+
 
     self.GetValue = function () {
         self.Product.name = $("#productname").val();
@@ -704,10 +515,12 @@
         $("#productstatus").val(view.status);       
 
         if (view.ImageModelView != null && view.ImageModelView.length > 0) {
+            self.ProductServerImages = view.ImageModelView;
+          /*  self.ProductUpdateImage = view.ImageModelView;*/
             for (var i = 0; i < view.ImageModelView.length; i++) {
-                var item = view.ImageModelView[i];
+                var item = view.ImageModelView[i];                
                 var html = "";
-                html = "<div class=\"box-image\" style=\"background-image:url(/product-image/" + item.name + ")\"><span onclick=\"removeImage('" + item.name + "',this)\" class='remove-image'>X</span></div>";
+                html = "<div class=\"box-image\" style=\"background-image:url(/product-image/" + item.name + ")\"><span onclick=\"removeImageViewServer(" + item.id +",this)\" class='remove-image'>X</span></div>";
 
                 $(".productimages").append(html);     
             }
@@ -748,14 +561,25 @@
             }
         })
     }
-    self.removeImage = function (nameimage,tag) {
+    self.removeImageViewServer = function (id, tag) {
+        if (self.IsUpdate) {
+            if (self.ProductServerImages != null && self.ProductServerImages.length > 0) {
+                var indeximage = self.ProductServerImages.find(p => p.id == id);
+                if (indeximage != null) {
+                    self.ProductUpdateImage.push(indeximage);
+                    $(tag).parent().remove();
+                }
+            }
+        }
+    }
+    self.removeImage = function (nameimage, tag) {
         if (self.ProductImages != null && self.ProductImages.length > 0) {
             var indeximage = self.ProductImages.findIndex(p => p.name == nameimage);
             if (indeximage >=0) {
                 self.ProductImages.splice(indeximage, 1);
                 $(tag).parent().remove();
             }
-        }
+        }        
     }
 
 
@@ -830,41 +654,9 @@
 
         });
 
-        //$('.filesImages').on('change', function () {
-        //    var fileUpload = $(this).get(0);
-        //    var files = fileUpload.files;
-        //    if (files != null && files.length > 0) {
-        //        var fileExtension = ['jpeg', 'jpg', 'png'];
-        //        var html = "";
-        //        for (var i = 0; i < files.length; i++) {
-        //            if ($.inArray(files[i].type.split('/')[1].toLowerCase(), fileExtension) == -1) {
-        //                alert("Only formats are allowed : " + fileExtension.join(', '));
-        //            }
-        //            else {
-        //                var src = URL.createObjectURL(files[i]);
-        //                html += "<div class=\"box-image\" style=\"background-image:url(" + src + ")\"></div>";
-        //            }
-        //        }
-        //        if (html != "") {
-        //            /*$(".image-default").hide();*/
-        //            $(".product-images").html(html);
-        //        }
-        //    }
-
-        //});
-
-
-
-
-
-
         $(".btn-back").click(function () {
             window.location.reload();
         })
-        //$(".btn-add-product").click(function () {
-          
-        //})
-
        
     })
 })(jQuery);
