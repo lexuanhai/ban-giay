@@ -1,10 +1,9 @@
 ﻿@{
     Layout = null;
 }
-
 <div  id="quantity" tabindex="-1" role="dialog" aria-labelledby="quantity" class="modal fade" aria-modal="true">
     <div role="document" class="modal-dialog modal-lg">
-      <form id="form-submit" action="#">
+      <form id="form-submit-quantity" action="#">
          <div  class="modal-content">
             <div  class="modal-header bg-primary">
                <h5  id="titleModal" class="modal-title white ">Quản lý số lượng</h5>
@@ -19,42 +18,21 @@
                             <thead>
                                 <tr>
                                     <th style="width:3%">STT</th>
-                                    <th width="10%">Màu sắc</th>
+                                    <th width="15%">Màu sắc</th>
                                     <th width="15%">Kích thước</th>
-                                    <th width="10%">Tổng số nhập</th>
-                                    <th style="text-align: center;" width="15%">Thao tác</th>
+                                    <th width="15%">Tổng số nhập</th>
+                                    <th style="text-align: center;" width="10%">Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody id="tblData">
-                                <tr>
-                                    <td>1</td>
-                                    <td>
-                                        <select class="form-select">
-                                            <option>1</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select class="form-select">
-                                            <option>1</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select class="form-select">
-                                            <option>1</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input type="number" class="orm-control" />
-                                    </td>
-                                    <td>1</td>
-                                </tr>
+                                
                             </tbody>
                         </table>
                     </div>
             </div>
             <div  class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-primary me-1 mb-1 btn-submit-format">Lưu</button>
+                    <button type="submit" class="btn btn-primary me-1 mb-1 btn-submit-format btn-submit-quantity">Lưu</button>
                 </div>
          </div>
       </form>

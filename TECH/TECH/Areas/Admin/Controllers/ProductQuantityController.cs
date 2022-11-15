@@ -42,37 +42,27 @@ namespace TECH.Areas.Admin.Controllers
         //    return View();
         //}
 
-        //[HttpPost]
-        //public JsonResult Add(CategoryModelView CategoryModelView)
-        //{
-
-        //    bool isCategoryNameExist = false;
-        //    if (CategoryModelView != null && !string.IsNullOrEmpty(CategoryModelView.name))
-        //    {
-        //        isCategoryNameExist = _productQuantityService.IsCategoryNameExist(CategoryModelView.name);               
-        //    }
-
-        //    if (!isCategoryNameExist)
-        //    {
-        //        _productQuantityService.Add(CategoryModelView);
-        //        _productQuantityService.Save();
-        //        return Json(new
-        //        {
-        //            success = true
-        //        });
-        //    }
-        //    else
-        //    {
-        //        return Json(new
-        //        {
-        //            success = false,
-        //            isCategoryNameExist = isCategoryNameExist
-        //        });
-        //    }
-
-
-
-        //}
+        [HttpPost]
+        public JsonResult Add(List<QuantityProductModelView> quantities)
+        {
+            try
+            {
+                _productQuantityService.Add(quantities);
+                _productQuantityService.Save();
+                return Json(new
+                {
+                    success = true
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    success = false
+                });
+            }
+           
+        }
 
         //[HttpGet]
         //public JsonResult UpdateStatus(int id,int status)

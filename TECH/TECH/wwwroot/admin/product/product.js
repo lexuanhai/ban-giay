@@ -4,7 +4,15 @@
     self.ProductImages = [];
     self.ProductServerImages = [];
     self.ProductUpdateImage = [];
-    self.IsUpdate = false;    
+   
+    self.IsUpdate = false;
+    // quantity start
+    self.ProductIdQuantity = 0;
+    self.Sizes = [];
+    self.UpdateQuantity = [];
+    self.DeletedQuantity = [];
+    self.Colors = [];
+    // quantity end
     self.Product = {
         id: null,
         name: null,
@@ -19,7 +27,7 @@
         status: "",
         endow: "",
         type: "",
-        differentiate:""
+        differentiate: ""
     }
     self.ProductSearch = {
         name: "",
@@ -55,17 +63,17 @@
                 html += "<td>" + item.trademark + "</td>";
                 html += "<td>" + item.price_sell_str + "</td>";
                 html += "<td>" + item.price_import_str + "</td>";
-                html += "<td>" + item.price_reduced_str + "</td>";   
-                html += "<td>" + item.price_reduced_str + "</td>";   
+                html += "<td>" + item.price_reduced_str + "</td>";
+                html += "<td>" + item.price_reduced_str + "</td>";
                 html += "<td style=\"text-align: center;\">" +
 
-                    (item.status == 0 ? "<button  class=\"btn btn-dark custom-button\" onClick=UpdateStatus(" + item.id + ",1)><i class=\"bi bi-eye custom-icon\"></i></button>" : "<button  class=\"btn btn-secondary custom-button\" onClick=UpdateStatus(" + item.id + ",0)><i class=\"bi bi-eye-slash custom-icon\"></i></button>")  +
+                    (item.status == 0 ? "<button  class=\"btn btn-dark custom-button\" onClick=UpdateStatus(" + item.id + ",1)><i class=\"bi bi-eye custom-icon\"></i></button>" : "<button  class=\"btn btn-secondary custom-button\" onClick=UpdateStatus(" + item.id + ",0)><i class=\"bi bi-eye-slash custom-icon\"></i></button>") +
                     "<button  class=\"btn btn-primary custom-button\" onClick=\"UpdateView(" + item.id + ")\"><i  class=\"bi bi-pencil-square custom-icon\"></i></button>" +
                     "<button  class=\"btn btn-success custom-button\" onClick=\"Quantity(" + item.id + ")\"><i  class=\"bi bi-calculator custom-icon\"></i></button>" +
                     "<button  class=\"btn btn-danger custom-button\" onClick=\"Deleted(" + item.id + ")\"><i  class=\"bi bi-trash custom-icon\"></i></button>" +
-                    
+
                     "</td>";
-                
+
                 html += "</tr>";
             }
         }
@@ -77,9 +85,52 @@
 
     // Quantity start
     self.InitQuantity = function () {
+        self.GetColor();
+        self.GetSize();
         $(".btn-create-row-quantity").click(function () {
-
+            var html = self.AddRowHtml();
+            $("#quantity #tblData").append(html);
+            $(".no-data").hide();
         });
+        $("#form-submit-quantity").on("submit", function () {
+            var lstAddQuantity = self.GetQuantityView("new");
+            if (lstAddQuantity != null && lstAddQuantity.length > 0) {
+                self.AddQuantity(lstAddQuantity);
+            }           
+        })
+    }
+    self.GetQuantityView = function (className) {
+        var lstAddQuantity = [];
+        var classNameCustom = "#quantity #tblData " + "." + className;
+        $(classNameCustom).each(function () {
+            var color = $(this).find(".colors").val();
+            var size = $(this).find(".sizes").val();
+            var totalimport = $(this).find(".totalimport").val();
+            lstAddQuantity.push({
+                AppSizeId: size,
+                ColorId: color,
+                TotalImported: totalimport,
+                ProductId: self.ProductIdQuantity
+            });
+        });
+        return lstAddQuantity;
+    }
+    self.AddRowHtml = function () {
+        var index = 0;
+        var html = "<tr class=\"new\">";
+        html += "<td>" + (++index) + "</td>";
+        html += "<td>" + self.GetColorByIdOrAll(0) + "</td>";
+        html += "<td>" + self.GetSizeByIdOrAll(0) + "</td>";
+        html += "<td><input type=\"number\" class=\"form-control totalimport\" min=\"0\" required></td>";
+        html += "<td style=\"text-align: center;\">" +
+            /* "<button  class=\"btn btn-primary custom-button\" onClick=\"UpdateView()\"><i  class=\"bi bi-pencil-square custom-icon\"></i></button>" +*/
+            "<button  class=\"btn btn-danger custom-button\" onClick=\"DeletedHtml(this)\"><i  class=\"bi bi-trash custom-icon\"></i></button>" +
+            "</td>";
+        html += "</tr>";
+        return html;
+    }
+    self.DeletedHtml = function (tag) {
+        $(tag).closest(".new").remove();
     }
     self.GetProductQuantityForProductId = function (productId) {
         $.ajax({
@@ -94,11 +145,10 @@
             complete: function () {
             },
             success: function (response) {
-                self.ProductQuantityRenderTableHtml(response.Data);                
+                self.ProductQuantityRenderTableHtml(response.Data);
             }
         });
     };
-
 
     self.ProductQuantityRenderTableHtml = function (data) {
         var html = "";
@@ -106,30 +156,81 @@
             var index = 0;
             for (var i = 0; i < data.length; i++) {
                 var item = data[i];
-                html += "<tr>";
+                html += "<tr data-quantity=" + item.Id + " class=" + item.Id +">";
                 html += "<td>" + (++index) + "</td>";
-                html += "<td>" + self.GetColor(item.ColorId) + "</td>";
-                html += "<td>" + self.GetSize(item.AppSizeId) + "</td>";
-                
-                    (item.status == 0 ? "<button  class=\"btn btn-dark custom-button\" onClick=UpdateStatus(" + item.id + ",1)><i class=\"bi bi-eye custom-icon\"></i></button>" : "<button  class=\"btn btn-secondary custom-button\" onClick=UpdateStatus(" + item.id + ",0)><i class=\"bi bi-eye-slash custom-icon\"></i></button>") +
-                    "<button  class=\"btn btn-primary custom-button\" onClick=\"UpdateView(" + item.id + ")\"><i  class=\"bi bi-pencil-square custom-icon\"></i></button>" +
-                    "<button  class=\"btn btn-success custom-button\" onClick=\"Quantity(" + item.id + ")\"><i  class=\"bi bi-calculator custom-icon\"></i></button>" +
-                    "<button  class=\"btn btn-danger custom-button\" onClick=\"Deleted(" + item.id + ")\"><i  class=\"bi bi-trash custom-icon\"></i></button>" +
-
+                html += "<td>" + self.GetColorByIdOrAll(item.ColorId,true) + "</td>";
+                html += "<td>" + self.GetSizeByIdOrAll(item.AppSizeId,true) + "</td>";
+                html += "<td><input type=\"number\" class=\"form-control totalimport\" min=\"0\" required value=" + item.TotalImported +" disabled></td>";
+                html += "<td style=\"text-align: center;\">"+
+                    "<button  class=\"btn btn-primary custom-button\" onClick=\"UpdateQuantity(" + item.id + ")\"><i  class=\"bi bi-pencil-square custom-icon\"></i></button>" +
+                    "<button  class=\"btn btn-danger custom-button\" onClick=\"DeletedQuantity(" + item.id + ")\"><i  class=\"bi bi-trash custom-icon\"></i></button>" +
                     "</td>";
-
                 html += "</tr>";
             }
         }
         else {
-            html += "<tr><td colspan=\"10\" style=\"text-align:center\">Không có dữ liệu</td></tr>";
+            html += "<tr class=\"no-data\"><td colspan=\"10\" style=\"text-align:center\">Không có dữ liệu</td></tr>";
         }
         $("#quantity #tblData").html(html);
         $('#quantity').modal('show');
     };
+    self.UpdateQuantity = function (id) {
+        if (id > 0) {
+            self.UpdateQuantity.push(id);
+        } 
+    }
+    self.DeletedQuantity = function (id) {
+        if (id > 0) {
+            self.DeletedQuantity.push(id);
+        }
+    }
+    self.GetColorByIdOrAll = function (colorId, isRenderAPI) {
+        var html = "";
+        if (isRenderAPI) {
+            html = "<select class=\"form-select colors\" required disabled><option value=\"\"> Chọn màu </option>";
+        }
+        else {
+            html = "<select class=\"form-select colors\" required><option value=\"\"> Chọn màu </option>";
+        }
+        if (self.Colors != null && self.Colors.length > 0) {
+            for (var i = 0; i < self.Colors.length; i++) {
+                var item = self.Colors[i];
+                if (item.id == colorId) {
+                    html += "<option value=\"" + item.id + "\" selected>" + (item.name != "" ? item.name : (item.code != "" ? item.code : "")) + "</option>";
+                }
+                else {
+                    html += "<option value=\"" + item.id + "\">" + (item.name != "" ? item.name : (item.code != "" ? item.code : "")) + "</option>";
+                }
+            }
+        }
+        html += "</select>";
+        return html;
+    }
 
-    self.GetColor = function (colorId) {
-        var html = "<select><option> Chọn màu </option>"
+    self.GetSizeByIdOrAll = function (sizeId, isRenderAPI) {
+        var html = "";
+        if (isRenderAPI) {
+            html = "<select class=\"form-select sizes\" required disabled><option value=\"\"> Chọn kích thước </option>";
+        }
+        else {
+            html = "<select class=\"form-select sizes\" required><option value=\"\"> Chọn kích thước </option>";
+        }
+        if (self.Sizes != null && self.Sizes.length > 0) {
+            for (var i = 0; i < self.Sizes.length; i++) {
+                var item = self.Sizes[i];
+                if (item.id == sizeId) {
+                    html += "<option value=\"" + item.id + "\" selected>" + (item.name != "" ? item.name : (item.code != "" ? item.code : "")) + "</option>";
+                }
+                else {
+                    html += "<option value=\"" + item.id + "\">" + (item.name != "" ? item.name : (item.code != "" ? item.code : "")) + "</option>";
+                }
+            }
+        }
+        html += "</select>";
+        return html;
+    }
+
+    self.GetColor = function () {
         $.ajax({
             url: '/Admin/Colors/GetAll',
             type: 'GET',
@@ -141,24 +242,13 @@
             success: function (response) {
 
                 if (response.Data != null && response.Data.length > 0) {
-                    for (var i = 0; i < response.Data.length; i++) {
-                        var item = response.Data[i];
-                        if (item.id == colorId) {
-                            html += "<option value=\"" + item.id + "\" selected>" + (item.name != "" ? item.name : (item.code != "" ? item.code : "")) + "</option>";
-                        }
-                        else {
-                            html += "<option value=\"" + item.id + "\">" + (item.name != "" ? item.name : (item.code != "" ? item.code : "")) + "</option>";
-                        }
-                    }
+                    self.Colors = response.Data;
                 }
-                html += "</select>";
             }
         });
-        return html;
     };
 
-    self.GetSize = function (sizeId) {
-        var html = "<select><option> Chọn kích thước </option>"
+    self.GetSize = function () {
         $.ajax({
             url: '/Admin/Sizes/GetAll',
             type: 'GET',
@@ -168,28 +258,48 @@
             complete: function () {
             },
             success: function (response) {
-
                 if (response.Data != null && response.Data.length > 0) {
-                    for (var i = 0; i < response.Data.length; i++) {
-                        var item = response.Data[i];
-                        if (item.id == sizeId) {
-                            html += "<option value=\"" + item.id + "\" selected>" + (item.name != "" ? item.name : "") + "</option>";
-                        }
-                        else {
-                            html += "<option value=\"" + item.id + "\">" + (item.name != "" ? item.name : "") + "</option>";
-                        }
-                    }
+                    self.Sizes = response.Data;
                 }
-                html += "</select>";
             }
         });
-        return html;
+
     };
-    
+
+    self.AddQuantity = function (quantities) {
+        $.ajax({
+            url: '/Admin/ProductQuantity/Add',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                quantities: quantities
+            },
+            beforeSend: function () {
+                //Loading('show');
+            },
+            complete: function () {
+                //Loading('hiden');
+            },
+            success: function (response) {
+                //if (response.success) {
+                //    if (self.ProductImages != null && self.ProductImages != "") {
+                //        self.UploadFileImageProduct(response.id);
+                //    }
+
+                //    tedu.notify('Thêm mới dữ liệu thành công', 'success');
+                //    self.GetDataPaging(true);
+                //    window.location.href = '/admin/quan-ly-san-pham';
+                //}
+                //else {
+                //    if (response.isNameExist) {
+                //        tedu.notify('Tên đã tồn tại', 'error');
+                //        //$(".product-name-exist").show().text("Tên đã tồn tại");
+                //    }
+                //}
+            }
+        })
+    }
     // Quantity end
-
-
-
 
     self.UpdateView = function (id) {
         if (id != null && id != "") {
@@ -206,7 +316,7 @@
     }
     self.Quantity = function (id) {
         self.GetProductQuantityForProductId(id);
-        
+        self.ProductIdQuantity = id;
     }
 
     self.GetById = function (id, renderCallBack) {
@@ -226,14 +336,14 @@
                     if (response.Data != null) {
                         renderCallBack(response.Data);
                         self.Id = id;
-                        
+
                     }
                 }
             })
         }
     }
 
-    self.UpdateStatus = function (id,status) {
+    self.UpdateStatus = function (id, status) {
         $.ajax({
             url: '/Admin/Product/UpdateStatus',
             type: 'GET',
@@ -334,9 +444,9 @@
         })
 
     };
-   
 
-   
+
+
     // Set value default
     self.SetValueDefault = function () {
         self.Product.Id = null;
@@ -351,7 +461,7 @@
         $(".box-avatar").css("display", "none");
     }
     // Get User
-   
+
     self.AddProduct = function (userView) {
         $.ajax({
             url: '/Admin/Product/Add',
@@ -406,7 +516,7 @@
                     self.GetDataPaging(true);
                     /*window.location.href = '/admin/quan-ly-san-pham';*/
                 }
-               
+
             }
         })
     }
@@ -442,9 +552,9 @@
         var dv = document.createElement("DIV");
         dv.innerHTML = html;
         return dv.textContent || dv.innerText || "";
-    }  
+    }
 
-    self.ValidateUser = function () {     
+    self.ValidateUser = function () {
 
         jQuery.validator.addMethod("ckrequired", function (value, element) {
             var idname = $(element).attr('id');
@@ -458,11 +568,11 @@
                 $(element).val(editor.getData());
             }
             return $(element).val().length > 0;
-        }, "This field is required"); 
+        }, "This field is required");
 
 
         $("#form-submit").validate({
-            ignore: [],  
+            ignore: [],
             rules:
             {
                 productname: {
@@ -486,7 +596,7 @@
                 productdescription: {
                     ckrequired: true
                 }
-                
+
             },
             messages:
             {
@@ -524,7 +634,7 @@
                         self.RemoveImageServer(self.ProductUpdateImage);
                     }
                 }
-                else {                    
+                else {
                     self.AddProduct(self.Product);
                 }
             }
@@ -546,7 +656,7 @@
                 Loading('hiden');
             },
             success: function (response) {
-               
+
             }
         })
     }
@@ -555,15 +665,15 @@
     self.GetValue = function () {
         self.Product.name = $("#productname").val();
         self.Product.category_id = $("#productcategoryid").val();
-        
+
         //if (self.ProductImages != null && self.ProductImages.name != null && self.ProductImages.name != "") {
         //    self.Product.avatar = self.ProductImages.name;
         //}
         self.Product.price_sell = $("#productpricesell").val();
         self.Product.price_reduced = $("#productreduced").val();
         self.Product.price_import = $("#productpriceimport").val();
-        self.Product.trademark = $("#producttrademark").val();       
-        self.Product.status = $("#productstatus").val();       
+        self.Product.trademark = $("#producttrademark").val();
+        self.Product.status = $("#productstatus").val();
         self.Product.description = CKEDITOR.instances.productdescription.getData();
     }
 
@@ -586,22 +696,22 @@
         $("#productreduced").val(view.price_reduced);
         $("#productpriceimport").val(view.price_import);
         $("#producttrademark").val(view.trademark);
-        $("#productstatus").val(view.status);       
+        $("#productstatus").val(view.status);
 
         if (view.ImageModelView != null && view.ImageModelView.length > 0) {
             self.ProductServerImages = view.ImageModelView;
-          /*  self.ProductUpdateImage = view.ImageModelView;*/
+            /*  self.ProductUpdateImage = view.ImageModelView;*/
             for (var i = 0; i < view.ImageModelView.length; i++) {
-                var item = view.ImageModelView[i];                
+                var item = view.ImageModelView[i];
                 var html = "";
-                html = "<div class=\"box-image\" style=\"background-image:url(/product-image/" + item.name + ")\"><span onclick=\"removeImageViewServer(" + item.id +",this)\" class='remove-image'>X</span></div>";
+                html = "<div class=\"box-image\" style=\"background-image:url(/product-image/" + item.name + ")\"><span onclick=\"removeImageViewServer(" + item.id + ",this)\" class='remove-image'>X</span></div>";
 
-                $(".productimages").append(html);     
+                $(".productimages").append(html);
             }
         }
 
         CKEDITOR.instances.productdescription.setData(view.description);
-       /* CKEDITOR.instances.productspecifications.setData(view.specifications);*/
+        /* CKEDITOR.instances.productspecifications.setData(view.specifications);*/
         /*$("#productspecifications").val(view.specifications);*/
         //$("#productendow").val(view.endow);
         //$(".box-image").css({ "background-image": "url('/product-image/" + view.avatar + "')", "display": "block" });  
@@ -649,11 +759,11 @@
     self.removeImage = function (nameimage, tag) {
         if (self.ProductImages != null && self.ProductImages.length > 0) {
             var indeximage = self.ProductImages.findIndex(p => p.name == nameimage);
-            if (indeximage >=0) {
+            if (indeximage >= 0) {
                 self.ProductImages.splice(indeximage, 1);
                 $(tag).parent().remove();
             }
-        }        
+        }
     }
 
 
@@ -701,13 +811,13 @@
             self.GetDataPaging(true);
         });
 
-        
+
         $('#productimages').on('change', function () {
             var fileUpload = $(this).get(0);
             var files = fileUpload.files;
             if (files != null && files.length > 0) {
                 var fileExtension = ['jpeg', 'jpg', 'png'];
-              
+
                 for (var i = 0; i < files.length; i++) {
                     var html = "";
                     if ($.inArray(files[i].type.split('/')[1].toLowerCase(), fileExtension) == -1) {
@@ -719,9 +829,9 @@
                         console.log(self.ProductImages);
                         var src = URL.createObjectURL(files[i]);
 
-                        html = "<div class=\"box-image\" style=\"background-image:url(" + src + ")\"><span onclick=\"removeImage('" + files[i].name +"',this)\" class='remove-image'>X</span></div>";
+                        html = "<div class=\"box-image\" style=\"background-image:url(" + src + ")\"><span onclick=\"removeImage('" + files[i].name + "',this)\" class='remove-image'>X</span></div>";
 
-                        $(".productimages").append(html);                
+                        $(".productimages").append(html);
                     }
                 }
             }
@@ -731,6 +841,7 @@
         $(".btn-back").click(function () {
             window.location.reload();
         })
-       
+        // Sử dụng cho quản lý số lượng sản phẩm
+        self.InitQuantity();
     })
 })(jQuery);
