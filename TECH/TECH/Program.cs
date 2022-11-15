@@ -43,7 +43,13 @@ builder.Services.AddScoped<IAdvertisementRepository, AdvertisementRepository>();
 builder.Services.AddScoped<ISidersRepository, SidersRepository>();
 builder.Services.AddScoped<IImageRepository, ImageRepository>();
 builder.Services.AddScoped<IProductsImageRepository, ProductsImageRepository>();
+builder.Services.AddScoped<IColorsRepository, ColorsRepository>();
+builder.Services.AddScoped<ISizesRepository, SizesRepository>();
+builder.Services.AddScoped<IProductQuantityRepository, ProductQuantityRepository>();
 
+builder.Services.AddScoped<IProductQuantityService, ProductQuantityService>();
+builder.Services.AddScoped<IColorsService, ColorsService>();
+builder.Services.AddScoped<ISizesService, SizesService>();
 builder.Services.AddScoped<IProductsImagesService, ProductsImagesService>();
 builder.Services.AddScoped<IImagesService, ImagesService>();
 builder.Services.AddScoped<IAppUserService, AppUserService>();
@@ -60,6 +66,7 @@ builder.Services.AddScoped<IFeeService, FeeService>();
 builder.Services.AddScoped<ICartsService, CartsService>();
 builder.Services.AddScoped<IAdvertisementService, AdvertisementService>();
 builder.Services.AddScoped<ISidersService, SidersService>();
+
 
 //builder.Services.AddMemoryCache();
 

@@ -76,6 +76,30 @@
     };
 
     // Quantity start
+    self.InitQuantity = function () {
+        $(".btn-create-row-quantity").click(function () {
+
+        });
+    }
+    self.GetProductQuantityForProductId = function (productId) {
+        $.ajax({
+            url: '/Admin/ProductQuantity/GetProductQuantityForProductId',
+            type: 'GET',
+            data: {
+                productId: productId
+            },
+            dataType: 'json',
+            beforeSend: function () {
+            },
+            complete: function () {
+            },
+            success: function (response) {
+                self.ProductQuantityRenderTableHtml(response.Data);                
+            }
+        });
+    };
+
+
     self.ProductQuantityRenderTableHtml = function (data) {
         var html = "";
         if (data != "" && data.length > 0) {
@@ -84,9 +108,9 @@
                 var item = data[i];
                 html += "<tr>";
                 html += "<td>" + (++index) + "</td>";
-                html += "<td>" ++"</td>";
+                html += "<td>" + self.GetColor(item.ColorId) + "</td>";
+                html += "<td>" + self.GetSize(item.AppSizeId) + "</td>";
                 
-
                     (item.status == 0 ? "<button  class=\"btn btn-dark custom-button\" onClick=UpdateStatus(" + item.id + ",1)><i class=\"bi bi-eye custom-icon\"></i></button>" : "<button  class=\"btn btn-secondary custom-button\" onClick=UpdateStatus(" + item.id + ",0)><i class=\"bi bi-eye-slash custom-icon\"></i></button>") +
                     "<button  class=\"btn btn-primary custom-button\" onClick=\"UpdateView(" + item.id + ")\"><i  class=\"bi bi-pencil-square custom-icon\"></i></button>" +
                     "<button  class=\"btn btn-success custom-button\" onClick=\"Quantity(" + item.id + ")\"><i  class=\"bi bi-calculator custom-icon\"></i></button>" +
@@ -100,8 +124,68 @@
         else {
             html += "<tr><td colspan=\"10\" style=\"text-align:center\">Không có dữ liệu</td></tr>";
         }
-        $("#tblData").html(html);
+        $("#quantity #tblData").html(html);
+        $('#quantity').modal('show');
     };
+
+    self.GetColor = function (colorId) {
+        var html = "<select><option> Chọn màu </option>"
+        $.ajax({
+            url: '/Admin/Colors/GetAll',
+            type: 'GET',
+            dataType: 'json',
+            beforeSend: function () {
+            },
+            complete: function () {
+            },
+            success: function (response) {
+
+                if (response.Data != null && response.Data.length > 0) {
+                    for (var i = 0; i < response.Data.length; i++) {
+                        var item = response.Data[i];
+                        if (item.id == colorId) {
+                            html += "<option value=\"" + item.id + "\" selected>" + (item.name != "" ? item.name : (item.code != "" ? item.code : "")) + "</option>";
+                        }
+                        else {
+                            html += "<option value=\"" + item.id + "\">" + (item.name != "" ? item.name : (item.code != "" ? item.code : "")) + "</option>";
+                        }
+                    }
+                }
+                html += "</select>";
+            }
+        });
+        return html;
+    };
+
+    self.GetSize = function (sizeId) {
+        var html = "<select><option> Chọn kích thước </option>"
+        $.ajax({
+            url: '/Admin/Sizes/GetAll',
+            type: 'GET',
+            dataType: 'json',
+            beforeSend: function () {
+            },
+            complete: function () {
+            },
+            success: function (response) {
+
+                if (response.Data != null && response.Data.length > 0) {
+                    for (var i = 0; i < response.Data.length; i++) {
+                        var item = response.Data[i];
+                        if (item.id == sizeId) {
+                            html += "<option value=\"" + item.id + "\" selected>" + (item.name != "" ? item.name : "") + "</option>";
+                        }
+                        else {
+                            html += "<option value=\"" + item.id + "\">" + (item.name != "" ? item.name : "") + "</option>";
+                        }
+                    }
+                }
+                html += "</select>";
+            }
+        });
+        return html;
+    };
+    
     // Quantity end
 
 
@@ -121,7 +205,8 @@
         }
     }
     self.Quantity = function (id) {
-        $('#quantityModal').modal('show');
+        self.GetProductQuantityForProductId(id);
+        
     }
 
     self.GetById = function (id, renderCallBack) {
