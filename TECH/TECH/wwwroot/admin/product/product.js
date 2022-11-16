@@ -9,8 +9,8 @@
     // quantity start
     self.ProductIdQuantity = 0;
     self.Sizes = [];
-    self.UpdateQuantity = [];
-    self.DeletedQuantity = [];
+    self.ListUpdateQuantity = [];
+    self.ListDeletedQuantity = [];
     self.Colors = [];
     // quantity end
     self.Product = {
@@ -92,21 +92,38 @@
             $("#quantity #tblData").append(html);
             $(".no-data").hide();
         });
-        $("#form-submit-quantity").on("submit", function () {
+        $("#form-submit-quantity").on("submit", function (e) {
+            e.preventDefault();
             var lstAddQuantity = self.GetQuantityView("new");
             if (lstAddQuantity != null && lstAddQuantity.length > 0) {
                 self.AddQuantity(lstAddQuantity);
-            }           
+            }
+            if (self.ListUpdateQuantity != null && self.ListUpdateQuantity.length > 0) {
+                var lstUpdateQuantity = [];
+                for (var i = 0; i < self.ListUpdateQuantity.length; i++) {
+                    var item = self.ListUpdateQuantity[i];
+                    lstUpdateQuantity = self.GetQuantityView(item.toString());                   
+                }
+                self.UpdateServerQuantity(lstUpdateQuantity);
+            }
+            if (self.ListDeletedQuantity != null && self.ListDeletedQuantity.length > 0) {
+                self.DeletedServerQuantity(self.ListDeletedQuantity);
+            }
         })
     }
     self.GetQuantityView = function (className) {
         var lstAddQuantity = [];
         var classNameCustom = "#quantity #tblData " + "." + className;
         $(classNameCustom).each(function () {
+            var id = $(this).attr("data-data-quantity");
+            if (id != null && id != "") {
+                id = parseInt(id);
+            }
             var color = $(this).find(".colors").val();
             var size = $(this).find(".sizes").val();
             var totalimport = $(this).find(".totalimport").val();
             lstAddQuantity.push({
+                Id: id,
                 AppSizeId: size,
                 ColorId: color,
                 TotalImported: totalimport,
@@ -162,8 +179,8 @@
                 html += "<td>" + self.GetSizeByIdOrAll(item.AppSizeId,true) + "</td>";
                 html += "<td><input type=\"number\" class=\"form-control totalimport\" min=\"0\" required value=" + item.TotalImported +" disabled></td>";
                 html += "<td style=\"text-align: center;\">"+
-                    "<button  class=\"btn btn-primary custom-button\" onClick=\"UpdateQuantity(" + item.id + ")\"><i  class=\"bi bi-pencil-square custom-icon\"></i></button>" +
-                    "<button  class=\"btn btn-danger custom-button\" onClick=\"DeletedQuantity(" + item.id + ")\"><i  class=\"bi bi-trash custom-icon\"></i></button>" +
+                    "<button type=\"button\" class=\"btn btn-primary custom-button\" onClick=\"UpdateQuantity(" + item.Id + ")\"><i  class=\"bi bi-pencil-square custom-icon\"></i></button>" +
+                    "<button type=\"button\" class=\"btn btn-danger custom-button\" onClick=\"DeletedQuantity(" + item.Id + ")\"><i  class=\"bi bi-trash custom-icon\"></i></button>" +
                     "</td>";
                 html += "</tr>";
             }
@@ -176,12 +193,18 @@
     };
     self.UpdateQuantity = function (id) {
         if (id > 0) {
-            self.UpdateQuantity.push(id);
+            self.ListUpdateQuantity.push(id);
+            var classNameSelect = "." + id.toString() + " select";
+            var classNameInput = "." + id.toString() + " .totalimport";
+            var className = classNameSelect + "," + classNameInput;
+            $(className).removeAttr('disabled');
         } 
     }
     self.DeletedQuantity = function (id) {
         if (id > 0) {
-            self.DeletedQuantity.push(id);
+            self.ListDeletedQuantity.push(id);
+            var className = "." + id.toString();
+            $(className).remove();
         }
     }
     self.GetColorByIdOrAll = function (colorId, isRenderAPI) {
@@ -281,21 +304,63 @@
                 //Loading('hiden');
             },
             success: function (response) {
-                //if (response.success) {
-                //    if (self.ProductImages != null && self.ProductImages != "") {
-                //        self.UploadFileImageProduct(response.id);
-                //    }
-
-                //    tedu.notify('Thêm mới dữ liệu thành công', 'success');
-                //    self.GetDataPaging(true);
-                //    window.location.href = '/admin/quan-ly-san-pham';
-                //}
-                //else {
-                //    if (response.isNameExist) {
-                //        tedu.notify('Tên đã tồn tại', 'error');
-                //        //$(".product-name-exist").show().text("Tên đã tồn tại");
-                //    }
-                //}
+                if (response.success) {                 
+                    tedu.notify('Thêm mới dữ liệu thành công', 'success');
+                   /* window.location.href = '/admin/quan-ly-san-pham';*/
+                }
+                else {
+                    tedu.notify('Thêm mới dữ liệu không thành công', 'error');
+                }
+            }
+        })
+    }
+    self.UpdateServerQuantity = function (quantities) {
+        $.ajax({
+            url: '/Admin/ProductQuantity/Update',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                quantities: quantities
+            },
+            beforeSend: function () {
+                //Loading('show');
+            },
+            complete: function () {
+                //Loading('hiden');
+            },
+            success: function (response) {
+                if (response.success) {
+                    tedu.notify('Cập nhật dữ liệu thành công', 'success');
+                    //window.location.href = '/admin/quan-ly-san-pham';
+                }
+                else {
+                    tedu.notify('Cập nhật dữ liệu không thành công', 'error');
+                }
+            }
+        })
+    }
+    self.DeletedServerQuantity = function (quantities) {
+        $.ajax({
+            url: '/Admin/ProductQuantity/Deleted',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                ids: quantities
+            },
+            beforeSend: function () {
+                //Loading('show');
+            },
+            complete: function () {
+                //Loading('hiden');
+            },
+            success: function (response) {
+                if (response.success) {
+                    tedu.notify('Xóa dữ liệu thành công', 'success');
+                    //window.location.href = '/admin/quan-ly-san-pham';
+                }
+                else {
+                    tedu.notify('Cập nhật dữ liệu không thành công', 'error');
+                }
             }
         })
     }
@@ -776,7 +841,7 @@
         self.GetAllCategories();
 
         CKEDITOR.replace('productdescription', {});
-        CKEDITOR.replace('productspecifications', {});
+      /*  CKEDITOR.replace('productspecifications', {});*/
 
         $(".modal").on("hidden.bs.modal", function () {
             $(this).find('form').trigger('reset');
