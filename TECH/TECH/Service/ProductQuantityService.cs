@@ -15,7 +15,7 @@ namespace TECH.Service
     {           
         void Add(List<QuantityProductModelView> view);
         bool Update(List<QuantityProductModelView> view);
-        bool Deleted(int id);
+        bool Deleted(List<int> ids);
         List<QuantityProductModelView> GetProductQuantity(int productId);
         void Save();
     }
@@ -107,16 +107,24 @@ namespace TECH.Service
             return false;
         }
 
-        public bool Deleted(int id)
+        public bool Deleted(List<int> ids)
         {
             try
             {
-                var dataServer = _productQuantityRepository.FindById(id);
-                if (dataServer != null)
+                if (ids != null && ids.Count() > 0)
                 {
-                    _productQuantityRepository.Remove(dataServer);
+                    foreach (var item in ids)
+                    {
+                        var dataServer = _productQuantityRepository.FindById(item);
+                        if (dataServer != null)
+                        {
+                            _productQuantityRepository.Remove(dataServer);
+                        }                        
+                    }
                     return true;
                 }
+                return false;
+
             }
             catch (Exception ex)
             {

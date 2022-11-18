@@ -35,18 +35,18 @@ namespace TECH.Areas.Admin.Controllers
             });
 
         }
-
-        //[HttpGet]
-        //public IActionResult AddOrUpdate()
-        //{
-        //    return View();
-        //}
-
         [HttpPost]
         public JsonResult Add(List<QuantityProductModelView> quantities)
         {
             try
             {
+                if (quantities == null || quantities.Count == 0)
+                {
+                    return Json(new
+                    {
+                        success = false
+                    });
+                }
                 _productQuantityService.Add(quantities);
                 _productQuantityService.Save();
                 return Json(new
@@ -63,74 +63,51 @@ namespace TECH.Areas.Admin.Controllers
             }
            
         }
+        [HttpPost]
+        public JsonResult Update(List<QuantityProductModelView> quantities)
+        {
+            try
+            {
+                if (quantities == null || quantities.Count == 0)
+                {
+                    return Json(new
+                    {
+                        success = false
+                    });
+                }
+                _productQuantityService.Update(quantities);
+                _productQuantityService.Save();
+                return Json(new
+                {
+                    success = true
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    success = false
+                });
+            }
+        }
 
-        //[HttpGet]
-        //public JsonResult UpdateStatus(int id,int status)
-        //{
-        //    if (id > 0)
-        //    {
-        //       var  model = _productQuantityService.UpdateStatus(id, status);
-        //        _productQuantityService.Save();
-        //        return Json(new
-        //        {
-        //            success = model
-        //        });
-        //    }
-        //    return Json(new
-        //    {
-        //        success = false
-        //    });
+        [HttpPost]
+        public JsonResult Deleted(List<int> ids)
+        {
+            if (ids != null && ids.Count() > 0)
+            {
+                var result = _productQuantityService.Deleted(ids);
+                _productQuantityService.Save();
+                return Json(new
+                {
+                    success = result
+                });
+            }
+            return Json(new
+            {
+                success = false
+            }); ;
+        }
 
-        //}
-
-        //[HttpPost]
-        //public JsonResult Update(CategoryModelView CategoryModelView)
-        //{
-        //    bool isCategoryNameExist = false;
-        //    if (CategoryModelView != null && !string.IsNullOrEmpty(CategoryModelView.name))
-        //    {
-        //        isCategoryNameExist = _productQuantityService.IsCategoryNameExist(CategoryModelView.name);
-        //    }
-
-
-        //    if (!isCategoryNameExist)
-        //    {
-        //        var result = _productQuantityService.Update(CategoryModelView);
-        //        _productQuantityService.Save();
-        //        return Json(new
-        //        {
-        //            success = result
-        //        });
-        //    }
-        //    else
-        //    {
-        //        return Json(new
-        //        {
-        //            success = false,
-        //            isCategoryNameExist = isCategoryNameExist
-        //        });
-        //    }
-
-
-        //}
-
-
-        //[HttpPost]
-        //public JsonResult Delete(int id)
-        //{
-        //    var result = _productQuantityService.Deleted(id);
-        //    _productQuantityService.Save();
-        //    return Json(new
-        //    {
-        //        success = result
-        //    });
-        //}
-
-        //[HttpGet]
-        //public JsonResult GetAllPaging(CategoryViewModelSearch categoryViewModelSearch)
-        //{
-        //    var data = _productQuantityService.GetAllPaging(categoryViewModelSearch);
-        //    return Json(new { data = data });
-        //}
     }
 }
