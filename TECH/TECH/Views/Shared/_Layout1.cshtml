@@ -1,0 +1,423 @@
+﻿@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@using TECH.Areas.Admin.Models
+@{
+    var userString = Context.Session.GetString("UserInfor");
+    var user = new UserModelView();
+    if (userString != null)
+    {
+        user = JsonConvert.DeserializeObject<UserModelView>(userString);
+    }
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Cửa hàng điện thoại Hiếu Táo">
+    <meta name="author" content="HieuTao">
+    <meta name="keywords" content="website, mobile app, apple, ios, iphone, ipad, applewatch, imac, dienthoai, hieutao">
+
+    <title>Cửa hàng điện thoại Hiếu Táo</title>
+
+    <link rel="canonical" href="">
+    <link rel="icon" href="https://hieutao.com/public/images/logo.jpg">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+    @* <link rel="stylesheet" href="/public/admin/css/bootstrap.css">*@
+    @*<link rel="stylesheet" href="/public/admin/css/bootstrap.css">*@
+    <link rel="stylesheet" href="/public/customer/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/public/admin/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/public/customer/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/public/customer/css/magnific-popup.css">
+    <link rel="stylesheet" href="/public/customer/css/aos.css">
+    <link rel="stylesheet" href="/public/customer/css/ionicons.min.css">
+    <link rel="stylesheet" href="/public/customer/css/flaticon.css">
+    <link rel="stylesheet" href="/public/customer/css/icomoon.css">
+    <link rel="stylesheet" href="/public/customer/css/style.css">
+    <link rel="stylesheet" href="/public/customer/css/custom-style.css">
+     <link rel="stylesheet" href="/public/star-rating-js-main/dist/star-rating.css">
+     @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />*@
+    <style>
+        .star-color {
+            color: #fcc72a;
+            font-size: 15px;
+        }
+        .ftco-navbar-light{
+            z-index: 6 !important;
+        }
+        .txt-search{
+           border-radius: 12px 0px 0px 12px !important;
+        }
+        .btn-search-stl{
+            border-radius: 0px 12px 12px 0px !important;
+        }
+    </style>
+     @RenderSection("Styles", required: false)
+</head>
+
+<body class="goto-here">
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v14.0" nonce="4U5DYTXU"></script>
+
+    <div id="app">
+        <nav id="ftco-navbar" class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light">
+            <div class="container">
+                <a href="/home" class="navbar-brand"><img src="/web/logo-web.jpg" alt="" class="navbar-brand img-header"></a> <button type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler">
+                    <span class="oi oi-menu"></span> Menu
+                </button>
+                <div id="ftco-nav" class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active"><a href="/" class="nav-link">Trang chủ</a></li>
+                        <li class="nav-item"><a href="/gioi-thieu" class="nav-link">Giới thiệu</a></li>
+                        <li class="nav-item"><a href="/san-pham" class="nav-link">Sản phẩm</a></li>
+                       @* <li class="nav-item dropdown">
+                            @await Component.InvokeAsync("CategoryMenuComponent")
+                        </li>*@
+                        <li class="nav-item"><a href="/bai-viet" class="nav-link">Bài viết</a></li>
+                        <li class="nav-item"><a href="/lien-he-voi-chung-toi" class="nav-link">Liên hệ</a></li>
+                        @if (user != null && user.role.HasValue && user.role.Value == 1)
+                        {
+                            <li class="nav-item cta cta-colored">
+                                <a href="/gio-hang" title="Giỏ hàng" class="nav-link">
+                                    GIỎ HÀNG
+                                </a>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">
+                                    XIN
+                                    CHÀO, @user.full_name
+                                </a>
+                                <div aria-labelledby="dropdown04" class="dropdown-menu">
+                                    <a href="/thong-tin-ca-nhan" class="dropdown-item">Thông tin cá nhân</a>
+                                    <a href="/lich-su-don-hang" class="dropdown-item">Lịch sử đơn hàng</a>
+                                    <a href="/doi-mat-khau" class="dropdown-item">Đổi mật khẩu</a>
+                                   
+                                    <a href="/dang-xuat" class="dropdown-item">Đăng xuất</a>
+                                </div>
+                            </li>
+                        }
+                        else if (user != null && user.role.HasValue && user.role.Value == 0)
+                        {
+
+                            <li class="nav-item dropdown">
+                                <a href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">
+                                    XIN
+                                    CHÀO, Quản trị viên
+                                </a>
+                                <div aria-labelledby="dropdown04" class="dropdown-menu">
+                                    <a href="/admin" class="dropdown-item">Trang quản trị</a>
+                                   
+                                    <a href="/dang-xuat" class="dropdown-item">Đăng xuất</a>
+                                </div>
+                            </li>
+                        }
+                        else
+                        {
+                            @*<li class="nav-item cta cta-colored">
+                        <a href="/dang-nhap" class="nav-link" style="padding-right: 0px;">
+                        ĐĂNG NHẬP&nbsp;/
+                        </a>
+                        </li>
+                        <li class="nav-item cta cta-colored">
+                        <a href="/dang-ky" class="nav-link" style="padding-left: 0px;">
+                        &nbsp;ĐĂNG KÝ
+                        </a>
+                        </li>*@
+
+                            <li class="nav-item dropdown">
+
+                                <a href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">
+                                   TÀI KHOẢN
+                                </a>
+
+                                <div aria-labelledby="dropdown04" class="dropdown-menu">
+                                      <a href="/dang-nhap" class="dropdown-item">Đăng nhập</a>
+                                    <a href="/dang-ky" class="dropdown-item">Đăng ký</a>
+
+                                </div>
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <nav class="ftco-navbar-light" style="padding-bottom: 10px;">
+            <div data-v-7f97b62c="" class="container">
+                <div data-v-7f97b62c="" class="input-group mb-3">
+                    <input data-v-7f97b62c="" type="text" placeholder="Tìm kiếm sản phẩm..." aria-describedby="basic-addon2" class="form-control search-stl txt-search">
+                    <div data-v-7f97b62c="" class="input-group-append"><button data-v-7f97b62c="" class="btn btn-block btn-primary form-control search-stl btn-search-stl"><i data-v-7f97b62c="" aria-hidden="true" class="ion-ios-search"></i></button></div>
+                </div>
+            </div>
+        </nav>      
+        @RenderBody()     
+    </div>
+    <!-------- END CONTENT -------->
+    <!-------- FOOTER -------->
+    <footer class="ftco-footer bg-dark ftco-section">
+        <div class="container">
+            <div class="row">
+                <div class="mouse">
+                    <a href="#" class="mouse-icon">
+                        <div class="mouse-wheel"><span class="ion-ios-arrow-up"></span></div>
+                    </a>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2" style="color: #fff; font-weight: bold">Hiếu Táo</h2>
+                        <p style="color: #fff">
+                            Hiếu Táo là cửa hàng bán lẻ chuyên về các dòng sản phẩm của Apple. Chúng tôi luôn mang cho bạn những dòng
+                            sản phẩm chất lượng nhất.
+                        </p>
+                        <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+                            <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                            <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                            <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4 ml-md-5" style="margin-left: unset !important;">
+                        <h2 class="ftco-heading-2" style="color: #fff; font-weight: bold">Điều khoản</h2>
+                        <ul class="list-unstyled">
+                            <li><a href="#" class="py-2 d-block" style="color: #fff">Chính sách bảo mật</a></li>
+                            <li><a href="#" class="py-2 d-block" style="color: #fff">Chính sách thanh toán</a></li>
+                            <li><a href="#" class="py-2 d-block" style="color: #fff">Điều khoản sử dụng</a></li>
+                            <li><a href="#" class="py-2 d-block" style="color: #fff">Giải quyết khiếu nại</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2" style="color: #fff; font-weight: bold">Liên hệ</h2>
+                        <div class="block-23 mb-3">
+                            <ul>
+                                <li>
+                                    <a href="#">
+                                        <span class="icon icon-location-arrow" style="color: #fff"></span>
+                                        <span class="text" style="color: #fff">61A Phước Hòa, Suối Đá, Dương Minh Châu, Tây Ninh</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="icon icon-phone" style="color: #fff"></span>
+                                        <span class="text" style="color: #fff">+84 878 707 070</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="icon icon-phone" style="color: #fff"></span>
+                                        <span class="text" style="color: #fff">+84 585 556 677</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="icon icon-envelope" style="color: #fff"></span>
+                                        <span class="text" style="color: #fff">hieutaostore.official@gmail.com</span>
+                                    </a>
+                                </li>
+                                <hr>
+                                <div style="display: flex; align-items: center">
+                                    <a href="https://www.facebook.com/pages/Hi%E1%BA%BFu%20T%C3%A1o%20Mobile/104103604802769"
+                                       style="color: blue; width: 50px; height: 50px; text-align: center; padding-top: 10px; background-color: #fff; border-radius: 10px; margin-right: 20px">
+                                        <i class="icon icon-facebook" style="font-size: 2rem"></i>
+                                    </a>
+                                    <a href="#"
+                                       style="color: red; width: 50px; height: 50px; text-align: center; padding-top: 10px; background-color: #fff; border-radius: 10px; margin-right: 20px">
+                                        <i class="icon icon-youtube" style="font-size: 2rem"></i>
+                                    </a>
+                                    <a href="mailto:hieutaostore.official@gmail.com"
+                                       style="color: orange; width: 50px; height: 50px; text-align: center; padding-top: 10px; background-color: #fff; border-radius: 10px; margin-right: 20px">
+                                        <i class="icon icon-envelope" style="font-size: 2rem"></i>
+                                    </a>
+                                    <a href="#"
+                                       style="color: #17a2b8; width: 50px; height: 50px; text-align: center; padding-top: 10px; background-color: #fff; border-radius: 10px; margin-right: 20px">
+                                        <i class="icon icon-telegram" style="font-size: 2rem"></i>
+                                    </a>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4 facebook-page">
+                        <aside class="widget-area footer-4-area mb-2">
+                            <section id="nav_menu-4" class="widget wp-bp-footer-widget widget_nav_menu mt-5">
+                                <div class="fb-page" data-href="https://www.facebook.com/Hi%E1%BA%BFu-t%C3%A1o-105599042282331" data-tabs="" data-width="" data-height=""
+                                     data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+                                    <blockquote cite="https://www.facebook.com/Hi%E1%BA%BFu-t%C3%A1o-105599042282331" class="fb-xfbml-parse-ignore">
+                                        <a href="https://www.facebook.com/Hi%E1%BA%BFu-t%C3%A1o-105599042282331">Dịch Vụ Xe Du Lịch Tây Ninh</a>
+                                    </blockquote>
+                                </div>
+                            </section>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+
+                    <p style="color: #fff">
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        Copyright &copy;<script>
+                                            document.write(new Date().getFullYear());
+                        </script> All rights reserved | SEP25PM02 @*<i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>*@
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-------- END FOOTER -------->
+    <!-------- LOADER -------->
+    <div id="ftco-loader" class="show fullscreen">
+        <svg class="circular" width="48px" height="48px">
+            <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+            <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
+        </svg>
+    </div>
+    <!-------- END LOADER -------->
+    <script src="/public/customer/js/jquery.min.js"></script>
+    @*<script src="/public/admin/js/jquery-3.4.1.js"></script>*@
+    
+    <script src="/public/customer/js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="/public/customer/js/popper.min.js"></script>
+    @* <script src="/public/admin/js/bootstrap.min.js"></script>*@
+    <script src="/public/customer/js/bootstrap.min.js"></script>
+    <script src="/public/customer/js/jquery.easing.1.3.js"></script>
+    <script src="/public/customer/js/jquery.waypoints.min.js"></script>
+    <script src="/public/customer/js/jquery.stellar.min.js"></script>
+    <script src="/public/customer/js/owl.carousel.min.js"></script>
+    <script src="/public/customer/js/jquery.magnific-popup.min.js"></script>
+    <script src="/public/customer/js/aos.js"></script>
+    <script src="/public/customer/js/jquery.animateNumber.min.js"></script>
+    <script src="/public/customer/js/bootstrap-datepicker.js"></script>
+    <script src="/public/customer/js/scrollax.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="/public/customer/js/main.js"></script>
+    <script src="~/admin/plugins/jquery-validation/jquery.validate.min.js"></script>
+     <script src="~/share/tedu.js"></script>
+     <script src="~/js/shared/shared.js"></script>
+    @*<script src="/public/js/app.js"></script>*@
+    @RenderSection("Scripts", required: false)
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $(".btn-search-stl").click(function(){
+                var textSearch = $(".txt-search").val();
+                window.location.href = '/san-pham-tim-kiem/' + textSearch;
+               // Search(textSearch);
+            })
+
+            $(".txt-search").keypress(function (e) {
+              if (e.which == 13) {
+                var textSearch = $(".txt-search").val();
+                window.location.href = '/san-pham-tim-kiem/' + textSearch;
+                return false;    //<---- Add this line
+              }
+            });
+
+
+            $('.home-slider-2').owlCarousel({
+                loop:true,
+                autoplay: true,
+                margin: 0,
+                //animateOut: 'fadeOut',
+                //animateIn: 'fadeIn',
+                autoplayTimeout: 5000,
+                autoplaySpeed: 4000,
+                nav: true,
+                //autoplayHoverPause: false,
+                items: 1,
+                navText: ["<img src='https://bizweb.dktcdn.net/100/112/815/themes/152840/assets/back-arrow.png?1479748613431'>","<img src='https://bizweb.dktcdn.net/100/112/815/themes/152840/assets/back-arrow.png?1479748613431'>"],
+                dots: true,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: 1
+                    },
+                    1000: {
+                        items: 1
+                    }
+                }
+            });
+
+        })
+
+     
+
+    </script>
+  <!-- Messenger Plugin chat Code -->
+    <div id="fb-root"></div>
+
+    <!-- Your Plugin chat code -->
+    <div id="fb-customer-chat" class="fb-customerchat">
+    </div>
+
+    <script>
+      var chatbox = document.getElementById('fb-customer-chat');
+      chatbox.setAttribute("page_id", "105890811713776");
+      chatbox.setAttribute("attribution", "biz_inbox");
+    </script>
+
+    <!-- Your SDK code -->
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          xfbml            : true,
+          version          : 'v14.0'
+        });
+      };
+
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+
+<a href="https://chat.zalo.me/?phone=0916252697" id="linkzalo" target="_blank" rel="noopener noreferrer">
+  @* <div id="fcta-zalo-tracking" class="fcta-zalo-mess">
+      <span id="fcta-zalo-tracking">Chat hỗ trợ</span>
+   </div>*@
+   <div class="fcta-zalo-vi-tri-nut">
+      <div id="fcta-zalo-tracking" class="fcta-zalo-nen-nut">
+         <div id="fcta-zalo-tracking" class="fcta-zalo-ben-trong-nut">
+             @*<img src="/web/7044033_zalo_icon.svg"/>*@
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460.1 436.6">
+               <path fill="currentColor" class="st0" d="M82.6 380.9c-1.8-.8-3.1-1.7-1-3.5 1.3-1 2.7-1.9 4.1-2.8 13.1-8.5 25.4-17.8 33.5-31.5 6.8-11.4 5.7-18.1-2.8-26.5C69 269.2 48.2 212.5 58.6 145.5 64.5 107.7 81.8 75 107 46.6c15.2-17.2 33.3-31.1 53.1-42.7 1.2-.7 2.9-.9 3.1-2.7-.4-1-1.1-.7-1.7-.7-33.7 0-67.4-.7-101 .2C28.3 1.7.5 26.6.6 62.3c.2 104.3 0 208.6 0 313 0 32.4 24.7 59.5 57 60.7 27.3 1.1 54.6.2 82 .1 2 .1 4 .2 6 .2H290c36 0 72 .2 108 0 33.4 0 60.5-27 60.5-60.3v-.6-58.5c0-1.4.5-2.9-.4-4.4-1.8.1-2.5 1.6-3.5 2.6-19.4 19.5-42.3 35.2-67.4 46.3-61.5 27.1-124.1 29-187.6 7.2-5.5-2-11.5-2.2-17.2-.8-8.4 2.1-16.7 4.6-25 7.1-24.4 7.6-49.3 11-74.8 6zm72.5-168.5c1.7-2.2 2.6-3.5 3.6-4.8 13.1-16.6 26.2-33.2 39.3-49.9 3.8-4.8 7.6-9.7 10-15.5 2.8-6.6-.2-12.8-7-15.2-3-.9-6.2-1.3-9.4-1.1-17.8-.1-35.7-.1-53.5 0-2.5 0-5 .3-7.4.9-5.6 1.4-9 7.1-7.6 12.8 1 3.8 4 6.8 7.8 7.7 2.4.6 4.9.9 7.4.8 10.8.1 21.7 0 32.5.1 1.2 0 2.7-.8 3.6 1-.9 1.2-1.8 2.4-2.7 3.5-15.5 19.6-30.9 39.3-46.4 58.9-3.8 4.9-5.8 10.3-3 16.3s8.5 7.1 14.3 7.5c4.6.3 9.3.1 14 .1 16.2 0 32.3.1 48.5-.1 8.6-.1 13.2-5.3 12.3-13.3-.7-6.3-5-9.6-13-9.7-14.1-.1-28.2 0-43.3 0zm116-52.6c-12.5-10.9-26.3-11.6-39.8-3.6-16.4 9.6-22.4 25.3-20.4 43.5 1.9 17 9.3 30.9 27.1 36.6 11.1 3.6 21.4 2.3 30.5-5.1 2.4-1.9 3.1-1.5 4.8.6 3.3 4.2 9 5.8 14 3.9 5-1.5 8.3-6.1 8.3-11.3.1-20 .2-40 0-60-.1-8-7.6-13.1-15.4-11.5-4.3.9-6.7 3.8-9.1 6.9zm69.3 37.1c-.4 25 20.3 43.9 46.3 41.3 23.9-2.4 39.4-20.3 38.6-45.6-.8-25-19.4-42.1-44.9-41.3-23.9.7-40.8 19.9-40 45.6zm-8.8-19.9c0-15.7.1-31.3 0-47 0-8-5.1-13-12.7-12.9-7.4.1-12.3 5.1-12.4 12.8-.1 4.7 0 9.3 0 14v79.5c0 6.2 3.8 11.6 8.8 12.9 6.9 1.9 14-2.2 15.8-9.1.3-1.2.5-2.4.4-3.7.2-15.5.1-31 .1-46.5z"></path>
+            </svg>
+         </div>
+        @* <div id="fcta-zalo-tracking" class="fcta-zalo-text">Chat ngay</div>*@
+      </div>
+   </div>
+</a>
+<style>
+    .fcta-zalo-mess{
+        display:none;
+    }
+   @@keyframes zoom{0%{transform:scale(.5);opacity:0}50%{opacity:1}to{opacity:0;transform:scale(1)}}@@keyframes lucidgenzalo{0% to{transform:rotate(-25deg)}50%{transform:rotate(25deg)}}.jscroll-to-top{bottom:100px}.fcta-zalo-ben-trong-nut svg path{fill:#fff}.fcta-zalo-vi-tri-nut{position:fixed;bottom:102px;right:31px;z-index:999}.fcta-zalo-nen-nut,div.fcta-zalo-mess{box-shadow:0 1px 6px rgba(0,0,0,.06),0 2px 32px rgba(0,0,0,.16)}.fcta-zalo-nen-nut{width:50px;height:50px;text-align:center;color:#fff;background:#0068ff;border-radius:50%;position:relative}.fcta-zalo-nen-nut::after,.fcta-zalo-nen-nut::before{content:"";position:absolute;border:1px solid #0068ff;background:#0068ff80;z-index:-1;left:-20px;right:-20px;top:-20px;bottom:-20px;border-radius:50%;animation:zoom 1.9s linear infinite}.fcta-zalo-nen-nut::after{animation-delay:.4s}.fcta-zalo-ben-trong-nut,.fcta-zalo-ben-trong-nut i{transition:all 1s}.fcta-zalo-ben-trong-nut{position:absolute;text-align:center;width:60%;height:60%;left:10px;bottom:34px;line-height:70px;font-size:25px;opacity:1}.fcta-zalo-ben-trong-nut i{animation:lucidgenzalo 1s linear infinite}.fcta-zalo-nen-nut:hover .fcta-zalo-ben-trong-nut,.fcta-zalo-text{opacity:0}.fcta-zalo-nen-nut:hover i{transform:scale(.5);transition:all .5s ease-in}.fcta-zalo-text a{text-decoration:none;color:#fff}.fcta-zalo-text{position:absolute;top:6px;text-transform:uppercase;font-size:12px;font-weight:700;transform:scaleX(-1);transition:all .5s;line-height:1.5}.fcta-zalo-nen-nut:hover .fcta-zalo-text{transform:scaleX(1);opacity:1}div.fcta-zalo-mess{position:fixed;bottom:29px;right:58px;z-index:99;background:#fff;padding:7px 25px 7px 15px;color:#0068ff;border-radius:50px 0 0 50px;font-weight:700;font-size:15px}.fcta-zalo-mess span{color:#0068ff!important}
+   span#fcta-zalo-tracking{font-family:Roboto;line-height:1.5}.fcta-zalo-text{font-family:Roboto}
+</style>
+
+<script>
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) { document.getElementById("linkzalo").href = "https://zalo.me/0916252697"; }
+</script>
+
+
+
+
+</body>
+
+</html>

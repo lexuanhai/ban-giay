@@ -2086,3 +2086,4 @@ C:\hoc-tap\ban-giay\TECH\TECH\obj\Debug\net6.0\refint\TECH.dll
 C:\hoc-tap\ban-giay\TECH\TECH\obj\Debug\net6.0\TECH.pdb
 C:\hoc-tap\ban-giay\TECH\TECH\obj\Debug\net6.0\TECH.genruntimeconfig.cache
 C:\hoc-tap\ban-giay\TECH\TECH\obj\Debug\net6.0\ref\TECH.dll
+E:\Hoc-Tap\ban giay\TECH\TECH\obj\Debug\net6.0\scopedcss\Views\Shared\_Layout1.cshtml.rz.scp.css

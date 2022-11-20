@@ -102,9 +102,15 @@
                 var lstUpdateQuantity = [];
                 for (var i = 0; i < self.ListUpdateQuantity.length; i++) {
                     var item = self.ListUpdateQuantity[i];
-                    lstUpdateQuantity = self.GetQuantityView(item.toString());                   
+                    var quantityView = self.GetQuantityView(item.toString());
+                    if (quantityView != null) {
+                        lstUpdateQuantity.push(quantityView);
+                    }
                 }
-                self.UpdateServerQuantity(lstUpdateQuantity);
+                if (lstUpdateQuantity != null && lstUpdateQuantity.length > 0) {
+                    console.log(lstUpdateQuantity);
+                    self.UpdateServerQuantity(lstUpdateQuantity);
+                }                
             }
             if (self.ListDeletedQuantity != null && self.ListDeletedQuantity.length > 0) {
                 self.DeletedServerQuantity(self.ListDeletedQuantity);
@@ -112,25 +118,71 @@
         })
     }
     self.GetQuantityView = function (className) {
-        var lstAddQuantity = [];
-        var classNameCustom = "#quantity #tblData " + "." + className;
-        $(classNameCustom).each(function () {
-            var id = $(this).attr("data-data-quantity");
+        if (className == "new") {
+            var lstAddQuantity = [];
+            var classNameCustom = "#quantity #tblData " + "." + className;
+            $(classNameCustom).each(function () {
+                var id = $(this).attr("data-quantity");
+                if (id != null && id != "") {
+                    id = parseInt(id);
+                }
+                var color = $(this).find(".colors").val();
+                if (color != null && color != "") {
+                    color = parseInt(color);
+                }
+                var size = $(this).find(".sizes").val();
+                if (size != null && size != "") {
+                    size = parseInt(size);
+                }
+                var totalimport = $(this).find(".totalimport").val();
+                if (totalimport != null && totalimport != "") {
+                    totalimport = parseInt(totalimport);
+                }
+                lstAddQuantity.push({
+                    Id: id,
+                    AppSizeId: size,
+                    ColorId: color,
+                    TotalImported: totalimport,
+                    ProductId: self.ProductIdQuantity
+                });
+            });
+            return lstAddQuantity;
+        }
+        else {
+            var lstAddQuantity = {
+                Id: 0,
+                AppSizeId: 0,
+                ColorId: 0,
+                TotalImported: 0,
+                ProductId: 0
+            };
+            var classNameCustom = "#quantity #tblData " + "." + className;
+            var id = $(classNameCustom).attr("data-quantity");
             if (id != null && id != "") {
                 id = parseInt(id);
             }
-            var color = $(this).find(".colors").val();
-            var size = $(this).find(".sizes").val();
-            var totalimport = $(this).find(".totalimport").val();
-            lstAddQuantity.push({
+            var color = $(classNameCustom).find(".colors").val();
+            if (color != null && color != "") {
+                color = parseInt(color);
+            }
+            var size = $(classNameCustom).find(".sizes").val();
+            if (size != null && size != "") {
+                size = parseInt(size);
+            }
+            var totalimport = $(classNameCustom).find(".totalimport").val();
+            if (totalimport != null && totalimport != "") {
+                totalimport = parseInt(totalimport);
+            }
+            lstAddQuantity={
                 Id: id,
                 AppSizeId: size,
                 ColorId: color,
                 TotalImported: totalimport,
                 ProductId: self.ProductIdQuantity
-            });
-        });
-        return lstAddQuantity;
+            };
+            return lstAddQuantity;
+        }
+       
     }
     self.AddRowHtml = function () {
         var index = 0;
@@ -289,13 +341,13 @@
 
     };
 
-    self.AddQuantity = function (quantities) {
+    self.AddQuantity = function (_quantities) {
         $.ajax({
             url: '/Admin/ProductQuantity/Add',
             type: 'POST',
             dataType: 'json',
             data: {
-                quantities: quantities
+                quantities: _quantities
             },
             beforeSend: function () {
                 //Loading('show');
@@ -306,6 +358,9 @@
             success: function (response) {
                 if (response.success) {                 
                     tedu.notify('Thêm mới dữ liệu thành công', 'success');
+                    if (self.ProductIdQuantity > 0) {
+                        self.Quantity(self.ProductIdQuantity);
+                    }
                    /* window.location.href = '/admin/quan-ly-san-pham';*/
                 }
                 else {
@@ -314,13 +369,13 @@
             }
         })
     }
-    self.UpdateServerQuantity = function (quantities) {
+    self.UpdateServerQuantity = function (_quantities) {
         $.ajax({
             url: '/Admin/ProductQuantity/Update',
             type: 'POST',
             dataType: 'json',
             data: {
-                quantities: quantities
+                quantities: _quantities
             },
             beforeSend: function () {
                 //Loading('show');
@@ -331,6 +386,9 @@
             success: function (response) {
                 if (response.success) {
                     tedu.notify('Cập nhật dữ liệu thành công', 'success');
+                    if (self.ProductIdQuantity > 0) {
+                        self.Quantity(self.ProductIdQuantity);
+                    }                   
                     //window.location.href = '/admin/quan-ly-san-pham';
                 }
                 else {
@@ -579,7 +637,7 @@
                 if (response.success) {
                     tedu.notify('Cập nhật dữ liệu thành công', 'success');
                     self.GetDataPaging(true);
-                    /*window.location.href = '/admin/quan-ly-san-pham';*/
+                    window.location.href = '/admin/quan-ly-san-pham';
                 }
 
             }
