@@ -9,26 +9,25 @@
         user = JsonConvert.DeserializeObject<UserModelView>(userString);
     }
 }
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="plugins/animate/animate.min.css">
-    <link rel="stylesheet" href="plugins/fontawesome/all.css">
-    <link rel="stylesheet" href="plugins/webfonts/font.css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css" type="text/css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="/website/plugins/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/website/plugins/animate/animate.min.css">
+    <link rel="stylesheet" href="/website/plugins/fontawesome/all.css">
+    <link rel="stylesheet" href="/website/plugins/webfonts/font.css">
+    <link rel="stylesheet" href="/website/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/website/css/owl.theme.default.min.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="/website/css/style.css">
 
     <!-- UIkit CSS -->
-    <link rel="stylesheet" href="plugins/uikit/uikit.min.css" />
+    <link rel="stylesheet" href="/website/plugins/uikit/uikit.min.css" />
 
     <title>Runner</title>
-
+    @RenderSection("Styles", required: false)
 </head>
 
 <body>
@@ -52,29 +51,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="product.html">SẢN PHẨM</a>
-                    </li>
-                    <!-- <li class="nav-item lisanpham">
-                        <a class="nav-link" href="detailproduct.html">SẢN PHẨM
-              <i class="fa fa-chevron-down" aria-hidden="true"></i>
-            </a>
-                        <ul class="sub_menu">
-                            <li class="">
-                                <a href="detailproduct.html" title="Sản phẩm - Style 1"> 
-                  Sản phẩm - Style 1
-                </a>
-                            </li>
-                            <li class="">
-                                <a href="detailproduct.html" title="Sản phẩm - Style 2"> 
-                  Sản phẩm - Style 2
-                </a>
-                            </li>
-                            <li class="">
-                                <a href="detailproduct.html" title="Sản phẩm - Style 3"> 
-                  Sản phẩm - Style 3
-                </a>
-                            </li>
-                        </ul>
-                    </li> -->
+                    </li>                    
                     <li class="nav-item">
                         <a class="nav-link" href="introduce.html">GIỚI THIỆU</a>
                     </li>
@@ -86,9 +63,8 @@
                     </li>
                 </ul>
             </div>
-            <div id="offcanvas-flip1" uk-offcanvas="flip: true; overlay: true">
-                <div class="uk-offcanvas-bar" style="background: white;
-        width: 100%;">
+            @*<div id="offcanvas-flip1" uk-offcanvas="flip: true; overlay: true">
+                <div class="uk-offcanvas-bar" style="background: white; width: 100%;">
 
                     <button class="uk-offcanvas-close" style="color:#272727" type="button" uk-close></button>
                     <h3 style="font-size: 14px;
@@ -129,7 +105,7 @@
                     </div>
 
                 </div>
-            </div>
+            </div>*@
             <div id="offcanvas-flip" uk-offcanvas="flip: true; overlay: true">
                 <div class="uk-offcanvas-bar" style="    background: white;
             width: 350px;">
@@ -158,7 +134,7 @@
                 </div>
             </div>
             <div id="offcanvas-flip2" uk-offcanvas="flip: true; overlay: true">
-                <div class="uk-offcanvas-bar" style="    background: white;
+               <div class="uk-offcanvas-bar" style="    background: white;
             width: 350px;">
 
                     <button class="uk-offcanvas-close" style="color:#272727" type="button" uk-close></button>
@@ -174,7 +150,7 @@
                                 <tbody>
                                     <tr class="item_1">
                                         <td class="img">
-                                            <a href="" title="Nike Air Max 90 Essential &quot;Grape&quot;"><img src="images/shoes/1.jpg" alt="/products/nike-air-max-90-essential-grape"></a>
+                                            <a href="" title="Nike Air Max 90 Essential &quot;Grape&quot;"><img src="/website/images/shoes/1.jpg" alt="/products/nike-air-max-90-essential-grape"></a>
                                         </td>
                                         <td>
                                             <a class="pro-title-view" style="color: #272727" href="" title="Nike Air Max 90 Essential &quot;Grape&quot;">Nike Air Max 90 Essential "Grape"</a>
@@ -215,10 +191,10 @@
                 <a href="#" class="" uk-toggle="target: #offcanvas-flip">
                     <i class="fas fa-search" style="color: black"></i>
                 </a>
-
                 <a style="color: #272727" href="#" uk-toggle="target: #offcanvas-flip2">
                     <i class="fas fa-shopping-cart"></i>
                 </a>
+
                 <button class="navbar-toggler" type="button" uk-toggle="target: #offcanvas-flip1" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -227,12 +203,13 @@
         </div>
 
     </nav>
+    @RenderBody() 
     <!-- Owl-Carousel -->
-    <div class="owl-carousel owl-theme owl-carousel-setting">
-        <div class="item"><img src="images/slideshow_1.jpg" class="d-block w-100" alt="..."></div>
-        <div class="item"><img src="images/slideshow_2.jpg" class="d-block w-100" alt="..."></div>
-    </div>
-
+   @* <div class="owl-carousel owl-theme owl-carousel-setting">
+        <div class="item"><img src="/website/images/slideshow_1.jpg" class="d-block w-100" alt="..."></div>
+        <div class="item"><img src="/website/images/slideshow_2.jpg" class="d-block w-100" alt="..."></div>
+    </div>*@
+        
     <!--Content-->
     <div class="content">
         <div class="container">
@@ -252,8 +229,8 @@
                     <div class="product-block">
                         <div class="product-img fade-box">
                             <a href="#" title="Adidas EQT Cushion ADV" class="img-resize">
-                                <img src="images/shoes/801740_1_e4adfa6d09b7468a8c9fb21bf8e02bd4_medium (1).jpg" alt="Adidas EQT Cushion ADV" class="lazyloaded">
-                                <img src="images/shoes/shoes fade 1.jpg" alt="Adidas EQT Cushion ADV" class="lazyloaded">
+                                <img src="/website//website/images/shoes/801740_1_e4adfa6d09b7468a8c9fb21bf8e02bd4_medium (1).jpg" alt="Adidas EQT Cushion ADV" class="lazyloaded">
+                                <img src="/website//website/images/shoes/shoes fade 1.jpg" alt="Adidas EQT Cushion ADV" class="lazyloaded">
                             </a>
 
                         </div>
@@ -274,8 +251,8 @@
                     <div class="product-block">
                         <div class="product-img fade-box">
                             <a href="#" title="Adidas Nmd R1" class="img-resize">
-                                <img src="images/shoes/201493_1_017364c87c3e4802a8cda5259e3d5a95_grande.jpg" alt="Adidas Nmd R1" class="lazyloaded">
-                                <img src="images/shoes/shoes fade 2.jpg" alt="Adidas Nmd R1" class="lazyloaded">
+                                <img src="/website/images/shoes/201493_1_017364c87c3e4802a8cda5259e3d5a95_grande.jpg" alt="Adidas Nmd R1" class="lazyloaded">
+                                <img src="/website/images/shoes/shoes fade 2.jpg" alt="Adidas Nmd R1" class="lazyloaded">
                             </a>
 
                         </div>
@@ -296,8 +273,8 @@
                     <div class="product-block">
                         <div class="product-img fade-box">
                             <a href="#" title="Adidas PW Solar HU NMD" class="img-resize">
-                                <img src="images/shoes/805266_02_b8b2cdd1782246febf8879a44a7e5021_grande.jpg" alt="Adidas PW Solar HU NMD" class="lazyloaded">
-                                <img src="images/shoes/shoes fade 3.jpg" alt="Adidas PW Solar HU NMD" class="lazyloaded">
+                                <img src="/website/images/shoes/805266_02_b8b2cdd1782246febf8879a44a7e5021_grande.jpg" alt="Adidas PW Solar HU NMD" class="lazyloaded">
+                                <img src="/website/images/shoes/shoes fade 3.jpg" alt="Adidas PW Solar HU NMD" class="lazyloaded">
                             </a>
 
                         </div>
@@ -318,8 +295,8 @@
                     <div class="product-block">
                         <div class="product-img fade-box">
                             <a href="#" title="Adidas Ultraboost W" class="img-resize">
-                                <img src="images/shoes/801432_01_b16d089f8bda434bacfe4620e8480be1_grande.jpg" alt="Adidas Ultraboost W" class="lazyloaded">
-                                <img src="images/shoes/shoes fade 4.jpg" alt="Adidas Ultraboost W" class="lazyloaded">
+                                <img src="/website/images/shoes/801432_01_b16d089f8bda434bacfe4620e8480be1_grande.jpg" alt="Adidas Ultraboost W" class="lazyloaded">
+                                <img src="/website/images/shoes/shoes fade 4.jpg" alt="Adidas Ultraboost W" class="lazyloaded">
                             </a>
 
                         </div>
@@ -342,8 +319,8 @@
                     <div class="product-block">
                         <div class="product-img fade-box">
                             <a href="#" title="Adidas Yeezy boost 350 v2" class="img-resize">
-                                <img class="lazyloaded" src="images/shoes/800502_01_e92c3b2bb8764b52a791846d84a3a360_grande.jpg" alt="Adidas Yeezy boost 350 v2">
-                                <img class="lazyloaded" src="images/shoes/shoes fade 5.jpg" alt="Adidas Yeezy boost 350 v2">
+                                <img class="lazyloaded" src="/website/images/shoes/800502_01_e92c3b2bb8764b52a791846d84a3a360_grande.jpg" alt="Adidas Yeezy boost 350 v2">
+                                <img class="lazyloaded" src="/website/images/shoes/shoes fade 5.jpg" alt="Adidas Yeezy boost 350 v2">
                             </a>
 
                         </div>
@@ -366,8 +343,8 @@
                     <div class="product-block">
                         <div class="product-img fade-box">
                             <a href="#" title="Adidas Yeezy Boost 700" class="img-resize">
-                                <img class="lazyloaded" src="images/shoes/802501_01_eccb69b5bcdf4ef5b209557ec6547774_grande.jpg" alt="Adidas Yeezy Boost 700">
-                                <img class="lazyloaded" src="images/shoes/shoes fade 6.jpg" alt="Adidas Yeezy Boost 700">
+                                <img class="lazyloaded" src="/website/images/shoes/802501_01_eccb69b5bcdf4ef5b209557ec6547774_grande.jpg" alt="Adidas Yeezy Boost 700">
+                                <img class="lazyloaded" src="/website/images/shoes/shoes fade 6.jpg" alt="Adidas Yeezy Boost 700">
                             </a>
 
                         </div>
@@ -388,8 +365,8 @@
                     <div class="product-block">
                         <div class="product-img fade-box">
                             <a href="#" title="Adidas Zx 4000 4d" class="img-resize">
-                                <img class="lazyloaded" src="images/shoes/806859_01_1ad7dd36e7b5403286b95a253e00718d_grande.jpg" alt="Adidas Zx 4000 4d">
-                                <img class="lazyloaded" src="images/shoes/shoes fade 7.jpg" alt="Adidas Zx 4000 4d">
+                                <img class="lazyloaded" src="/website/images/shoes/806859_01_1ad7dd36e7b5403286b95a253e00718d_grande.jpg" alt="Adidas Zx 4000 4d">
+                                <img class="lazyloaded" src="/website/images/shoes/shoes fade 7.jpg" alt="Adidas Zx 4000 4d">
                             </a>
 
                         </div>
@@ -410,8 +387,8 @@
                     <div class="product-block">
                         <div class="product-img fade-box">
                             <a href="#" title=" Ultra Boost" class="img-resize">
-                                <img class="lazyloaded" src="images/shoes/805338_01_eb7365e97d3f471d872159918a8526a9_grande.jpg" alt=" Ultra Boost">
-                                <img class="lazyloaded" src="images/shoes/shoes fade 8.jpg" alt=" Ultra Boost">
+                                <img class="lazyloaded" src="/website/images/shoes/805338_01_eb7365e97d3f471d872159918a8526a9_grande.jpg" alt=" Ultra Boost">
+                                <img class="lazyloaded" src="/website/images/shoes/shoes fade 8.jpg" alt=" Ultra Boost">
                             </a>
 
                         </div>
@@ -437,7 +414,7 @@
                         <div class="block-banner-category">
                             <a href="#" class="link-banner wrap-flex-align flex-column">
                                 <div class="fg-image fade-box">
-                                    <img class="lazyloaded" src="images/shoes/block_home_category1_grande.jpg" alt="Shoes">
+                                    <img class="lazyloaded" src="/website/images/shoes/block_home_category1_grande.jpg" alt="Shoes">
                                 </div>
                                 <figcaption class="caption_banner site-animation">
                                     <p>Bộ sưu tập</p>
@@ -452,7 +429,7 @@
                         <div class="block-banner-category">
                             <a href="#" class="link-banner wrap-flex-align flex-column">
                                 <div class="fg-image fade-box">
-                                    <img class="lazyloaded" src="images/shoes/block_home_category2_grande.jpg" alt="Shoes">
+                                    <img class="lazyloaded" src="/website/images/shoes/block_home_category2_grande.jpg" alt="Shoes">
                                 </div>
                                 <figcaption class="caption_banner site-animation">
                                     <p>Bộ sưu tập</p>
@@ -467,7 +444,7 @@
                         <div class="block-banner-category">
                             <a href="#" class="link-banner wrap-flex-align flex-column">
                                 <div class="fg-image">
-                                    <img class="lazyloaded" src="images/shoes/block_home_category3_grande.jpg" alt="Shoes">
+                                    <img class="lazyloaded" src="/website/images/shoes/block_home_category3_grande.jpg" alt="Shoes">
                                 </div>
                                 <figcaption class="caption_banner site-animation">
                                     <p></p>
@@ -502,8 +479,8 @@
                             <div class="product-block">
                                 <div class="product-img fade-box">
                                     <a href="#" title="Adidas Ultraboost W" class="img-resize">
-                                        <img src="images/shoes/801432_01_b16d089f8bda434bacfe4620e8480be1_grande.jpg" alt="Adidas Ultraboost W" class="lazyloaded">
-                                        <img src="images/shoes/shoes fade 4.jpg" alt="Adidas Ultraboost W" class="lazyloaded">
+                                        <img src="/website/images/shoes/801432_01_b16d089f8bda434bacfe4620e8480be1_grande.jpg" alt="Adidas Ultraboost W" class="lazyloaded">
+                                        <img src="/website/images/shoes/shoes fade 4.jpg" alt="Adidas Ultraboost W" class="lazyloaded">
                                     </a>
 
                                 </div>
@@ -526,8 +503,8 @@
                             <div class="product-block">
                                 <div class="product-img fade-box">
                                     <a href="#" title="Adidas Ultraboost W" class="img-resize">
-                                        <img src="images/shoes/801432_01_b16d089f8bda434bacfe4620e8480be1_grande.jpg" alt="Adidas Ultraboost W" class="lazyloaded">
-                                        <img src="images/shoes/shoes fade 4.jpg" alt="Adidas Ultraboost W" class="lazyloaded">
+                                        <img src="/website/images/shoes/801432_01_b16d089f8bda434bacfe4620e8480be1_grande.jpg" alt="Adidas Ultraboost W" class="lazyloaded">
+                                        <img src="/website/images/shoes/shoes fade 4.jpg" alt="Adidas Ultraboost W" class="lazyloaded">
                                     </a>
 
                                 </div>
@@ -550,8 +527,8 @@
                             <div class="product-block">
                                 <div class="product-img fade-box">
                                     <a href="#" title="Adidas Ultraboost W" class="img-resize">
-                                        <img src="images/shoes/801432_01_b16d089f8bda434bacfe4620e8480be1_grande.jpg" alt="Adidas Ultraboost W" class="lazyloaded">
-                                        <img src="images/shoes/shoes fade 4.jpg" alt="Adidas Ultraboost W" class="lazyloaded">
+                                        <img src="/website/images/shoes/801432_01_b16d089f8bda434bacfe4620e8480be1_grande.jpg" alt="Adidas Ultraboost W" class="lazyloaded">
+                                        <img src="/website/images/shoes/shoes fade 4.jpg" alt="Adidas Ultraboost W" class="lazyloaded">
                                     </a>
 
                                 </div>
@@ -574,8 +551,8 @@
                             <div class="product-block">
                                 <div class="product-img fade-box">
                                     <a href="#" title="Adidas Ultraboost W" class="img-resize">
-                                        <img src="images/shoes/801432_01_b16d089f8bda434bacfe4620e8480be1_grande.jpg" alt="Adidas Ultraboost W" class="lazyloaded">
-                                        <img src="images/shoes/shoes fade 4.jpg" alt="Adidas Ultraboost W" class="lazyloaded">
+                                        <img src="/website/images/shoes/801432_01_b16d089f8bda434bacfe4620e8480be1_grande.jpg" alt="Adidas Ultraboost W" class="lazyloaded">
+                                        <img src="/website/images/shoes/shoes fade 4.jpg" alt="Adidas Ultraboost W" class="lazyloaded">
                                     </a>
 
                                 </div>
@@ -598,8 +575,8 @@
                             <div class="product-block">
                                 <div class="product-img fade-box">
                                     <a href="#" title="Adidas Ultraboost W" class="img-resize">
-                                        <img src="images/shoes/801432_01_b16d089f8bda434bacfe4620e8480be1_grande.jpg" alt="Adidas Ultraboost W" class="lazyloaded">
-                                        <img src="images/shoes/shoes fade 4.jpg" alt="Adidas Ultraboost W" class="lazyloaded">
+                                        <img src="/website/images/shoes/801432_01_b16d089f8bda434bacfe4620e8480be1_grande.jpg" alt="Adidas Ultraboost W" class="lazyloaded">
+                                        <img src="/website/images/shoes/shoes fade 4.jpg" alt="Adidas Ultraboost W" class="lazyloaded">
                                     </a>
 
                                 </div>
@@ -622,8 +599,8 @@
                             <div class="product-block">
                                 <div class="product-img fade-box">
                                     <a href="#" title="Adidas Ultraboost W" class="img-resize">
-                                        <img src="images/shoes/801432_01_b16d089f8bda434bacfe4620e8480be1_grande.jpg" alt="Adidas Ultraboost W" class="lazyloaded">
-                                        <img src="images/shoes/shoes fade 4.jpg" alt="Adidas Ultraboost W" class="lazyloaded">
+                                        <img src="/website/images/shoes/801432_01_b16d089f8bda434bacfe4620e8480be1_grande.jpg" alt="Adidas Ultraboost W" class="lazyloaded">
+                                        <img src="/website/images/shoes/shoes fade 4.jpg" alt="Adidas Ultraboost W" class="lazyloaded">
                                     </a>
 
                                 </div>
@@ -670,7 +647,7 @@
                             <div class="post_item">
                                 <div class="post_featured">
                                     <a href="#" title="Adidas EQT Cushion ADV">
-                                        <img class="img-resize" style="padding-bottom:15px;" src="images/shoes/new-1.jpg" alt="Adidas Falcon nổi bật mùa Hè với phối màu color block">
+                                        <img class="img-resize" style="padding-bottom:15px;" src="/website/images/shoes/new-1.jpg" alt="Adidas Falcon nổi bật mùa Hè với phối màu color block">
                                     </a>
                                 </div>
                                 <div class="pro-text">
@@ -698,7 +675,7 @@
                             <div class="post_item">
                                 <div class="post_featured">
                                     <a href="#" title="Adidas EQT Cushion ADV">
-                                        <img class="img-resize" style="padding-bottom:15px;" src="images/shoes/new-2.jpg" alt="Saucony hồi sinh mẫu giày chạy bộ cổ điển của mình – Aya Runner">
+                                        <img class="img-resize" style="padding-bottom:15px;" src="/website/images/shoes/new-2.jpg" alt="Saucony hồi sinh mẫu giày chạy bộ cổ điển của mình – Aya Runner">
                                     </a>
                                 </div>
                                 <div class="pro-text">
@@ -727,7 +704,7 @@
                             <div class="post_item">
                                 <div class="post_featured">
                                     <a href="#" title="Adidas EQT Cushion ADV">
-                                        <img class="img-resize" style="padding-bottom:15px;" src="images/shoes/new-3.jpg" alt="Nike Vapormax Plus trở lại với sắc tím mộng mơ và thiết kế chuyển màu đẹp mắt">
+                                        <img class="img-resize" style="padding-bottom:15px;" src="/website/images/shoes/new-3.jpg" alt="Nike Vapormax Plus trở lại với sắc tím mộng mơ và thiết kế chuyển màu đẹp mắt">
                                     </a>
                                 </div>
                                 <div class="pro-text">
@@ -783,32 +760,32 @@
                     <ul class="shoes-gp">
                         <li>
                             <div class="gallery_item">
-                                <img class="img-resize" src="images/shoes/gallery_item_1.jpg" alt="">
+                                <img class="img-resize" src="/website/images/shoes/gallery_item_1.jpg" alt="">
                             </div>
                         </li>
                         <li>
                             <div class="gallery_item">
-                                <img class="img-resize" src="images/shoes/gallery_item_2.jpg" alt="">
+                                <img class="img-resize" src="/website/images/shoes/gallery_item_2.jpg" alt="">
                             </div>
                         </li>
                         <li>
                             <div class="gallery_item">
-                                <img class="img-resize" src="images/shoes/gallery_item_3.jpg" alt="">
+                                <img class="img-resize" src="/website/images/shoes/gallery_item_3.jpg" alt="">
                             </div>
                         </li>
                         <li>
                             <div class="gallery_item">
-                                <img class="img-resize" src="images/shoes/gallery_item_4.jpg" alt="">
+                                <img class="img-resize" src="/website/images/shoes/gallery_item_4.jpg" alt="">
                             </div>
                         </li>
                         <li>
                             <div class="gallery_item">
-                                <img class="img-resize" src="images/shoes/gallery_item_5.jpg" alt="">
+                                <img class="img-resize" src="/website/images/shoes/gallery_item_5.jpg" alt="">
                             </div>
                         </li>
                         <li>
                             <div class="gallery_item">
-                                <img class="img-resize" src="images/shoes/gallery_item_6.jpg" alt="">
+                                <img class="img-resize" src="/website/images/shoes/gallery_item_6.jpg" alt="">
                             </div>
                         </li>
                     </ul>
@@ -909,16 +886,42 @@
                 </div>
             </div>
         </footer>
-    </div>    
-  <script async defer crossorigin="anonymous" src="plugins/sdk.js"></script>
-  <script src="plugins/jquery-3.4.1/jquery-3.4.1.min.js"></script>
-  <script src="plugins/bootstrap/popper.min.js"></script>
-  <script src="plugins/bootstrap/bootstrap.min.js"></script>
-  <script src="plugins/owl.carousel/owl.carousel.min.js"></script>
-  <script src="js/home.js"></script>
-  <script src="js/script.js"></script>
-  <script src="plugins/uikit/uikit.min.js"></script>
-  <script src="plugins/uikit/uikit-icons.min.js"></script>
+    </div>
+    <!-- <div class="registratior_custom"> -->
+        <!-- <form action=""> -->
+            <!-- <div class="content"> -->
+                <!-- <div class="x-close"> -->
+                    <!-- <i class="fa fa-times"></i> -->
+                <!-- </div> -->
+                <!-- <h3>Nhận các ưu đãi cùng Runner</h3> -->
+                <!-- <p>Chúng tôi sẽ cập nhật các chương trình khuyến mãi mới đến bạn</p> -->
+                <!-- <ul> -->
+                    <!-- <li> -->
+                        <!-- <span>Giảm giá sản phẩm</span> -->
+                    <!-- </li> -->
+                    <!-- <li> -->
+                        <!-- <span>Sản phẩm mới</span> -->
+                    <!-- </li> -->
+                    <!-- <li> -->
+                        <!-- <span>Sản phẩm bán chạy/span> -->
+            <!-- </li> -->
+          <!-- </ul> -->
+          <!-- <input type="text" placeholder="Đăng kí nhận thông tin"> -->
+          <!-- <button class="button_register"><p>ĐĂNG KÍ</p></button> -->
+        <!-- </div> -->
+    <!-- </form> -->
+  <!-- </div> -->
+  <script async defer crossorigin="anonymous" src="/website/plugins/sdk.js"></script>
+  <script src="/website/plugins/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+  <script src="/website/plugins/bootstrap/popper.min.js"></script>
+  <script src="/website/plugins/bootstrap/bootstrap.min.js"></script>
+  <script src="/website/plugins/owl.carousel/owl.carousel.min.js"></script>
+  <script src="/website/js/home.js"></script>
+  <script src="/website/js/script.js"></script>
+  <script src="/website/plugins/uikit/uikit.min.js"></script>
+  <script src="/website/plugins/uikit/uikit-icons.min.js"></script>
+    @RenderSection("Scripts", required: false)
 </body>
 
 </html>
