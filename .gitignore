@@ -1,0 +1,10 @@
+/TECH/**/bin
+/TECH/**/Debug
+/TECH/.vs/TECH/v17/.suo
+/TECH/**/staticwebassets.pack.sentinel
+/TECH/.vs/TECH/FileContentIndex/*.vsidx
+/**/obj
+/TECH/.vs
+/TECH/TECH/TECH.csproj
+/TECH/TECH/TECH.csproj.user
+

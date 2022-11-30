@@ -62,6 +62,11 @@ namespace TECH.Areas.Admin.Models
         public int review_count { get; set; }
     }
 
+    public class ProductViewsComponent
+    {
+        public int status { get; set; }
+        public List<ProductModelView> Products { get; set; }
+    }
 
 
 }
