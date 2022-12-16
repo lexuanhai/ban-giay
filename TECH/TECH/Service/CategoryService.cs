@@ -24,6 +24,7 @@ namespace TECH.Service
         List<CategoryModelView> GetAll();
         int GetCount();
         List<CategoryModelView> GetAllMenu();
+        List<CategoryModelView> GetCategoryParent();
     }
 
     public class CategoryService : ICategoryService
@@ -57,7 +58,16 @@ namespace TECH.Service
 
             return data;
         }
+        public List<CategoryModelView> GetCategoryParent()
+        {
+            var data = _categoryRepository.FindAll(c=>c.partentId == null).Select(c => new CategoryModelView()
+            {
+                id = c.id,
+                name = c.name
+            }).ToList();
 
+            return data;
+        }
         public bool IsCategoryNameExist(string name)
         {
             var data = _categoryRepository.FindAll().Any(p => p.name == name);
@@ -195,6 +205,7 @@ namespace TECH.Service
                     status = c.status,
                     created_at = c.created_at,
                     updated_at = c.updated_at,
+                    partentId =c.partentId,                   
                 }).ToList();
               
                 var pagingData = new PagedResult<CategoryModelView>

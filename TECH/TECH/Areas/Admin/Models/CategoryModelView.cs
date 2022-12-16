@@ -10,9 +10,9 @@ namespace TECH.Areas.Admin.Models
         public int id { get; set; }
         public string? name { get; set; }
         public string? slug { get; set; }
-
+        public int? partentId { get; set; }
         public int? status { get; set; }
-
+        public CategoryModelView? Categories { get; set; }
         public DateTime created_at { get; set; }
 
         public DateTime? updated_at { get; set; }

@@ -41,6 +41,16 @@ namespace TECH.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        public JsonResult GetCategoryParent()
+        {
+            var data = _categoryService.GetCategoryParent();
+            return Json(new
+            {
+                Data = data
+            });
+        }
+
+        [HttpGet]
         public IActionResult AddOrUpdate()
         {
             return View();
@@ -144,6 +154,16 @@ namespace TECH.Areas.Admin.Controllers
         public JsonResult GetAllPaging(CategoryViewModelSearch categoryViewModelSearch)
         {
             var data = _categoryService.GetAllPaging(categoryViewModelSearch);
+            if (data != null && data.Results != null && data.Results.Count > 0)
+            {
+                foreach (var item in data.Results)
+                {
+                    if (item.partentId.HasValue && item.partentId.Value > 0)
+                    {
+                        item.Categories = _categoryService.GetByid(item.partentId.Value);
+                    }
+                }
+            }
             return Json(new { data = data });
         }
     }

@@ -82,6 +82,9 @@ namespace TECH.Migrations
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(250)");
 
+                    b.Property<int?>("partentId")
+                        .HasColumnType("int");
+
                     b.Property<string>("slug")
                         .HasColumnType("varchar(200)");
 
@@ -92,6 +95,8 @@ namespace TECH.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("id");
+
+                    b.HasIndex("partentId");
 
                     b.ToTable("categories");
                 });
@@ -614,6 +619,15 @@ namespace TECH.Migrations
                         .HasForeignKey("product_id");
 
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("TECH.Data.DatabaseEntity.Category", b =>
+                {
+                    b.HasOne("TECH.Data.DatabaseEntity.Category", "CategoryParent")
+                        .WithMany()
+                        .HasForeignKey("partentId");
+
+                    b.Navigation("CategoryParent");
                 });
 
             modelBuilder.Entity("TECH.Data.DatabaseEntity.Districts", b =>

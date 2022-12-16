@@ -18,9 +18,14 @@ namespace TECH.Data.DatabaseEntity
 
         public int? status { get; set; }
 
+        public int? partentId { get; set; }
+        [ForeignKey("partentId")]
+        public Category? CategoryParent { get; set; }
+
         public DateTime created_at { get; set; }
 
         public DateTime? updated_at { get; set; }
+
 
         public virtual ICollection<Products> Products { get; set; }
     }

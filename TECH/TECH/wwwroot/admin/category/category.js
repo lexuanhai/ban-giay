@@ -5,6 +5,7 @@
     self.Category = {
         id: null,
         name: "",
+        partentId:0
     }
     self.CategorySearch = {
         name: "",
@@ -22,6 +23,7 @@
                 html += "<tr>";
                 html += "<td>" + (++index) + "</td>";
                 html += "<td>" + item.name + "</td>";
+                html += "<td>" + (item.Categories != null && item.Categories.name != "" ? item.Categories.name:"")  + "</td>";
                 html += "<td style=\"text-align: center;\">" +
 
                     (item.status == 0 ? "<button  class=\"btn btn-dark custom-button\" onClick=UpdateStatus(" + item.id + ",1)><i class=\"bi bi-eye\"></i></button>" : "<button  class=\"btn btn-secondary custom-button\" onClick=UpdateStatus(" + item.id + ",0)><i class=\"bi bi-eye-slash\"></i></button>") +
@@ -80,6 +82,29 @@
                 }
             })
         }
+    }
+    self.GetCategoryParent = function () {
+        $.ajax({
+            url: '/Admin/Category/GetCategoryParent',
+            type: 'GET',
+            dataType: 'json',
+            beforeSend: function () {
+                //Loading('show');
+            },
+            complete: function () {
+                ////Loading('hiden');
+            },
+            success: function (response) {
+                if (response.Data != null) {
+                    var html = "<option value=''>Chọn danh mục cha</option>";
+                    for (var i = 0; i < response.Data.length; i++) {
+                        var item = response.Data[i];
+                        html += "<option value=" + item.id + ">" + item.name + "</option>";
+                    }
+                    $("#categoryParent").html(html);
+                }
+            }
+        })
     }
 
     self.UpdateStatus = function (id, status) {
@@ -155,10 +180,8 @@
     }
 
     self.GetDataPaging = function (isPageChanged) {
-
         self.CategorySearch.PageIndex = tedu.configs.pageIndex;
         self.CategorySearch.PageSize = tedu.configs.pageSize;
-
         $.ajax({
             url: '/Admin/Category/GetAllPaging',
             type: 'GET',
@@ -183,9 +206,6 @@
         })
 
     };
-
-
-   
 
     self.Add = function (userView) {
         $.ajax({
@@ -214,9 +234,7 @@
             }
         })
     }
-
    
-
     self.UpdateObject = function (userView) {
         $.ajax({
             url: '/Admin/Category/Update',
@@ -272,6 +290,12 @@
 
     self.GetValue = function () {
         self.Category.name = $(".txtname").val();
+        
+        var parentId = $("#categoryParent").val();
+        if (parentId != "") {
+            self.Category.partentId = parseInt(parentId);
+        }
+       
     }
 
     Set.SetValue = function () {
@@ -305,6 +329,8 @@
 
    
     $(document).ready(function () {
+        self.GetCategoryParent();
+
         self.GetDataPaging();
         
         self.ValidateUser();
